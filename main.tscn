@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bd0hbatixfv0y"]
+[gd_scene load_steps=8 format=3 uid="uid://bd0hbatixfv0y"]
 
+[ext_resource type="Script" path="res://pipeline.gd" id="1_34f1b"]
 [ext_resource type="Texture2D" uid="uid://m2lbprrvl8s7" path="res://assets/CharacterColored.png" id="2_36yq3"]
 [ext_resource type="Texture2D" uid="uid://cpb0b51l04yyb" path="res://assets/execute-box.png" id="3_gstia"]
 [ext_resource type="Texture2D" uid="uid://clggv5ba8y7ai" path="res://assets/fetch-box.png" id="3_sf2v8"]
@@ -10,6 +11,7 @@
 [node name="Node2D" type="Node2D"]
 
 [node name="Pipeline" type="Node2D" parent="."]
+script = ExtResource("1_34f1b")
 
 [node name="Sprite2D" type="Sprite2D" parent="Pipeline"]
 _import_path = NodePath("")
@@ -34,7 +36,7 @@ texture_filter = 0
 texture_repeat = 0
 material = null
 use_parent_material = false
-position = Vector2(169, 142)
+position = Vector2(150, 143)
 rotation = 0.0
 scale = Vector2(1, 1)
 skew = 0.0
@@ -74,7 +76,7 @@ texture_filter = 0
 texture_repeat = 0
 material = null
 use_parent_material = false
-position = Vector2(237, 144)
+position = Vector2(212, 143)
 rotation = 0.0
 scale = Vector2(1, 1)
 skew = 0.0
@@ -99,7 +101,7 @@ process_priority = 0
 process_physics_priority = 0
 process_thread_group = 0
 editor_description = ""
-visible = true
+visible = false
 modulate = Color(1, 1, 1, 1)
 self_modulate = Color(1, 1, 1, 1)
 show_behind_parent = false
@@ -114,7 +116,7 @@ texture_filter = 0
 texture_repeat = 0
 material = null
 use_parent_material = false
-position = Vector2(209, 98)
+position = Vector2(196, 86)
 rotation = 0.0
 scale = Vector2(1, 1)
 skew = 0.0
@@ -149,35 +151,25 @@ grow_vertical = 0
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/ShopPanel"]
 layout_mode = 2
 
-[node name="F-Box" type="TextureRect" parent="CanvasLayer/ShopPanel/HBoxContainer"]
+[node name="F-Box" type="TextureButton" parent="CanvasLayer/ShopPanel/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("3_sf2v8")
-expand_mode = 2
-stretch_mode = 5
+texture_normal = ExtResource("3_sf2v8")
 
-[node name="D-Box" type="TextureRect" parent="CanvasLayer/ShopPanel/HBoxContainer"]
+[node name="D-Box" type="TextureButton" parent="CanvasLayer/ShopPanel/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("4_a4tqp")
-expand_mode = 2
-stretch_mode = 5
+texture_normal = ExtResource("4_a4tqp")
 
-[node name="E-Box" type="TextureRect" parent="CanvasLayer/ShopPanel/HBoxContainer"]
+[node name="E-Box" type="TextureButton" parent="CanvasLayer/ShopPanel/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("3_gstia")
-expand_mode = 2
-stretch_mode = 5
+texture_normal = ExtResource("3_gstia")
 
-[node name="M-Box" type="TextureRect" parent="CanvasLayer/ShopPanel/HBoxContainer"]
+[node name="M-Box" type="TextureButton" parent="CanvasLayer/ShopPanel/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("5_t8235")
-expand_mode = 2
-stretch_mode = 5
+texture_normal = ExtResource("5_t8235")
 
-[node name="W-Box" type="TextureRect" parent="CanvasLayer/ShopPanel/HBoxContainer"]
+[node name="W-Box" type="TextureButton" parent="CanvasLayer/ShopPanel/HBoxContainer"]
 layout_mode = 2
-texture = ExtResource("6_btnbs")
-expand_mode = 2
-stretch_mode = 5
+texture_normal = ExtResource("6_btnbs")
 
 [node name="CodePanel" type="PanelContainer" parent="CanvasLayer"]
 offset_left = 3.0
