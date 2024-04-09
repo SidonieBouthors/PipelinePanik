@@ -9,54 +9,194 @@
 
 [node name="Node2D" type="Node2D"]
 
+[node name="Pipeline" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Pipeline"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+position = Vector2(169, 142)
+rotation = 0.0
+scale = Vector2(1, 1)
+skew = 0.0
+texture = ExtResource("3_sf2v8")
+centered = true
+offset = Vector2(0, 0)
+flip_h = false
+flip_v = false
+hframes = 1
+vframes = 1
+frame = 0
+region_enabled = false
+region_rect = Rect2(0, 0, 0, 0)
+region_filter_clip_enabled = false
+script = null
+
+[node name="Sprite2D2" type="Sprite2D" parent="Pipeline"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+position = Vector2(237, 144)
+rotation = 0.0
+scale = Vector2(1, 1)
+skew = 0.0
+texture = ExtResource("3_gstia")
+centered = true
+offset = Vector2(0, 0)
+flip_h = false
+flip_v = false
+hframes = 1
+vframes = 1
+frame = 0
+region_enabled = false
+region_rect = Rect2(0, 0, 0, 0)
+region_filter_clip_enabled = false
+script = null
+
 [node name="CharacterColored" type="Sprite2D" parent="."]
-position = Vector2(370, 222)
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+position = Vector2(209, 98)
+rotation = 0.0
+scale = Vector2(1, 1)
+skew = 0.0
 texture = ExtResource("2_36yq3")
+centered = true
+offset = Vector2(0, 0)
+flip_h = false
+flip_v = false
+hframes = 1
+vframes = 1
+frame = 0
+region_enabled = false
+region_rect = Rect2(0, 0, 0, 0)
+region_filter_clip_enabled = false
+script = null
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+[node name="ShopPanel" type="PanelContainer" parent="CanvasLayer"]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -56.0
+offset_left = -92.0
 offset_top = -43.0
-offset_right = 56.0
+offset_right = 92.0
 offset_bottom = -3.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/ShopPanel"]
 layout_mode = 2
 
-[node name="F-Box" type="TextureRect" parent="CanvasLayer/PanelContainer/HBoxContainer"]
+[node name="F-Box" type="TextureRect" parent="CanvasLayer/ShopPanel/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("3_sf2v8")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="D-Box" type="TextureRect" parent="CanvasLayer/PanelContainer/HBoxContainer"]
+[node name="D-Box" type="TextureRect" parent="CanvasLayer/ShopPanel/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("4_a4tqp")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="E-Box" type="TextureRect" parent="CanvasLayer/PanelContainer/HBoxContainer"]
+[node name="E-Box" type="TextureRect" parent="CanvasLayer/ShopPanel/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("3_gstia")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="M-Box" type="TextureRect" parent="CanvasLayer/PanelContainer/HBoxContainer"]
+[node name="M-Box" type="TextureRect" parent="CanvasLayer/ShopPanel/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("5_t8235")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="W-Box" type="TextureRect" parent="CanvasLayer/PanelContainer/HBoxContainer"]
+[node name="W-Box" type="TextureRect" parent="CanvasLayer/ShopPanel/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("6_btnbs")
 expand_mode = 2
 stretch_mode = 5
+
+[node name="CodePanel" type="PanelContainer" parent="CanvasLayer"]
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 112.0
+offset_bottom = 136.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CodePanel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/CodePanel/VBoxContainer"]
+layout_mode = 2
+text = "Instructions"
+
+[node name="InstructionPanel" type="PanelContainer" parent="CanvasLayer/CodePanel/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"InstructionPanel"
+
+[node name="Label2" type="Label" parent="CanvasLayer/CodePanel/VBoxContainer/InstructionPanel"]
+layout_mode = 2
+text = "add
+"
