@@ -1,11 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://besoyubbke5bo"]
+[gd_scene load_steps=2 format=3 uid="uid://besoyubbke5bo"]
 
 [ext_resource type="Script" path="res://unit.gd" id="1_26vih"]
-[ext_resource type="PackedScene" uid="uid://0nubijmywq4q" path="res://controller.tscn" id="2_evxvr"]
 
 [node name="Unit" type="Node"]
 script = ExtResource("1_26vih")
-
-[node name="Controller" parent="." instance=ExtResource("2_evxvr")]
-
-[connection signal="increment_clock" from="Controller" to="." method="_on_controller_increment_clock"]
