@@ -1,10 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://cvtjrvc3ra1vo"]
+[gd_scene load_steps=6 format=3 uid="uid://cvtjrvc3ra1vo"]
 
+[ext_resource type="Script" path="res://niveau_0.gd" id="1_e1vtc"]
 [ext_resource type="PackedScene" uid="uid://0nubijmywq4q" path="res://controller.tscn" id="1_urynr"]
 [ext_resource type="PackedScene" uid="uid://besoyubbke5bo" path="res://unit.tscn" id="2_tek5y"]
+[ext_resource type="PackedScene" uid="uid://33252v2xhgfr" path="res://decode.tscn" id="4_f0va1"]
+[ext_resource type="PackedScene" uid="uid://e54pi0ofyoil" path="res://scheduler.tscn" id="5_r5awx"]
 
 [node name="Niveau0" type="Node"]
+script = ExtResource("1_e1vtc")
 
 [node name="Controller" parent="." instance=ExtResource("1_urynr")]
 
 [node name="Fetch" parent="." instance=ExtResource("2_tek5y")]
+
+[node name="Decode" parent="." instance=ExtResource("4_f0va1")]
+
+[node name="Scheduler" parent="." instance=ExtResource("5_r5awx")]
+
+[node name="Execute" parent="." instance=ExtResource("2_tek5y")]
+
+[node name="Writeback" parent="." instance=ExtResource("2_tek5y")]

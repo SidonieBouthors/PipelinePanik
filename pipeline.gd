@@ -1,11 +1,13 @@
 extends Node2D
+class_name Pipeline
 
 enum Units {
 	FETCH,
 	DECODE,
 	EXECUTE,
 	MEMORY,
-	WRITEBACK
+	WRITEBACK,
+	SCHEDULER
 }
 
 # The grid's size in rows and columns.
