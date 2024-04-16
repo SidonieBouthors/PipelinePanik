@@ -1,6 +1,8 @@
 extends Node2D
 class_name Pipeline
 
+const unitVisual = preload("res://unit_visual.tscn")
+
 const unitImages = [
 	preload("res://assets/fetch-box.png"),
 	preload("res://assets/decode-box.png"),
@@ -63,8 +65,8 @@ func _process(delta):
 	
 func add_unit(unit):
 	var empty
-	var sprite = Sprite2D.new()
-	sprite.texture = unitImages[unit]
+	var sprite = unitVisual.instantiate()
+	sprite.set_sprite(unitImages[unit])
 	for i in size.y:
 		var j = (int(i) + 1) % 3
 		if pipeline_state[unit * size.y + j] == Unit.NONE:
