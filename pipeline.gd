@@ -21,7 +21,7 @@ enum Unit {
 
 @export var pipeline_state := []
 
-# The grid's size in rows and columns.
+# The grid's size in columns and rows.
 @export var size := Vector2(5, 3)
 # The size of a cell in pixels.
 @export var cell_size := Vector2(64, 64)
