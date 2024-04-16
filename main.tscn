@@ -13,125 +13,10 @@
 [node name="Pipeline" type="Node2D" parent="."]
 script = ExtResource("1_34f1b")
 
-[node name="Sprite2D" type="Sprite2D" parent="Pipeline"]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-editor_description = ""
-visible = true
-modulate = Color(1, 1, 1, 1)
-self_modulate = Color(1, 1, 1, 1)
-show_behind_parent = false
-top_level = false
-clip_children = 0
-light_mask = 1
-visibility_layer = 1
-z_index = 0
-z_as_relative = true
-y_sort_enabled = false
-texture_filter = 0
-texture_repeat = 0
-material = null
-use_parent_material = false
-position = Vector2(150, 143)
-rotation = 0.0
-scale = Vector2(1, 1)
-skew = 0.0
-texture = ExtResource("3_sf2v8")
-centered = true
-offset = Vector2(0, 0)
-flip_h = false
-flip_v = false
-hframes = 1
-vframes = 1
-frame = 0
-region_enabled = false
-region_rect = Rect2(0, 0, 0, 0)
-region_filter_clip_enabled = false
-script = null
-
-[node name="Sprite2D2" type="Sprite2D" parent="Pipeline"]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-editor_description = ""
-visible = true
-modulate = Color(1, 1, 1, 1)
-self_modulate = Color(1, 1, 1, 1)
-show_behind_parent = false
-top_level = false
-clip_children = 0
-light_mask = 1
-visibility_layer = 1
-z_index = 0
-z_as_relative = true
-y_sort_enabled = false
-texture_filter = 0
-texture_repeat = 0
-material = null
-use_parent_material = false
-position = Vector2(212, 143)
-rotation = 0.0
-scale = Vector2(1, 1)
-skew = 0.0
-texture = ExtResource("3_gstia")
-centered = true
-offset = Vector2(0, 0)
-flip_h = false
-flip_v = false
-hframes = 1
-vframes = 1
-frame = 0
-region_enabled = false
-region_rect = Rect2(0, 0, 0, 0)
-region_filter_clip_enabled = false
-script = null
-
 [node name="CharacterColored" type="Sprite2D" parent="."]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-editor_description = ""
 visible = false
-modulate = Color(1, 1, 1, 1)
-self_modulate = Color(1, 1, 1, 1)
-show_behind_parent = false
-top_level = false
-clip_children = 0
-light_mask = 1
-visibility_layer = 1
-z_index = 0
-z_as_relative = true
-y_sort_enabled = false
-texture_filter = 0
-texture_repeat = 0
-material = null
-use_parent_material = false
 position = Vector2(196, 86)
-rotation = 0.0
-scale = Vector2(1, 1)
-skew = 0.0
 texture = ExtResource("2_36yq3")
-centered = true
-offset = Vector2(0, 0)
-flip_h = false
-flip_v = false
-hframes = 1
-vframes = 1
-frame = 0
-region_enabled = false
-region_rect = Rect2(0, 0, 0, 0)
-region_filter_clip_enabled = false
-script = null
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -151,23 +36,23 @@ grow_vertical = 0
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/ShopPanel"]
 layout_mode = 2
 
-[node name="F-Box" type="TextureButton" parent="CanvasLayer/ShopPanel/HBoxContainer"]
+[node name="F-Button" type="TextureButton" parent="CanvasLayer/ShopPanel/HBoxContainer"]
 layout_mode = 2
 texture_normal = ExtResource("3_sf2v8")
 
-[node name="D-Box" type="TextureButton" parent="CanvasLayer/ShopPanel/HBoxContainer"]
+[node name="D-Button" type="TextureButton" parent="CanvasLayer/ShopPanel/HBoxContainer"]
 layout_mode = 2
 texture_normal = ExtResource("4_a4tqp")
 
-[node name="E-Box" type="TextureButton" parent="CanvasLayer/ShopPanel/HBoxContainer"]
+[node name="E-Button" type="TextureButton" parent="CanvasLayer/ShopPanel/HBoxContainer"]
 layout_mode = 2
 texture_normal = ExtResource("3_gstia")
 
-[node name="M-Box" type="TextureButton" parent="CanvasLayer/ShopPanel/HBoxContainer"]
+[node name="M-Button" type="TextureButton" parent="CanvasLayer/ShopPanel/HBoxContainer"]
 layout_mode = 2
 texture_normal = ExtResource("5_t8235")
 
-[node name="W-Box" type="TextureButton" parent="CanvasLayer/ShopPanel/HBoxContainer"]
+[node name="W-Button" type="TextureButton" parent="CanvasLayer/ShopPanel/HBoxContainer"]
 layout_mode = 2
 texture_normal = ExtResource("6_btnbs")
 
@@ -192,3 +77,9 @@ theme_type_variation = &"InstructionPanel"
 layout_mode = 2
 text = "add
 "
+
+[connection signal="pressed" from="CanvasLayer/ShopPanel/HBoxContainer/F-Button" to="Pipeline" method="_on_f_pressed"]
+[connection signal="pressed" from="CanvasLayer/ShopPanel/HBoxContainer/D-Button" to="Pipeline" method="_on_d_pressed"]
+[connection signal="pressed" from="CanvasLayer/ShopPanel/HBoxContainer/E-Button" to="Pipeline" method="_on_e_pressed"]
+[connection signal="pressed" from="CanvasLayer/ShopPanel/HBoxContainer/M-Button" to="Pipeline" method="_on_m_pressed"]
+[connection signal="pressed" from="CanvasLayer/ShopPanel/HBoxContainer/W-Button" to="Pipeline" method="_on_w_pressed"]

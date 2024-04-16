@@ -1,14 +1,25 @@
 extends Node2D
 class_name Pipeline
 
-enum Units {
+const unitImages = [
+	preload("res://assets/fetch-box.png"),
+	preload("res://assets/decode-box.png"),
+	preload("res://assets/execute-box.png"),
+	preload("res://assets/memory-box.png"),
+	preload("res://assets/writeback-box.png"),
+	]
+
+enum Unit {
 	FETCH,
 	DECODE,
 	EXECUTE,
 	MEMORY,
 	WRITEBACK,
-	SCHEDULER
+	SCHEDULER,
+	NONE
 }
+
+@export var pipeline_state := []
 
 # The grid's size in rows and columns.
 @export var size := Vector2(5, 3)
@@ -16,6 +27,12 @@ enum Units {
 @export var cell_size := Vector2(64, 64)
 
 var _half_cell_size = cell_size / 2
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	set_position(Vector2(128, 0))
+	for i in (size.x * size.y):
+		pipeline_state.append(Unit.NONE)
 
 # Returns the position of a cell's center in pixels.
 func calculate_map_position(grid_position: Vector2) -> Vector2:
@@ -40,19 +57,36 @@ func clamp(grid_position: Vector2) -> Vector2:
 func as_index(cell: Vector2) -> int:
 	return int(cell.x + size.x * cell.y)
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass 
-
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
-
-
-func _on_f_box_pressed():
-	pass # Replace with function body.
-
+	
+func add_unit(unit):
+	var empty
+	var sprite = Sprite2D.new()
+	sprite.texture = unitImages[unit]
+	for i in size.y:
+		if pipeline_state[unit * size.y + i] == Unit.NONE:
+			pipeline_state[unit * size.y + i] = unit
+			sprite.position = calculate_map_position(Vector2(unit, i))
+			get_node(".").add_child(sprite)
+			break
 
 func _on_f_pressed():
-	pass # Replace with function body.
+	add_unit(Unit.FETCH)
+
+
+func _on_d_pressed():
+	add_unit(Unit.DECODE)
+
+
+func _on_e_pressed():
+	add_unit(Unit.EXECUTE)
+
+
+func _on_m_pressed():
+	add_unit(Unit.MEMORY)
+
+
+func _on_w_pressed():
+	add_unit(Unit.WRITEBACK)
