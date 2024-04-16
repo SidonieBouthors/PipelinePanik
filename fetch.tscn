@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cneptmxrledhu"]
-
-[ext_resource type="Texture2D" uid="uid://clggv5ba8y7ai" path="res://assets/fetch-box.png" id="1_2714v"]
-
-[node name="Fetch" type="Sprite2D"]
-texture = ExtResource("1_2714v")
