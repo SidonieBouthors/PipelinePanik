@@ -1,9 +1,10 @@
 extends Node
 class_name Controller
 
-@onready var timer: Timer = get_node("Timer")
+@export var timer_wait_time = 1.0
+var timer: Timer
 
-var clock_cycle_counter := 0
+var clock_cycle_counter = 0
 var instructions : Array
 var first_units : Array
 var last_unit: Unit
@@ -12,7 +13,7 @@ signal increment_clock(clock_cycle_counter)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print(timer)
+	set_timer()
 	start_clock()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -39,15 +40,20 @@ func run():
 
 func start_clock():
 	timer.start()
-	pass
 
 func pause_clock():
 	timer.stop()
-	pass
 	
 func reset_counter():
 	clock_cycle_counter = 0
 	pause_clock()
+
+func set_timer():
+	timer = Timer.new()
+	add_child(timer)
+	
+	timer.wait_time = timer_wait_time
+	timer.timeout.connect(_on_timer_timeout)
 
 func _print_state():
 	print("Clock cycle: ", clock_cycle_counter)
