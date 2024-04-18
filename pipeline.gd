@@ -1,6 +1,8 @@
 extends Node2D
 class_name Pipeline
 
+const unitVisual = preload("res://unit_visual.tscn")
+
 const unitImages = [
 	preload("res://assets/fetch-box.png"),
 	preload("res://assets/decode-box.png"),
@@ -21,7 +23,7 @@ enum Unit {
 
 @export var pipeline_state := []
 
-# The grid's size in rows and columns.
+# The grid's size in columns and rows.
 @export var size := Vector2(5, 3)
 # The size of a cell in pixels.
 @export var cell_size := Vector2(64, 64)
@@ -63,30 +65,27 @@ func _process(delta):
 	
 func add_unit(unit):
 	var empty
-	var sprite = Sprite2D.new()
-	sprite.texture = unitImages[unit]
+	var sprite = unitVisual.instantiate()
+	sprite.set_sprite(unitImages[unit])
 	for i in size.y:
-		if pipeline_state[unit * size.y + i] == Unit.NONE:
-			pipeline_state[unit * size.y + i] = unit
-			sprite.position = calculate_map_position(Vector2(unit, i))
+		var j = (int(i) + 1) % 3
+		if pipeline_state[unit * size.y + j] == Unit.NONE:
+			pipeline_state[unit * size.y + j] = unit
+			sprite.position = calculate_map_position(Vector2(unit, j))
 			get_node(".").add_child(sprite)
 			break
 
 func _on_f_pressed():
 	add_unit(Unit.FETCH)
 
-
 func _on_d_pressed():
 	add_unit(Unit.DECODE)
-
 
 func _on_e_pressed():
 	add_unit(Unit.EXECUTE)
 
-
 func _on_m_pressed():
 	add_unit(Unit.MEMORY)
-
 
 func _on_w_pressed():
 	add_unit(Unit.WRITEBACK)

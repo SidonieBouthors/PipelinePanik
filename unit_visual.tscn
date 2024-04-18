@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://ca57crfjn837g"]
+
+[ext_resource type="Script" path="res://unit_visual.gd" id="1_bulo6"]
+[ext_resource type="Texture2D" uid="uid://mcyihy0kvcvh" path="res://assets/memory-box.png" id="2_o8eek"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_osmur"]
+size = Vector2(64, 64)
+
+[node name="UnitVisual" type="Area2D"]
+script = ExtResource("1_bulo6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_o8eek")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_osmur")
