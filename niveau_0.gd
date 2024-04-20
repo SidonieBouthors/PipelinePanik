@@ -61,6 +61,24 @@ func _ready():
 	instruction.inputs = [Instruction.Register.r1, Instruction.Register.r2]
 	instructions.append(instruction)
 
+	# Second instruction: ADD r1, r1, r2
+	instruction = Instruction.new()
+	add_child(instruction)
+	instruction.pc = 1
+	instruction.type = Instruction.Type.ALU
+	instruction.output = Instruction.Register.r1
+	instruction.inputs = [Instruction.Register.r1, Instruction.Register.r2]
+	instructions.append(instruction)
+
+	# Third instruction: ADD r2, r1, r2
+	instruction = Instruction.new()
+	add_child(instruction)
+	instruction.pc = 2
+	instruction.type = Instruction.Type.ALU
+	instruction.output = Instruction.Register.r2
+	instruction.inputs = [Instruction.Register.r1, Instruction.Register.r2]
+	instructions.append(instruction)
+
 	# Instantiate the controller
 	var controller = Controller.new()
 	add_child(controller)

@@ -65,6 +65,9 @@ func is_type_compat(instruction : Instruction, unit: Unit) -> bool:
 	return type
 
 func get_compatible_unit(instruction: Instruction, units: Array) -> Unit:
+	if is_dependent(instruction, outputs):
+		return null
+
 	var pool: Dictionary = {}
 	var i = 0
 
@@ -74,8 +77,6 @@ func get_compatible_unit(instruction: Instruction, units: Array) -> Unit:
 	while not pool.is_empty():
 		for unit in pool.keys():
 			if is_type_compat(instruction, unit):
-				# Either a NOP or independent instruction
-				if not unit.instr or is_independent(instruction, unit.instr):
 					return unit
 
 		i += 1
@@ -92,7 +93,7 @@ func get_compatible_unit(instruction: Instruction, units: Array) -> Unit:
 
 	return null
 	
-func is_independent(input: Instruction, output: Instruction):
+func is_instr_independent(input: Instruction, output: Instruction) -> bool:
 	return input.inputs.filter(func(i): 
 		var inp := i as Instruction.Register
 
@@ -102,6 +103,35 @@ func is_independent(input: Instruction, output: Instruction):
 		
 		return inp == output.instr.output
 	).is_empty()
+
+func is_dependent(instruction: Instruction, out: Array) -> bool:
+	if out.filter(func(unit: Unit): 
+		return unit != null
+	).is_empty():
+		return false
+
+	var dependent = false
+
+	for output in out:
+		if not output is Scheduler:
+			if output.instr:
+				dependent = is_instr_independent(instruction, output.instr)
+				
+				if not dependent:
+					return true
+
+				dependent = is_dependent(instruction, [output.next_unit])
+
+				if dependent:
+					return true
+
+		else:
+			dependent = is_dependent(instruction, output.outputs)
+
+			if dependent:
+				return true			
+
+	return false
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():

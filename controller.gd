@@ -85,8 +85,8 @@ func _print_state():
 				unit = unit.outputs[0]
 			else:
 				print("   Unit Type: ", Pipeline.Unit.keys()[unit.unit_type])
-				print("   Instruction: ", Instruction.Type.keys()[unit.instr.type] if unit.instr else "null")
-				print("   Program Counter: ", unit.instr.pc if unit.instr else "null")
+				print("   Instruction: ", Instruction.Type.keys()[unit.instr.type] if unit.instr else "None")
+				print("   Program Counter: ", unit.instr.pc if unit.instr else "None")
 				print("   Is Stalled: ", unit.is_stalled)
 				unit = unit.next_unit
 			print("")
