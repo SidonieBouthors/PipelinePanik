@@ -8,8 +8,7 @@ var output : Register
 enum Type {
 	ALU,
 	MEM,
-	BRANCH,
-	NOP
+	BRANCH
 } 
 
 enum Register {

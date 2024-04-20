@@ -14,7 +14,7 @@ const unitImages = [
 enum Unit {
 	FETCH,
 	DECODE,
-	EXECUTE,
+	ALU,
 	MEMORY,
 	WRITEBACK,
 	SCHEDULER,
@@ -82,7 +82,7 @@ func _on_d_pressed():
 	add_unit(Unit.DECODE)
 
 func _on_e_pressed():
-	add_unit(Unit.EXECUTE)
+	add_unit(Unit.ALU)
 
 func _on_m_pressed():
 	add_unit(Unit.MEMORY)

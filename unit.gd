@@ -2,7 +2,7 @@ extends Node
 class_name Unit
 
 var unit_type: Pipeline.Unit
-var instr : Instruction 
+var instr : Instruction
 var is_stalled : bool = false
 
 # Either a unit or a scheduler
@@ -40,4 +40,8 @@ func run():
 				previous_unit.is_stalled = true
 			else:
 				instr = previous_unit.instr
+				previous_unit.instr = null
 		previous_unit.run()
+
+func find_types() -> Array:
+	return []

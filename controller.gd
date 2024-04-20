@@ -7,7 +7,9 @@ var timer: Timer
 var clock_cycle_counter = 0
 var instructions : Array
 var first_units : Array
-var last_unit: Unit
+var last_units : Array
+
+var scheduler_list : Array = []
 
 signal increment_clock(clock_cycle_counter)
 
@@ -22,18 +24,34 @@ func _ready():
 func _process(delta):
 	pass
 
+func searchAllSchedulers(unit, accumulator):
+	if not unit:
+		return
+
+	if unit is Scheduler:
+		if unit not in accumulator:
+			accumulator.append(unit)
+			for output in unit.outputs:
+				searchAllSchedulers(output, accumulator)
+	else:
+		searchAllSchedulers(unit.next_unit, accumulator)
 
 func _on_timer_timeout():
+	if clock_cycle_counter == 0:
+		for unit in first_units:
+			searchAllSchedulers(unit, scheduler_list)
+
+	for sch in scheduler_list:
+		sch.update_semaphore()
+	
 	clock_cycle_counter += 1
 
 	for unit in first_units :
 		if not unit.is_stalled :
 			unit.instr = instructions.pop_at(0)
 	
-	increment_clock.emit(clock_cycle_counter)
-	
-	if last_unit:
-		last_unit.run()
+	for unit in last_units :
+		unit.run()
 	
 	_print_state()
 
@@ -52,10 +70,9 @@ func reset_counter():
 
 func set_timer():
 	timer = Timer.new()
-	add_child(timer)
-	
 	timer.wait_time = timer_wait_time
 	timer.timeout.connect(_on_timer_timeout)
+	add_child(timer)
 
 func _print_state():
 	print("Clock cycle: ", clock_cycle_counter)
@@ -67,11 +84,10 @@ func _print_state():
 				print("   Scheduler")
 				unit = unit.outputs[0]
 			else:
-				print("   Unit Type: ", unit.unit_type if unit.unit_type else "null")
-				print("   Type from Enum: ", Pipeline.Unit.keys()[unit.unit_type] if unit.unit_type else "null")
-				print("   Instruction Type: ", unit.instr.type if unit.instr else "null")
+				print("   Unit Type: ", Pipeline.Unit.keys()[unit.unit_type])
+				print("   Instruction: ", Instruction.Type.keys()[unit.instr.type] if unit.instr else "null")
 				print("   Program Counter: ", unit.instr.pc if unit.instr else "null")
-				print("   Is Stalled: ", unit.is_stalled if unit.is_stalled else "null")
+				print("   Is Stalled: ", unit.is_stalled)
 				unit = unit.next_unit
 			print("")
 
