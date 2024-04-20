@@ -1,10 +1,10 @@
 extends Node
 
 var first_unit: Unit = Unit.new()
-var last_unit
 
 var instructions: Array = []
 var first_units: Array = []
+var last_units: Array = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -33,12 +33,12 @@ func _ready():
 	curr_unit.outputs = [Unit.new()]
 	add_child(curr_unit)
 
-	# Execute
+	# ALU
 	prev_unit = curr_unit
 	curr_unit = curr_unit.outputs[0]
 	curr_unit.previous_unit = prev_unit
 	curr_unit.next_unit = Unit.new()
-	curr_unit.unit_type = Pipeline.Unit.EXECUTE
+	curr_unit.unit_type = Pipeline.Unit.ALU
 	add_child(curr_unit)
 
 	# Writeback
@@ -50,7 +50,7 @@ func _ready():
 	add_child(curr_unit)
 	
 	first_units.append(first_unit)
-	last_unit = curr_unit
+	last_units.append(curr_unit)
 
 	# First instruction: ADD r0, r1, r2
 	var instruction = Instruction.new()
@@ -66,6 +66,7 @@ func _ready():
 	add_child(controller)
 	controller.instructions = instructions
 	controller.first_units = first_units
+	controller.last_units = last_units
 	
 	controller.set_timer()
 

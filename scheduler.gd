@@ -28,24 +28,34 @@ func scheduler():
 				
 # Schedule the current instruction of `old` to `new`
 func schedule(old: Unit, new: Unit):
-	if old.instr and old.instr.type != Instruction.Type.NOP:
+	if old.instr and old.instr.type:
 		new.instr = old.instr
 		old.instr = null
 
 func update_available():
 	available_inputs = inputs.filter(func(unit: Unit): 
-		return unit.instr.type != Instruction.Type.NOP
+		return unit.instr != null
 	)
 
 	available_outputs = outputs.filter(func(unit: Unit): 
-		return unit.stalled == false
+		return unit.is_stalled == false
 	)
 	
 func update_stall():
 	pass
 
 func is_type_compat(unit1 : Unit, unit2: Unit):
-	return unit1.instr.type == unit2.instr.type
+	var type = false
+
+	match unit1.instr.type:
+		Instruction.Type.ALU:
+			type = unit2.unit_type == Pipeline.Unit.ALU
+		Instruction.Type.MEM:
+			type = unit2.unit_type == Pipeline.Unit.MEMORY
+		Instruction.Type.BRANCH:
+			type = true
+
+	return unit1.instr and unit2.unit_type and type
 	
 func is_independent(input: Unit, output: Unit):
 	return input.instr.inputs.filter(func(i): 
@@ -67,7 +77,7 @@ func _ready():
 func _process(delta):
 	pass
 
-func _on_controller_increment_clock(clock_cycle_counter):
+func update_semaphore():
 	semaphore = outputs.size()
 
 # Can be called multiple times per clock cycle (if multiple outputs)
