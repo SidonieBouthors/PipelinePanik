@@ -19,16 +19,23 @@ func scheduler():
 
 	for input in available_inputs:
 		if input not in inputs_to_skip:
-			for output in available_outputs:
-				if output not in outputs_to_skip:
-					if is_type_compat(input, output) and is_independent(input, output):
-						schedule(input, output)
-						inputs_to_skip[input] = true
-						outputs_to_skip[output] = true
+			var unit = get_compatible_unit(input.instr, available_outputs.filter(
+				func(i: Unit): 
+					return i not in outputs_to_skip
+			))
+
+			if unit:
+				schedule(input, unit)
+				inputs_to_skip[input] = true
+				outputs_to_skip[unit] = true
+			else:
+				# if no compatible unit found (e.g. all units are busy/dependant), 
+				# stall the input
+				input.is_stalled = true
 				
 # Schedule the current instruction of `old` to `new`
 func schedule(old: Unit, new: Unit):
-	if old.instr and old.instr.type:
+	if old.instr:
 		new.instr = old.instr
 		old.instr = null
 
@@ -44,21 +51,49 @@ func update_available():
 func update_stall():
 	pass
 
-func is_type_compat(unit1 : Unit, unit2: Unit):
+func is_type_compat(instruction : Instruction, unit: Unit) -> bool:
 	var type = false
 
-	match unit1.instr.type:
+	match instruction.type:
 		Instruction.Type.ALU:
-			type = unit2.unit_type == Pipeline.Unit.ALU
+			type = unit.unit_type == Pipeline.Unit.ALU
 		Instruction.Type.MEM:
-			type = unit2.unit_type == Pipeline.Unit.MEMORY
+			type = unit.unit_type == Pipeline.Unit.MEMORY
 		Instruction.Type.BRANCH:
 			type = true
 
-	return unit1.instr and unit2.unit_type and type
+	return type
+
+func get_compatible_unit(instruction: Instruction, units: Array) -> Unit:
+	var pool: Dictionary = {}
+	var i = 0
+
+	for unit in units:
+		pool[unit] = i
+
+	while not pool.is_empty():
+		for unit in pool.keys():
+			if is_type_compat(instruction, unit):
+				# Either a NOP or independent instruction
+				if not unit.instr or is_independent(instruction, unit.instr):
+					return unit
+
+		i += 1
+
+		for unit in pool.keys():
+			if unit is Scheduler:
+				for child in unit.inputs:
+					pool[child] = i
+			else:
+				if unit.next_unit and unit.next_unit.unit_type != Pipeline.Unit.WRITEBACK:
+					pool[unit.next_unit] = i
+			
+			pool.erase(unit)
+
+	return null
 	
-func is_independent(input: Unit, output: Unit):
-	return input.instr.inputs.filter(func(i): 
+func is_independent(input: Instruction, output: Instruction):
+	return input.inputs.filter(func(i): 
 		var inp := i as Instruction.Register
 
 		# if input is not a register (e.g. immediate), it is always independent
