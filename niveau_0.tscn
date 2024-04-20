@@ -11,9 +11,6 @@ script = ExtResource("1_e1vtc")
 
 [node name="Controller" parent="." instance=ExtResource("1_urynr")]
 
-[node name="Timer" parent="Controller" index="0"]
-autostart = true
-
 [node name="Fetch" parent="." instance=ExtResource("2_tek5y")]
 
 [node name="Decode" parent="." instance=ExtResource("4_f0va1")]
@@ -23,7 +20,5 @@ autostart = true
 [node name="Execute" parent="." instance=ExtResource("2_tek5y")]
 
 [node name="Writeback" parent="." instance=ExtResource("2_tek5y")]
-
-[connection signal="timeout" from="Controller/Timer" to="Controller" method="_on_timer_timeout"]
 
 [editable path="Controller"]

@@ -1,7 +1,7 @@
 extends Node
 class_name Unit
 
-var unit_type: Pipeline.Units
+var unit_type: Pipeline.Unit
 var instr : Instruction 
 var is_stalled : bool = false
 

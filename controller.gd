@@ -13,8 +13,10 @@ signal increment_clock(clock_cycle_counter)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	set_timer()
-	start_clock()
+	#print("ready called")
+	#set_timer()
+	#start_clock()
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -22,8 +24,6 @@ func _process(delta):
 
 
 func _on_timer_timeout():
-	_print_state()
-	
 	clock_cycle_counter += 1
 
 	for unit in first_units :
@@ -34,6 +34,8 @@ func _on_timer_timeout():
 	
 	if last_unit:
 		last_unit.run()
+	
+	_print_state()
 
 func run():
 	start_clock()
@@ -61,11 +63,16 @@ func _print_state():
 	if not first_units.is_empty():
 		var unit = first_units[0]
 		while unit:
-			print("Unit Type:", unit.unit_type)
-			print("   Instruction Type:", unit.instr.type)
-			print("   Program Counter:", unit.instr.pc)
-			print("   Is Stalled:", unit.is_stalled)
+			if unit is Scheduler:
+				print("   Scheduler")
+				unit = unit.outputs[0]
+			else:
+				print("   Unit Type: ", unit.unit_type if unit.unit_type else "null")
+				print("   Type from Enum: ", Pipeline.Unit.keys()[unit.unit_type] if unit.unit_type else "null")
+				print("   Instruction Type: ", unit.instr.type if unit.instr else "null")
+				print("   Program Counter: ", unit.instr.pc if unit.instr else "null")
+				print("   Is Stalled: ", unit.is_stalled if unit.is_stalled else "null")
+				unit = unit.next_unit
 			print("")
-			unit = unit.next_unit
 
 		print("")
