@@ -37,23 +37,28 @@ func searchAllSchedulers(unit, accumulator):
 		searchAllSchedulers(unit.next_unit, accumulator)
 
 func _on_timer_timeout():
+	pop_instructions(first_units, instructions)
+	_print_state()
+
 	if clock_cycle_counter == 0:
 		for unit in first_units:
 			searchAllSchedulers(unit, scheduler_list)
+		clock_cycle_counter += 1
+		return
 
 	for sch in scheduler_list:
 		sch.update_semaphore()
 	
 	clock_cycle_counter += 1
 
-	for unit in first_units :
-		if not unit.is_stalled :
-			unit.instr = instructions.pop_at(0)
-	
 	for unit in last_units :
 		unit.run()
 	
-	_print_state()
+
+func pop_instructions(units: Array, instr: Array):
+	for unit in units:
+		if not unit.is_stalled:
+			unit.instr = instr.pop_at(0)
 
 func run():
 	start_clock()
