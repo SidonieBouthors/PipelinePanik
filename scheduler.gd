@@ -1,9 +1,9 @@
 extends Node
 class_name Scheduler
 
-var inputs: Array
-var outputs: Array
-var semaphore : int
+@export var inputs: Array
+@export var outputs: Array
+@export var semaphore : int
 
 # Available inputs = inputs - NOPs
 var available_inputs = []
@@ -101,7 +101,7 @@ func is_instr_independent(input: Instruction, output: Instruction) -> bool:
 		if not inp :
 			return false
 		
-		return inp == output.instr.output
+		return inp == output.output
 	).is_empty()
 
 func is_dependent(instruction: Instruction, out: Array) -> bool:
@@ -120,10 +120,10 @@ func is_dependent(instruction: Instruction, out: Array) -> bool:
 				if not dependent:
 					return true
 
-				dependent = is_dependent(instruction, [output.next_unit])
+			dependent = is_dependent(instruction, [output.next_unit])
 
-				if dependent:
-					return true
+			if dependent:
+				return true
 
 		else:
 			dependent = is_dependent(instruction, output.outputs)

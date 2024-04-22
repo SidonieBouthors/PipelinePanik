@@ -1,9 +1,9 @@
 extends Node
 class_name Unit
 
-var unit_type: Pipeline.Unit
-var instr : Instruction
-var is_stalled : bool = false
+@export var unit_type: Pipeline.Unit
+@export var instr : Instruction
+@export var is_stalled : bool = false
 
 # Either a unit or a scheduler
 var previous_unit 
