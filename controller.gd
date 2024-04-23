@@ -90,6 +90,9 @@ func _print_state():
 				unit = unit.outputs[0]
 			elif unit is Commiter:
 				print("   Commiter")
+				for instr in unit.instructions:
+					if instr:
+						print("   PC : ", instr.pc)
 				unit = null
 			else:
 				print("   Unit Type: ", Pipeline.Unit.keys()[unit.unit_type])

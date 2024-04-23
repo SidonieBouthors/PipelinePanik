@@ -105,7 +105,7 @@ func is_instr_independent(input: Instruction, output: Instruction) -> bool:
 	).is_empty()
 
 func is_dependent(instruction: Instruction, out: Array) -> bool:
-	if out.filter(func(unit: Unit): 
+	if out.filter(func(unit): 
 		return unit != null
 	).is_empty():
 		return false
