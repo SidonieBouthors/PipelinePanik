@@ -2,6 +2,7 @@ extends Node2D
 class_name Pipeline
 
 const unitVisual = preload("res://unit_visual.tscn")
+const dropZone = preload("res://dropzone.tscn")
 
 const unitImages = [
 	preload("res://assets/fetch-box.png"),
@@ -35,6 +36,12 @@ func _ready():
 	set_position(Vector2(128, 0))
 	for i in (size.x * size.y):
 		pipeline_state.append(Unit.NONE)
+	for i in size.x:
+		for j in size.y:
+			var drop = dropZone.instantiate()
+			drop.position = calculate_map_position(Vector2(i, j))
+			get_node(".").add_child(drop)
+			
 
 # Returns the position of a cell's center in pixels.
 func calculate_map_position(grid_position: Vector2) -> Vector2:
@@ -59,9 +66,6 @@ func clamp(grid_position: Vector2) -> Vector2:
 func as_index(cell: Vector2) -> int:
 	return int(cell.x + size.x * cell.y)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 	
 func add_unit(unit):
 	var empty
