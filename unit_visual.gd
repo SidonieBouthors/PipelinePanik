@@ -9,10 +9,6 @@ var initialPos: Vector2
 func set_sprite(image):
 	get_child(0).texture = image
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -47,7 +43,6 @@ func _on_mouse_exited():
 func _on_body_entered(zone):
 	if zone.is_in_group("dropzone"):
 		if zone.occupy(self):
-			print("NEW CELL OCCUPIED")
 			is_inside_dropzone = true
 			zone_ref = zone
 
@@ -57,5 +52,4 @@ func _on_body_exited(zone):
 		zone.unoccupy(self)
 		if zone == zone_ref:
 			is_inside_dropzone = false
-			zone_ref = null
 			
