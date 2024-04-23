@@ -1,11 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cvtjrvc3ra1vo"]
+[gd_scene load_steps=2 format=3 uid="uid://cvtjrvc3ra1vo"]
 
 [ext_resource type="Script" path="res://niveau_0.gd" id="1_e1vtc"]
-[ext_resource type="PackedScene" uid="uid://0nubijmywq4q" path="res://controller.tscn" id="1_urynr"]
 
 [node name="Niveau0" type="Node"]
 script = ExtResource("1_e1vtc")
-
-[node name="Controller" parent="." instance=ExtResource("1_urynr")]
-
-[editable path="Controller"]

@@ -36,9 +36,8 @@ func run():
 			pass
 		else:
 			# if previous is a unit
-			if is_stalled:
-				previous_unit.is_stalled = true
-			else:
+			previous_unit.is_stalled = is_stalled
+			if not is_stalled:
 				instr = previous_unit.instr
 				previous_unit.instr = null
 		previous_unit.run()

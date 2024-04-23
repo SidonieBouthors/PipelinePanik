@@ -38,6 +38,7 @@ func schedule(old: Unit, new: Unit):
 	if old.instr:
 		new.instr = old.instr
 		old.instr = null
+		old.is_stalled = false
 
 func update_available():
 	available_inputs = inputs.filter(func(unit: Unit): 
@@ -77,7 +78,10 @@ func get_compatible_unit(instruction: Instruction, units: Array) -> Unit:
 	while not pool.is_empty():
 		for unit in pool.keys():
 			if is_type_compat(instruction, unit):
-					return unit
+					var u = unit
+					while not (u.previous_unit is Scheduler):
+						u = u.previous_unit
+					return u
 
 		i += 1
 
