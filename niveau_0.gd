@@ -45,9 +45,17 @@ func _ready():
 	prev_unit = curr_unit
 	curr_unit = curr_unit.next_unit
 	curr_unit.previous_unit = prev_unit
-	curr_unit.next_unit = null
+	curr_unit.next_unit = Commiter.new()
 	curr_unit.unit_type = Pipeline.Unit.WRITEBACK
 	add_child(curr_unit)
+	
+	
+	#Commiter
+	prev_unit = curr_unit
+	curr_unit = curr_unit.next_unit
+	curr_unit.inputs = [prev_unit]
+	add_child(curr_unit)
+
 	
 	first_units.append(first_unit)
 	last_units.append(curr_unit)

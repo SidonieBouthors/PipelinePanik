@@ -33,6 +33,8 @@ func searchAllSchedulers(unit, accumulator):
 			accumulator.append(unit)
 			for output in unit.outputs:
 				searchAllSchedulers(output, accumulator)
+	elif unit is Commiter:
+		return
 	else:
 		searchAllSchedulers(unit.next_unit, accumulator)
 
@@ -43,8 +45,6 @@ func _on_timer_timeout():
 	if clock_cycle_counter == 0:
 		for unit in first_units:
 			searchAllSchedulers(unit, scheduler_list)
-		clock_cycle_counter += 1
-		return
 
 	for sch in scheduler_list:
 		sch.update_semaphore()
@@ -88,6 +88,9 @@ func _print_state():
 			if unit is Scheduler:
 				print("   Scheduler")
 				unit = unit.outputs[0]
+			elif unit is Commiter:
+				print("   Commiter")
+				unit = null
 			else:
 				print("   Unit Type: ", Pipeline.Unit.keys()[unit.unit_type])
 				print("   Instruction: ", Instruction.Type.keys()[unit.instr.type] if unit.instr else "None")

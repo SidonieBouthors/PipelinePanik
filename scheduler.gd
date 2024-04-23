@@ -113,23 +113,29 @@ func is_dependent(instruction: Instruction, out: Array) -> bool:
 	var dependent = false
 
 	for output in out:
-		if not output is Scheduler:
+		if output is Scheduler:
+			dependent = is_dependent(instruction, output.outputs)
+
+			if dependent:
+				return true
+		elif output is Commiter:
+				for instr in output.instructions:
+					if instr:
+						dependent = not is_instr_independent(instruction, instr)
+						if dependent:
+							return true
+		else:
 			if output.instr:
-				dependent = is_instr_independent(instruction, output.instr)
+				dependent = not is_instr_independent(instruction, output.instr)
 				
-				if not dependent:
+				if dependent:
 					return true
 
 			dependent = is_dependent(instruction, [output.next_unit])
 
 			if dependent:
 				return true
-
-		else:
-			dependent = is_dependent(instruction, output.outputs)
-
-			if dependent:
-				return true			
+						
 
 	return false
 	

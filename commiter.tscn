@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://icvdkxo0rtqh"]
+
+[ext_resource type="Script" path="res://Commiter.gd" id="1_3u8g6"]
+
+[node name="Commiter" type="Node"]
+script = ExtResource("1_3u8g6")
