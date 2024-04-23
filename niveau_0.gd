@@ -4,7 +4,7 @@ var first_unit: Unit = Unit.new()
 
 var instructions: Array = []
 var first_units: Array = []
-var last_units: Array = []
+var last_unit: Commiter
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -58,7 +58,7 @@ func _ready():
 
 	
 	first_units.append(first_unit)
-	last_units.append(curr_unit)
+	last_unit = curr_unit
 
 	# First instruction: ADD r0, r1, r2
 	var instruction = Instruction.new()
@@ -92,7 +92,7 @@ func _ready():
 	add_child(controller)
 	controller.instructions = instructions
 	controller.first_units = first_units
-	controller.last_units = last_units
+	controller.last_unit = last_unit
 	
 	controller.set_timer()
 

@@ -15,19 +15,26 @@ func scheduler():
 	update_available()
 
 	var inputs_to_skip = {}
-	var outputs_to_skip = {}
 
 	for input in available_inputs:
 		if input not in inputs_to_skip:
-			var unit = get_compatible_unit(input.instr, available_outputs.filter(
-				func(i: Unit): 
-					return i not in outputs_to_skip
-			))
+			var unit
+			if input.unit_type == Pipeline.Unit.FETCH:
+				# if input is a fetch unit, schedule it to the first available output (decode)
+				if not available_outputs.is_empty():
+					unit = available_outputs[0]
+				
+			else:
+				# if input is not a fetch unit, find a compatible unit
+				unit = get_compatible_unit(input.instr, available_outputs)
 
 			if unit:
 				schedule(input, unit)
 				inputs_to_skip[input] = true
-				outputs_to_skip[unit] = true
+				available_outputs = available_outputs.filter(
+					func(i: Unit): 
+						return i != unit
+			)
 			else:
 				# if no compatible unit found (e.g. all units are busy/dependant), 
 				# stall the input

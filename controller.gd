@@ -7,7 +7,7 @@ var timer: Timer
 var clock_cycle_counter = 0
 var instructions : Array
 var first_units : Array
-var last_units : Array
+var last_unit : Commiter
 
 var scheduler_list : Array = []
 
@@ -51,8 +51,7 @@ func _on_timer_timeout():
 	
 	clock_cycle_counter += 1
 
-	for unit in last_units :
-		unit.run()
+	last_unit.run()
 	
 
 func pop_instructions(units: Array, instr: Array):

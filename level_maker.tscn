@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbj3727g3450m"]
+
+[ext_resource type="Script" path="res://level_maker.gd" id="1_bp6ps"]
+
+[node name="Level_Maker" type="Node"]
+script = ExtResource("1_bp6ps")
