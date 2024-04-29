@@ -68,6 +68,6 @@ func find_neighbours(i: int, j: int):
 	
 func get_column(pipeline: Array, size: Vector2, i: int) -> Array:
 	var res = []
-	for idx in range(i * size.x, (i + 1) * size.x):
+	for idx in range(i * size.y, (i + 1) * size.y):
 		res.append(pipeline[idx])
 	return res

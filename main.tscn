@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bd0hbatixfv0y"]
+[gd_scene load_steps=9 format=3 uid="uid://bd0hbatixfv0y"]
 
 [ext_resource type="Script" path="res://pipeline.gd" id="1_34f1b"]
 [ext_resource type="Texture2D" uid="uid://m2lbprrvl8s7" path="res://assets/CharacterColored.png" id="2_36yq3"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://byhqvpcx5dink" path="res://assets/decode-box.png" id="4_a4tqp"]
 [ext_resource type="Texture2D" uid="uid://mcyihy0kvcvh" path="res://assets/memory-box.png" id="5_t8235"]
 [ext_resource type="Texture2D" uid="uid://dug68doo48oo3" path="res://assets/writeback-box.png" id="6_btnbs"]
+[ext_resource type="Texture2D" uid="uid://7vfokthmbssf" path="res://assets/play-button.png" id="8_oewop"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -82,6 +83,22 @@ layout_mode = 2
 text = "add
 "
 
+[node name="PlayPanel" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -28.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = 28.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="PlayButton" type="TextureButton" parent="CanvasLayer/PlayPanel"]
+layout_mode = 2
+texture_normal = ExtResource("8_oewop")
+
 [connection signal="button_down" from="CanvasLayer/ShopPanel/HBoxContainer/F-Button" to="CanvasLayer2/Pipeline" method="_on_f_button_down"]
 [connection signal="pressed" from="CanvasLayer/ShopPanel/HBoxContainer/F-Button" to="CanvasLayer2/Pipeline" method="_on_f_pressed"]
 [connection signal="toggled" from="CanvasLayer/ShopPanel/HBoxContainer/F-Button" to="CanvasLayer2/Pipeline" method="_on_f_button_toggled"]
@@ -93,3 +110,4 @@ text = "add
 [connection signal="pressed" from="CanvasLayer/ShopPanel/HBoxContainer/M-Button" to="CanvasLayer2/Pipeline" method="_on_m_pressed"]
 [connection signal="button_down" from="CanvasLayer/ShopPanel/HBoxContainer/W-Button" to="CanvasLayer2/Pipeline" method="_on_w_button_down"]
 [connection signal="pressed" from="CanvasLayer/ShopPanel/HBoxContainer/W-Button" to="CanvasLayer2/Pipeline" method="_on_w_pressed"]
+[connection signal="pressed" from="CanvasLayer/PlayPanel/PlayButton" to="CanvasLayer2/Pipeline" method="_on_play_button_pressed"]

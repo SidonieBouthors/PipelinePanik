@@ -1,8 +1,9 @@
 extends Node2D
 class_name Pipeline
 
-const unitVisual = preload("res://unit.tscn")
+const unit = preload("res://unit.tscn")
 const dropZone = preload("res://dropzone.tscn")
+const levelMaker = preload("res://level_maker.tscn")
 
 const unitImages = [
 	preload("res://assets/fetch-box.png"),
@@ -24,6 +25,8 @@ enum Unit {
 
 @export var pipeline_state := []
 
+var instructions = []
+
 @export var drop_zones := []
 
 # The grid's size in columns and rows.
@@ -33,11 +36,15 @@ enum Unit {
 
 var _half_cell_size = cell_size / 2
 
+var level
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	level = levelMaker.instantiate()
+	
 	set_position(Vector2(128, 0))
 	for i in (size.x * size.y):
-		pipeline_state.append(Unit.NONE)
+		pipeline_state.append(null)
 		drop_zones.append(null)
 	for i in size.x:
 		for j in size.y:
@@ -75,10 +82,10 @@ func calc_pipeline():
 		for j in size.y:
 			pipeline_state[i * size.y + j] = drop_zones[i * size.y + j].occupant
 	
-func add_unit(unit):
+func add_unit(type):
 	var empty
-	var sprite = unitVisual.instantiate()
-	sprite.set_sprite(unitImages[unit])
+	var sprite = unit.instantiate()
+	sprite.set_sprite(unitImages[type])
 	sprite.position = get_local_mouse_position()
 	get_node(".").add_child(sprite)
 	sprite._on_mouse_entered()
@@ -98,3 +105,49 @@ func _on_m_button_down():
 
 func _on_w_button_down():
 	add_unit(Unit.WRITEBACK)
+
+
+func _on_play_button_pressed():
+	calc_pipeline()
+	print(pipeline_state)
+	fill_instructions()
+	level.create(pipeline_state, size, instructions)
+	
+	
+func fill_instructions():
+	# First instruction: ADD r0, r1, r2
+	var instruction = Instruction.new()
+	add_child(instruction)
+	instruction.pc = 0
+	instruction.type = Instruction.Type.ALU
+	instruction.output = Instruction.Register.r0
+	instruction.inputs = [Instruction.Register.r1, Instruction.Register.r2]
+	instructions.append(instruction)
+
+	# Second instruction: ADD r1, r1, r2
+	instruction = Instruction.new()
+	add_child(instruction)
+	instruction.pc = 1
+	instruction.type = Instruction.Type.ALU
+	instruction.output = Instruction.Register.r1
+	instruction.inputs = [Instruction.Register.r1, Instruction.Register.r2]
+	instructions.append(instruction)
+
+	# Third instruction: ADD r2, r1, r2
+	instruction = Instruction.new()
+	add_child(instruction)
+	instruction.pc = 2
+	instruction.type = Instruction.Type.ALU
+	instruction.output = Instruction.Register.r2
+	instruction.inputs = [Instruction.Register.r1, Instruction.Register.r2]
+	instructions.append(instruction)
+
+
+	# Fourth instruction: LW r3, 0(r0)
+	instruction = Instruction.new()
+	add_child(instruction)
+	instruction.pc = 3
+	instruction.type = Instruction.Type.MEM
+	instruction.output = Instruction.Register.r3
+	instruction.inputs = [0, Instruction.Register.r0]
+	instructions.append(instruction)
