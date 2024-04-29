@@ -1,5 +1,7 @@
-extends Node
+extends Area2D
 class_name Unit
+
+######## RUNNABLE ########
 
 @export var unit_type: Pipeline.Unit
 @export var instr : Instruction
@@ -8,15 +10,6 @@ class_name Unit
 # Either a unit or a scheduler
 var previous_unit 
 var next_unit
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
 func _on_controller_increment_clock(clock_cycle_counter):
 	print(clock_cycle_counter)
@@ -44,3 +37,68 @@ func run():
 
 func find_types() -> Array:
 	return []
+	
+######## VISUAL ########
+
+var draggable = false
+var is_inside_dropzone = false
+var zone_ref: DropZone
+var offset: Vector2
+var initialPos: Vector2
+var noPos: bool
+
+func set_sprite(image):
+	get_child(0).texture = image
+
+func _ready():
+	noPos = true
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	if draggable:
+		if Input.is_action_just_pressed("left_click"):
+			initialPos = global_position
+			offset = get_global_mouse_position() - global_position
+			global.is_dragging = true
+		if Input.is_action_pressed("left_click"):
+			global_position = get_global_mouse_position()
+		elif Input.is_action_just_released("left_click"):
+			global.is_dragging = false
+			var tween = get_tree().create_tween()
+			if is_inside_dropzone and zone_ref.occupant == self:
+				noPos = false
+				tween.tween_property(self, "position", zone_ref.position, 0.2).set_ease(Tween.EASE_OUT)
+			else:
+				if (noPos): 
+					queue_free()
+				else:
+					noPos = false
+					tween.tween_property(self, "global_position", initialPos, 0.2).set_ease(Tween.EASE_OUT)
+
+
+func _on_mouse_entered():
+	if not global.is_dragging:
+		draggable = true
+		scale = Vector2(1.05, 1.05)
+
+
+func _on_mouse_exited():
+	if not global.is_dragging:
+		draggable = false
+		scale = Vector2(1, 1)
+
+
+func _on_body_entered(zone):
+	if zone.is_in_group("dropzone"):
+		if zone.occupy(self):
+			is_inside_dropzone = true
+			zone_ref = zone
+
+
+func _on_body_exited(zone):
+	if zone.is_in_group("dropzone"):
+		zone.unoccupy(self)
+		if zone == zone_ref:
+			is_inside_dropzone = false
+			

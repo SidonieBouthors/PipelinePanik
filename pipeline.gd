@@ -1,7 +1,7 @@
 extends Node2D
 class_name Pipeline
 
-const unitVisual = preload("res://unit_visual.tscn")
+const unitVisual = preload("res://unit.tscn")
 const dropZone = preload("res://dropzone.tscn")
 
 const unitImages = [
