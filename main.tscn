@@ -10,10 +10,14 @@
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Pipeline" type="Node2D" parent="."]
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Pipeline" type="Node2D" parent="CanvasLayer2"]
+z_index = 1
 script = ExtResource("1_34f1b")
 
-[node name="CharacterColored" type="Sprite2D" parent="."]
+[node name="CharacterColored" type="Sprite2D" parent="CanvasLayer2"]
 visible = false
 position = Vector2(196, 86)
 texture = ExtResource("2_36yq3")
@@ -78,8 +82,14 @@ layout_mode = 2
 text = "add
 "
 
-[connection signal="pressed" from="CanvasLayer/ShopPanel/HBoxContainer/F-Button" to="Pipeline" method="_on_f_pressed"]
-[connection signal="pressed" from="CanvasLayer/ShopPanel/HBoxContainer/D-Button" to="Pipeline" method="_on_d_pressed"]
-[connection signal="pressed" from="CanvasLayer/ShopPanel/HBoxContainer/E-Button" to="Pipeline" method="_on_e_pressed"]
-[connection signal="pressed" from="CanvasLayer/ShopPanel/HBoxContainer/M-Button" to="Pipeline" method="_on_m_pressed"]
-[connection signal="pressed" from="CanvasLayer/ShopPanel/HBoxContainer/W-Button" to="Pipeline" method="_on_w_pressed"]
+[connection signal="button_down" from="CanvasLayer/ShopPanel/HBoxContainer/F-Button" to="CanvasLayer2/Pipeline" method="_on_f_button_down"]
+[connection signal="pressed" from="CanvasLayer/ShopPanel/HBoxContainer/F-Button" to="CanvasLayer2/Pipeline" method="_on_f_pressed"]
+[connection signal="toggled" from="CanvasLayer/ShopPanel/HBoxContainer/F-Button" to="CanvasLayer2/Pipeline" method="_on_f_button_toggled"]
+[connection signal="button_down" from="CanvasLayer/ShopPanel/HBoxContainer/D-Button" to="CanvasLayer2/Pipeline" method="_on_d_button_down"]
+[connection signal="pressed" from="CanvasLayer/ShopPanel/HBoxContainer/D-Button" to="CanvasLayer2/Pipeline" method="_on_d_pressed"]
+[connection signal="button_down" from="CanvasLayer/ShopPanel/HBoxContainer/E-Button" to="CanvasLayer2/Pipeline" method="_on_e_button_down"]
+[connection signal="pressed" from="CanvasLayer/ShopPanel/HBoxContainer/E-Button" to="CanvasLayer2/Pipeline" method="_on_e_pressed"]
+[connection signal="button_down" from="CanvasLayer/ShopPanel/HBoxContainer/M-Button" to="CanvasLayer2/Pipeline" method="_on_m_button_down"]
+[connection signal="pressed" from="CanvasLayer/ShopPanel/HBoxContainer/M-Button" to="CanvasLayer2/Pipeline" method="_on_m_pressed"]
+[connection signal="button_down" from="CanvasLayer/ShopPanel/HBoxContainer/W-Button" to="CanvasLayer2/Pipeline" method="_on_w_button_down"]
+[connection signal="pressed" from="CanvasLayer/ShopPanel/HBoxContainer/W-Button" to="CanvasLayer2/Pipeline" method="_on_w_pressed"]
