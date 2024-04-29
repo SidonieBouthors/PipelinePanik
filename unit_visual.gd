@@ -5,9 +5,13 @@ var is_inside_dropzone = false
 var zone_ref: DropZone
 var offset: Vector2
 var initialPos: Vector2
+var noPos: bool
 
 func set_sprite(image):
 	get_child(0).texture = image
+
+func _ready():
+	noPos = true
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -23,9 +27,14 @@ func _process(delta):
 			global.is_dragging = false
 			var tween = get_tree().create_tween()
 			if is_inside_dropzone and zone_ref.occupant == self:
+				noPos = false
 				tween.tween_property(self, "position", zone_ref.position, 0.2).set_ease(Tween.EASE_OUT)
 			else:
-				tween.tween_property(self, "global_position", initialPos, 0.2).set_ease(Tween.EASE_OUT)
+				if (noPos): 
+					queue_free()
+				else:
+					noPos = false
+					tween.tween_property(self, "global_position", initialPos, 0.2).set_ease(Tween.EASE_OUT)
 
 
 func _on_mouse_entered():
