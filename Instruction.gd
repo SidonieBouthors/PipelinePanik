@@ -26,6 +26,6 @@ func get_text():
 	var ins = ""
 	for inp in inputs:
 		ins += str(inp) + " "
-	var text = Type.keys()[type] + " " + Register.keys()[output] + " " + ins
+	var text = str(pc) + " " + Type.keys()[type] + " " + Register.keys()[output] + " " + ins
 	print(text)
 	return text

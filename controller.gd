@@ -101,7 +101,7 @@ func _print_state():
 				unit = null
 			else:
 				if unit.instr:
-					unit.draw_instruction(Instruction.Type.keys()[unit.instr.type])
+					unit.draw_instruction(unit.instr)
 				else:
 					unit.hide_instruction()
 				print("   Unit Type: ", Pipeline.Unit.keys()[unit.unit_type])

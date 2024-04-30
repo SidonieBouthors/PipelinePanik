@@ -79,7 +79,8 @@ func _process(delta):
 					noPos = false
 					tween.tween_property(self, "global_position", initialPos, 0.2).set_ease(Tween.EASE_OUT)
 
-func draw_instruction(label_text):
+func draw_instruction(instruction):
+	var label_text = str(instruction.pc) + " " + Instruction.Type.keys()[instruction.type]
 	$InstructionPanel.visible = true
 	$InstructionPanel.set_label(label_text)
 
