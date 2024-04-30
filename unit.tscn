@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://evx3b8b67dsp" path="res://instruction_panel.tscn" id="3_alcx1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osmur"]
-size = Vector2(48, 48)
+size = Vector2(46, 46)
 
 [node name="Unit" type="Area2D"]
 script = ExtResource("1_26vih")
@@ -17,6 +17,10 @@ texture = ExtResource("2_7mqyk")
 shape = SubResource("RectangleShape2D_osmur")
 
 [node name="InstructionPanel" parent="." instance=ExtResource("3_alcx1")]
+offset_left = -22.0
+offset_top = 3.0
+offset_right = 9.0
+offset_bottom = 31.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
