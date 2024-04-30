@@ -41,6 +41,7 @@ var level
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	level = levelMaker.instantiate()
+	add_child(level)
 	
 	set_position(Vector2(128, 0))
 	for i in (size.x * size.y):
@@ -83,8 +84,8 @@ func calc_pipeline():
 			pipeline_state[i * size.y + j] = drop_zones[i * size.y + j].occupant
 	
 func add_unit(type):
-	var empty
 	var sprite = unit.instantiate()
+	sprite.unit_type = type
 	sprite.set_sprite(unitImages[type])
 	sprite.position = get_local_mouse_position()
 	get_node(".").add_child(sprite)

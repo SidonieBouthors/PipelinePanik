@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://ca57crfjn837g"]
+[gd_scene load_steps=4 format=3 uid="uid://besoyubbke5bo"]
 
 [ext_resource type="Script" path="res://unit.gd" id="1_26vih"]
 [ext_resource type="Texture2D" uid="uid://mcyihy0kvcvh" path="res://assets/memory-box.png" id="2_7mqyk"]

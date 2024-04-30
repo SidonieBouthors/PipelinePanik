@@ -15,10 +15,9 @@ signal increment_clock(clock_cycle_counter)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#print("ready called")
+	print("ready called")
 	#set_timer()
 	#start_clock()
-	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -62,8 +61,13 @@ func pop_instructions(units: Array, instr: Array):
 func run():
 	start_clock()
 
+#E 0:00:46:0634   controller.gd:66 @ start_clock(): Timer was not added to the SceneTree. Either add it or set autostart to true.
 func start_clock():
-	timer.start()
+	if timer.is_inside_tree():
+		timer.start()
+	else:
+		print("Timer not in scene tree")
+
 
 func pause_clock():
 	timer.stop()
@@ -75,7 +79,9 @@ func reset_counter():
 func set_timer():
 	timer = Timer.new()
 	timer.wait_time = timer_wait_time
+	timer.autostart = true
 	timer.timeout.connect(_on_timer_timeout)
+	timer.one_shot = false
 	add_child(timer)
 
 func _print_state():

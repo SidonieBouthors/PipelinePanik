@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dyq4i36w26pih"]
+
+[ext_resource type="Script" path="res://rob.gd" id="1_hlbuc"]
+
+[node name="ROB" type="Node"]
+script = ExtResource("1_hlbuc")
