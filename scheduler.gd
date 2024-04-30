@@ -1,8 +1,8 @@
 extends Node
 class_name Scheduler
 
-@export var inputs: Array
-@export var outputs: Array
+@export var inputs: Array = []
+@export var outputs: Array = []
 @export var semaphore : int
 
 # Available inputs = inputs - NOPs

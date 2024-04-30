@@ -72,6 +72,7 @@ func create(pipeline: Array, size: Vector2, instructions: Array):
 	var controller = Controller.new()
 	add_child(controller)
 	controller.instructions = instructions
+	controller.instruction_count = instructions.size()
 	controller.first_units = first_units
 	controller.last_unit = curr_unit
 

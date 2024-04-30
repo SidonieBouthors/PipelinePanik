@@ -22,7 +22,7 @@ func _ready():
 	prev_unit = curr_unit
 	curr_unit = curr_unit.next_unit
 	curr_unit.inputs = [prev_unit]
-	curr_unit.outputs = [Decoder.new()]
+	curr_unit.outputs = [Unit.new()]
 	add_child(curr_unit)
 	
 	# Decode

@@ -14,7 +14,7 @@ func _ready():
 	# Fetch
 	curr_unit = first_unit
 	curr_unit.previous_unit = prev_unit
-	curr_unit.next_unit = Decoder.new()
+	curr_unit.next_unit = Unit.new()
 	curr_unit.unit_type = Pipeline.Unit.FETCH
 	add_child(curr_unit)
 	

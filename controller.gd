@@ -1,15 +1,16 @@
 extends Node
 class_name Controller
 
-@export var timer_wait_time = 3.0
+@export var timer_wait_time = 1.0
 var timer: Timer
 
 var clock_cycle_counter = 0
-var instructions : Array
-var first_units : Array
-var last_unit : Commiter
+var instructions: Array
+var instruction_count: int
+var first_units: Array
+var last_unit: Commiter
 
-var scheduler_list : Array = []
+var scheduler_list: Array = []
 
 signal increment_clock(clock_cycle_counter)
 
@@ -49,9 +50,18 @@ func _on_timer_timeout():
 		sch.update_semaphore()
 	
 	clock_cycle_counter += 1
-
-	last_unit.run()
-	
+	#if last unit contains the last instruction, then we are done
+	var pc = last_unit.instructions.map(func(instr):
+		if instr == null:
+			return null
+		else: return instr.pc)
+	if (instruction_count - 1) in pc:
+		pause_clock()
+		print("Simulation done")
+		print("Score : ", str(float(instruction_count)/clock_cycle_counter), " IPC")
+		return
+	else:
+		last_unit.run()
 
 func pop_instructions(units: Array, instr: Array):
 	for unit in units:
@@ -67,7 +77,6 @@ func start_clock():
 		timer.start()
 	else:
 		print("Timer not in scene tree")
-
 
 func pause_clock():
 	timer.stop()
