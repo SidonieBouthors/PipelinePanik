@@ -40,6 +40,8 @@ func find_types() -> Array:
 	
 ######## VISUAL ########
 
+const instruction_panel = preload("res://instruction_panel.tscn")
+
 var draggable = false
 var is_inside_dropzone = false
 var zone_ref: DropZone
@@ -76,6 +78,12 @@ func _process(delta):
 					noPos = false
 					tween.tween_property(self, "global_position", initialPos, 0.2).set_ease(Tween.EASE_OUT)
 
+func draw_instruction(label_text):
+	$InstructionPanel.visible = true
+	$InstructionPanel.set_label(label_text)
+
+func hide_instruction():
+	$InstructionPanel.visible = false
 
 func _on_mouse_entered():
 	if not global.is_dragging:

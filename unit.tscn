@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://besoyubbke5bo"]
+[gd_scene load_steps=5 format=3 uid="uid://besoyubbke5bo"]
 
 [ext_resource type="Script" path="res://unit.gd" id="1_26vih"]
 [ext_resource type="Texture2D" uid="uid://mcyihy0kvcvh" path="res://assets/memory-box.png" id="2_7mqyk"]
+[ext_resource type="PackedScene" uid="uid://evx3b8b67dsp" path="res://instruction_panel.tscn" id="3_alcx1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osmur"]
 size = Vector2(48, 48)
@@ -14,6 +15,8 @@ texture = ExtResource("2_7mqyk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_osmur")
+
+[node name="InstructionPanel" parent="." instance=ExtResource("3_alcx1")]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

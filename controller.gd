@@ -1,7 +1,7 @@
 extends Node
 class_name Controller
 
-@export var timer_wait_time = 1.0
+@export var timer_wait_time = 3.0
 var timer: Timer
 
 var clock_cycle_counter = 0
@@ -100,6 +100,10 @@ func _print_state():
 						print("   PC : ", instr.pc)
 				unit = null
 			else:
+				if unit.instr:
+					unit.draw_instruction(Instruction.Type.keys()[unit.instr.type])
+				else:
+					unit.hide_instruction()
 				print("   Unit Type: ", Pipeline.Unit.keys()[unit.unit_type])
 				print("   Instruction: ", Instruction.Type.keys()[unit.instr.type] if unit.instr else "None")
 				print("   Program Counter: ", unit.instr.pc if unit.instr else "None")
