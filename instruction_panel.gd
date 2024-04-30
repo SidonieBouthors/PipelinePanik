@@ -1,8 +1,9 @@
 extends PanelContainer
 
 func _ready():
-	visible = false
+	pass
 
 func set_label(text):
+	print(text)
 	var label = get_node("Label")
 	label.text = text

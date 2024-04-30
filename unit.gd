@@ -54,6 +54,7 @@ func set_sprite(image):
 
 func _ready():
 	noPos = true
+	$InstructionPanel.visible = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

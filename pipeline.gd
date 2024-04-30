@@ -47,12 +47,15 @@ func _ready():
 	for i in (size.x * size.y):
 		pipeline_state.append(null)
 		drop_zones.append(null)
+		
 	for i in size.x:
 		for j in size.y:
 			var drop = dropZone.instantiate()
 			drop.position = calculate_map_position(Vector2(i, j))
 			get_node(".").add_child(drop)
 			drop_zones[i * size.y + j] = drop
+			
+	fill_instructions()
 			
 
 # Returns the position of a cell's center in pixels.
@@ -111,7 +114,6 @@ func _on_w_button_down():
 func _on_play_button_pressed():
 	calc_pipeline()
 	print(pipeline_state)
-	fill_instructions()
 	level.create(pipeline_state, size, instructions)
 	
 	
@@ -152,3 +154,5 @@ func fill_instructions():
 	instruction.output = Instruction.Register.r3
 	instruction.inputs = [0, Instruction.Register.r0]
 	instructions.append(instruction)
+	
+	$"../../UILayer/CodePanel".populate(instructions)
