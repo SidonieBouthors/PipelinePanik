@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bd0hbatixfv0y"]
+[gd_scene load_steps=19 format=3 uid="uid://bd0hbatixfv0y"]
 
 [ext_resource type="Script" path="res://pipeline.gd" id="1_34f1b"]
 [ext_resource type="Texture2D" uid="uid://m2lbprrvl8s7" path="res://assets/CharacterColored.png" id="2_36yq3"]
@@ -9,6 +9,33 @@
 [ext_resource type="Texture2D" uid="uid://dug68doo48oo3" path="res://assets/writeback-box.png" id="6_btnbs"]
 [ext_resource type="Script" path="res://code_panel.gd" id="8_kg6wt"]
 [ext_resource type="Texture2D" uid="uid://7vfokthmbssf" path="res://assets/play-button.png" id="8_oewop"]
+[ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="10_0ahj7"]
+[ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="11_nhf02"]
+[ext_resource type="Script" path="res://addons/resonate/music_manager/music_bank.gd" id="13_nfnoc"]
+[ext_resource type="Script" path="res://addons/resonate/music_manager/music_track_resource.gd" id="14_55fli"]
+[ext_resource type="Script" path="res://addons/resonate/music_manager/music_stem_resource.gd" id="15_hxprc"]
+[ext_resource type="AudioStream" uid="uid://chjmmcwis8cq4" path="res://assets/sound/bruit-de-fond-entrepot_fond_479937-Country_House_Empty_Warehouse_Night_Spooky_Distant_Hits.ogg" id="16_30o5a"]
+
+[sub_resource type="Resource" id="Resource_10f5n"]
+script = ExtResource("11_nhf02")
+name = ""
+bus = ""
+volume = 0.0
+pitch = 1.0
+streams = Array[AudioStream]([ExtResource("16_30o5a")])
+
+[sub_resource type="Resource" id="Resource_2j55l"]
+script = ExtResource("15_hxprc")
+name = "background"
+enabled = true
+volume = 0.0
+stream = ExtResource("16_30o5a")
+
+[sub_resource type="Resource" id="Resource_h171v"]
+script = ExtResource("14_55fli")
+name = "background"
+bus = "Master"
+stems = Array[ExtResource("15_hxprc")]([SubResource("Resource_2j55l")])
 
 [node name="Node2D" type="Node2D"]
 
@@ -91,6 +118,18 @@ size_flags_vertical = 8
 [node name="PlayButton" type="TextureButton" parent="UILayer/PlayPanel"]
 layout_mode = 2
 texture_normal = ExtResource("8_oewop")
+
+[node name="SoundBank" type="Node" parent="."]
+script = ExtResource("10_0ahj7")
+label = "Background"
+bus = "master"
+events = Array[ExtResource("11_nhf02")]([SubResource("Resource_10f5n")])
+
+[node name="MusicBank" type="Node" parent="."]
+script = ExtResource("13_nfnoc")
+label = "background"
+bus = "master"
+tracks = Array[ExtResource("14_55fli")]([SubResource("Resource_h171v")])
 
 [connection signal="button_down" from="UILayer/ShopPanel/HBoxContainer/F-Button" to="CanvasLayer2/Pipeline" method="_on_f_button_down"]
 [connection signal="pressed" from="UILayer/ShopPanel/HBoxContainer/F-Button" to="CanvasLayer2/Pipeline" method="_on_f_pressed"]
