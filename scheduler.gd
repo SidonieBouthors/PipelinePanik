@@ -97,7 +97,7 @@ func get_compatible_unit(instruction: Instruction, units: Array) -> Unit:
 				for child in unit.inputs:
 					pool[child] = i
 			else:
-				if unit.next_unit and unit.next_unit.unit_type != Pipeline.Unit.WRITEBACK:
+				if unit.next_unit and not (unit.next_unit as ROB):
 					pool[unit.next_unit] = i
 			
 			pool.erase(unit)
@@ -135,6 +135,12 @@ func is_dependent(instruction: Instruction, out: Array) -> bool:
 						dependent = not is_instr_independent(instruction, instr)
 						if dependent:
 							return true
+		elif output is ROB:
+			for instr in output.stack:
+				if instr:
+					dependent = not is_instr_independent(instruction, instr)
+					if dependent:
+						return true
 		else:
 			if output.instr:
 				dependent = not is_instr_independent(instruction, output.instr)

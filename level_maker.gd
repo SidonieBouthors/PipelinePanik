@@ -1,7 +1,8 @@
 extends Node
 @export var first_units: Array = []
+@export var last_units: Array = []
 
-func create(pipeline: Array, size: Vector2, instructions: Array):
+func create(pipeline: Array, size: Vector2, instructions: Array, rob_size: int = 10):
 
 	#Fetch
 	var column = get_column(pipeline, size, 0)
@@ -26,49 +27,55 @@ func create(pipeline: Array, size: Vector2, instructions: Array):
 			sch_fetch.outputs.append(decode)
 	sch_fetch.update_semaphore()
 
+	# ROB
+	var rob = ROB.new(rob_size)
+	add_child(rob)
+
 	#Execute and Writeback
 	column = get_column(pipeline, size, 2)
 	var curr_unit
 	var prev_unit
+	var line = 0
 	for unit in column:
 		if unit:
 			unit.previous_unit = sch_decode
 			sch_decode.outputs.append(unit)
 			curr_unit = unit
-			break
+
+			var next_units = get_line(pipeline, size, line, 3)
+			var next_unit_feur
+			for next_unit in next_units:
+				next_unit_feur = next_unit
+				if next_unit:
+					if next_unit.unit_type != Pipeline.Unit.WRITEBACK:
+						next_unit.previous_unit = curr_unit
+						curr_unit.next_unit = next_unit
+						curr_unit = next_unit
+					else:
+						curr_unit.next_unit = rob
+						rob.inputs.append(curr_unit)
+
+						# next_unit is a writeback
+						rob.outputs.append(next_unit)
+						next_unit.previous_unit = rob
+						last_units.append(next_unit)
+			
+			if not next_unit_feur:
+				curr_unit.next_unit = rob
+				rob.inputs.append(curr_unit)
+
+		line += 1
+
 	sch_decode.update_semaphore()
-	prev_unit = curr_unit
-
-	var i = 3
-	while (curr_unit.unit_type != Pipeline.Unit.WRITEBACK):
-		column = get_column(pipeline, size, i)
-		for unit in column:
-			if unit:
-				curr_unit = unit
-				curr_unit.previous_unit = prev_unit
-				prev_unit.next_unit = curr_unit
-				prev_unit = curr_unit
-				print("Unit type : ", curr_unit.unit_type)
-				break
-		i += 1
+	rob.update_semaphore()
 	
-	##
-	##Writeback
-	##i -= 1
-	##column = get_column(pipeline, size, i)
-	##for unit in column:
-	#	if unit and unit.unit_type == Pipeline.Unit.WRITEBACK:
-	#		curr_unit = unit
-	#		curr_unit.previous_unit = prev_unit
-	#		prev_unit.next_unit = curr_unit
-	#		prev_unit = curr_unit
-	#		break
-
 	#Commiter
-	prev_unit.next_unit = Commiter.new()
-	curr_unit = prev_unit.next_unit
-	curr_unit.inputs = [prev_unit]
+	var commiter = Commiter.new()
 	add_child(curr_unit)
+	commiter.inputs = last_units
+
+	for last_unit in last_units:
+		last_unit.next_unit = commiter
 
 	# Instantiate the controller
 	var controller = Controller.new()
@@ -76,18 +83,22 @@ func create(pipeline: Array, size: Vector2, instructions: Array):
 	controller.instructions = instructions
 	controller.instruction_count = instructions.size()
 	controller.first_units = first_units
-	controller.last_unit = curr_unit
+	controller.last_unit = commiter
+	controller.map = pipeline
 
 	controller.set_timer()
 	print("Controller is in scene tree : ", controller.is_inside_tree())
 
 	controller.run()
 
-func find_neighbours(i: int, j: int):
-	pass
-	
 func get_column(pipeline: Array, size: Vector2, i: int) -> Array:
 	var res = []
 	for idx in range(i * size.y, (i + 1) * size.y):
 		res.append(pipeline[idx])
+	return res
+
+func get_line(pipeline: Array, size: Vector2, j: int, from: int = 0) -> Array:
+	var res = []
+	for idx in range(from, size.x):
+		res.append(pipeline[idx * size.y + j])
 	return res

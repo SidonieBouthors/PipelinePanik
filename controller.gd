@@ -1,7 +1,7 @@
 extends Node
 class_name Controller
 
-@export var timer_wait_time = 1.0
+@export var timer_wait_time = 3.0
 var timer: Timer
 
 var clock_cycle_counter = 0
@@ -11,6 +11,7 @@ var first_units: Array
 var last_unit: Commiter
 
 var scheduler_list: Array = []
+var map: Array = []
 
 signal increment_clock(clock_cycle_counter)
 
@@ -101,16 +102,29 @@ func _print_state():
 					if instr:
 						print("   PC : ", instr.pc)
 				unit = null
+			elif unit is ROB:
+				print("   Reorder Buffer")
+				for instr in unit.stack:
+					if instr:
+						print("   PC : ", instr.pc)
+				unit = null
 			else:
-				if unit.instr:
-					unit.draw_instruction(unit.instr)
-				else:
-					unit.hide_instruction()
+				# if unit.instr:
+				# 	unit.draw_instruction(unit.instr)
+				# else:
+				# 	unit.hide_instruction()
 				print("   Unit Type: ", Pipeline.Unit.keys()[unit.unit_type])
 				print("   Instruction: ", Instruction.Type.keys()[unit.instr.type] if unit.instr else "None")
 				print("   Program Counter: ", unit.instr.pc if unit.instr else "None")
 				print("   Is Stalled: ", unit.is_stalled)
 				unit = unit.next_unit
 			print("")
+
+		for u in map:
+			if u:
+				if u.instr:
+					u.draw_instruction(u.instr)
+				else:
+					u.hide_instruction()
 
 		print("")
