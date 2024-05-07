@@ -24,6 +24,7 @@ func create(pipeline: Array, size: Vector2, instructions: Array):
 			decode.previous_unit = sch_fetch
 			sch_decode.inputs.append(decode)
 			sch_fetch.outputs.append(decode)
+	sch_fetch.update_semaphore()
 
 	#Execute and Writeback
 	column = get_column(pipeline, size, 2)
@@ -35,6 +36,7 @@ func create(pipeline: Array, size: Vector2, instructions: Array):
 			sch_decode.outputs.append(unit)
 			curr_unit = unit
 			break
+	sch_decode.update_semaphore()
 	prev_unit = curr_unit
 
 	var i = 3

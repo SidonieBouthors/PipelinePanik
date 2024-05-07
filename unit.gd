@@ -22,10 +22,11 @@ func update_instruction(instruction):
 # then backtracks to the beginning.
 func run():
 	if previous_unit:
-		var prev := previous_unit as Scheduler
+		# TODO: check this causes a crash
+		var prev := (previous_unit as Scheduler) or (previous_unit as ROB)
 
 		if prev:
-			# if previous is a scheduler
+			# if previous is a scheduler or a ROB
 			pass
 		else:
 			# if previous is a unit

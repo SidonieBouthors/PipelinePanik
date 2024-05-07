@@ -172,3 +172,5 @@ func run():
 
 		for unit in inputs:
 			unit.run()
+		
+		update_semaphore()

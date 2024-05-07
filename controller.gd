@@ -41,13 +41,6 @@ func searchAllSchedulers(unit, accumulator):
 func _on_timer_timeout():
 	pop_instructions(first_units, instructions)
 	_print_state()
-
-	if clock_cycle_counter == 0:
-		for unit in first_units:
-			searchAllSchedulers(unit, scheduler_list)
-
-	for sch in scheduler_list:
-		sch.update_semaphore()
 	
 	clock_cycle_counter += 1
 	#if last unit contains the last instruction, then we are done
