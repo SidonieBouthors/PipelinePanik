@@ -1,6 +1,7 @@
 extends Node
 @export var first_units: Array = []
 @export var last_units: Array = []
+@export var components : Array = []
 
 func create(pipeline: Array, size: Vector2, instructions: Array, rob_size: int = 10):
 
@@ -14,6 +15,7 @@ func create(pipeline: Array, size: Vector2, instructions: Array, rob_size: int =
 			unit.next_unit = sch_fetch
 			unit.previous_unit = null
 			sch_fetch.inputs.append(unit)
+			components.append(unit)
 
 	#Decode
 	column = get_column(pipeline, size, 1)
@@ -25,28 +27,31 @@ func create(pipeline: Array, size: Vector2, instructions: Array, rob_size: int =
 			decode.previous_unit = sch_fetch
 			sch_decode.inputs.append(decode)
 			sch_fetch.outputs.append(decode)
+			components.append(decode)
 	sch_fetch.update_semaphore()
 
 	# ROB
 	var rob = ROB.new(rob_size)
 	add_child(rob)
+	components.append(rob)
 
 	#Execute and Writeback
 	column = get_column(pipeline, size, 2)
 	var curr_unit
-	var prev_unit
 	var line = 0
 	for unit in column:
 		if unit:
 			unit.previous_unit = sch_decode
 			sch_decode.outputs.append(unit)
 			curr_unit = unit
+			components.append(unit)
 
 			var next_units = get_line(pipeline, size, line, 3)
-			var next_unit_feur
+			var next_u
 			for next_unit in next_units:
-				next_unit_feur = next_unit
+				next_u = next_unit
 				if next_unit:
+					components.append(next_unit)
 					if next_unit.unit_type != Pipeline.Unit.WRITEBACK:
 						next_unit.previous_unit = curr_unit
 						curr_unit.next_unit = next_unit
@@ -60,7 +65,7 @@ func create(pipeline: Array, size: Vector2, instructions: Array, rob_size: int =
 						next_unit.previous_unit = rob
 						last_units.append(next_unit)
 			
-			if not next_unit_feur:
+			if not next_u:
 				curr_unit.next_unit = rob
 				rob.inputs.append(curr_unit)
 
@@ -72,22 +77,19 @@ func create(pipeline: Array, size: Vector2, instructions: Array, rob_size: int =
 	#Commiter
 	var commiter = Commiter.new()
 	add_child(curr_unit)
+	components.append(commiter)
 	commiter.inputs = last_units
 
 	for last_unit in last_units:
 		last_unit.next_unit = commiter
+	
+	#Give the global info to the scheduler
+	sch_decode.components = components
 
 	# Instantiate the controller
-	var controller = Controller.new()
+	var controller = Controller.new(instructions, instructions.size(), first_units, commiter, components)
 	add_child(controller)
-	controller.instructions = instructions
-	controller.instruction_count = instructions.size()
-	controller.first_units = first_units
-	controller.last_unit = commiter
-	controller.map = pipeline
-
 	controller.set_timer()
-	print("Controller is in scene tree : ", controller.is_inside_tree())
 
 	controller.run()
 

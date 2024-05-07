@@ -22,6 +22,12 @@ enum Register {
 	r7
 }
 
+func _init(_pc : int, _type : Type, _inputs : Array, _output : Register):
+	pc = _pc
+	type = _type
+	inputs = _inputs
+	output = _output
+
 func get_text():
 	var ins = ""
 	for inp in inputs:

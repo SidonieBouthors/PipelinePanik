@@ -119,40 +119,24 @@ func _on_play_button_pressed():
 	
 func fill_instructions():
 	# First instruction: ADD r0, r1, r2
-	var instruction = Instruction.new()
+	var instruction = Instruction.new(0, Instruction.Type.ALU, [Instruction.Register.r1, Instruction.Register.r2], Instruction.Register.r0)
 	add_child(instruction)
-	instruction.pc = 0
-	instruction.type = Instruction.Type.ALU
-	instruction.output = Instruction.Register.r0
-	instruction.inputs = [Instruction.Register.r1, Instruction.Register.r2]
 	instructions.append(instruction)
 
 	# Second instruction: ADD r1, r1, r2
-	instruction = Instruction.new()
+	instruction = Instruction.new(1, Instruction.Type.ALU, [Instruction.Register.r1, Instruction.Register.r2], Instruction.Register.r1)
 	add_child(instruction)
-	instruction.pc = 1
-	instruction.type = Instruction.Type.ALU
-	instruction.output = Instruction.Register.r1
-	instruction.inputs = [Instruction.Register.r1, Instruction.Register.r2]
 	instructions.append(instruction)
 
 	# Third instruction: ADD r2, r1, r2
-	instruction = Instruction.new()
+	instruction = Instruction.new(2, Instruction.Type.ALU, [Instruction.Register.r1, Instruction.Register.r2], Instruction.Register.r2)
 	add_child(instruction)
-	instruction.pc = 2
-	instruction.type = Instruction.Type.ALU
-	instruction.output = Instruction.Register.r2
-	instruction.inputs = [Instruction.Register.r1, Instruction.Register.r2]
 	instructions.append(instruction)
 
 
 	# Fourth instruction: LW r3, 0(r0)
-	instruction = Instruction.new()
+	instruction = Instruction.new(3, Instruction.Type.MEM, [0, Instruction.Register.r0], Instruction.Register.r3)
 	add_child(instruction)
-	instruction.pc = 3
-	instruction.type = Instruction.Type.MEM
-	instruction.output = Instruction.Register.r3
-	instruction.inputs = [0, Instruction.Register.r0]
 	instructions.append(instruction)
 	
 	$"../../UILayer/CodePanel".populate(instructions)

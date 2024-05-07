@@ -11,19 +11,24 @@ var first_units: Array
 var last_unit: Commiter
 
 var scheduler_list: Array = []
-var map: Array = []
+var components: Array = []
 
 signal increment_clock(clock_cycle_counter)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print("ready called")
+	pass
 	#set_timer()
 	#start_clock()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+
+func _init(_instructions : Array, _instruction_count : int, _first_units : Array, _last_unit : Commiter, _components: Array):
+	instructions = _instructions
+	instruction_count = _instruction_count
+	first_units = _first_units
+	last_unit = _last_unit
+	components = _components
 
 func searchAllSchedulers(unit, accumulator):
 	if not unit:
@@ -42,6 +47,7 @@ func searchAllSchedulers(unit, accumulator):
 func _on_timer_timeout():
 	pop_instructions(first_units, instructions)
 	_print_state()
+	_draw_state()
 	
 	clock_cycle_counter += 1
 	#if last unit contains the last instruction, then we are done
@@ -60,7 +66,7 @@ func _on_timer_timeout():
 func pop_instructions(units: Array, instr: Array):
 	for unit in units:
 		if not unit.is_stalled:
-			unit.instr = instr.pop_at(0)
+			unit.instr = instr.pop_front()
 
 func run():
 	start_clock()
@@ -120,11 +126,14 @@ func _print_state():
 				unit = unit.next_unit
 			print("")
 
-		for u in map:
-			if u:
+		print("")
+
+func _draw_state() :
+	if not first_units.is_empty():
+		for u in components:
+			if u is Unit:
 				if u.instr:
 					u.draw_instruction(u.instr)
 				else:
 					u.hide_instruction()
 
-		print("")

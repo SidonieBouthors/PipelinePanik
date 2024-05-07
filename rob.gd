@@ -16,19 +16,6 @@ class_name ROB
 func _init(s: int):
 	size = s
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-	
-	
-func commit():
-	pass
-
 func update_semaphore():
 	semaphore = outputs.size()
 
@@ -48,6 +35,12 @@ func get_ready_units(units: Array) -> Array:
 	res.sort_custom(sort_pc_ascending)
 	return res
 
+func sort_pc_instr(instr1: Instruction, instr2: Instruction) -> bool:
+	if instr1.pc < instr2.pc:
+		return true
+	else:
+		return false
+
 # Can be called multiple times per clock cycle (if multiple outputs)
 func run():
 	semaphore -= 1
@@ -55,22 +48,27 @@ func run():
 	if semaphore == 0:
 		var available_units = get_ready_units(inputs)
 
+		# First fill the stack with instructions that are ready to be written back
 		for unit in available_units:
 			if unit.instr.pc < pc + size:
 				stack.append(unit.instr)
 
 				unit.is_stalled = false
 				unit.instr = null
-
-				pc += 1
 			else:
 				unit.is_stalled = true
-		
+
+		# Then assign instructions in order to the writebacks
 		for unit in outputs:
 			if stack.size() > 0:
-				unit.instr = stack.pop_front()
+				stack.sort_custom(sort_pc_instr)
+				if stack[0].pc == pc:
+					unit.instr = stack.pop_front()
+					pc += 1
 			else:
 				unit.instr = null
+
+		
 		
 		for unit in inputs:
 			unit.run()
