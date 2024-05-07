@@ -34,7 +34,7 @@ streams = Array[AudioStream]([ExtResource("12_vlc6j")])
 script = ExtResource("11_nhf02")
 name = "bong"
 bus = "Master"
-volume = 0.0
+volume = -9.7
 pitch = 1.0
 streams = Array[AudioStream]([ExtResource("13_6ntm3")])
 

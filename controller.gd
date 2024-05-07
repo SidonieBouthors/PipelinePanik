@@ -55,7 +55,8 @@ func _on_timer_timeout():
 		if instr == null:
 			return null
 		else: return instr.pc)
-	if (instruction_count - 1) in pc:
+	if (instruction_count - 1) in pc: # pipeline is finished
+		MusicManager.disable_stem("simulation")		
 		pause_clock()
 		print("Simulation done")
 		print("Score : ", str(float(instruction_count)/clock_cycle_counter), " IPC")
@@ -109,6 +110,8 @@ func _print_state():
 						print("   PC : ", instr.pc)
 				unit = null
 			else:
+				if unit.is_stalled:
+					SoundManager.play("main", "alert")	
 				if unit.instr:
 					unit.draw_instruction(unit.instr)
 				else:
