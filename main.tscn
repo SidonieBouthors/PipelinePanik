@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bd0hbatixfv0y"]
+[gd_scene load_steps=28 format=3 uid="uid://bd0hbatixfv0y"]
 
 [ext_resource type="Script" path="res://pipeline.gd" id="1_34f1b"]
 [ext_resource type="Texture2D" uid="uid://m2lbprrvl8s7" path="res://assets/CharacterColored.png" id="2_36yq3"]
@@ -11,31 +11,60 @@
 [ext_resource type="Texture2D" uid="uid://7vfokthmbssf" path="res://assets/play-button.png" id="8_oewop"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="10_0ahj7"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_event_resource.gd" id="11_nhf02"]
+[ext_resource type="AudioStream" uid="uid://crkvxyc8cxc14" path="res://assets/sound/alerte-grave_lancement-simulation_480984-Strong_Sci-Fi_Alarm_Loop_1.ogg" id="12_vlc6j"]
+[ext_resource type="AudioStream" uid="uid://mdgeovy5v54c" path="res://assets/sound/impact-container_fin-de-chaine_135388-EFX_INT_Metal_On_Metal_Impact_05_B.ogg" id="13_6ntm3"]
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_bank.gd" id="13_nfnoc"]
+[ext_resource type="AudioStream" uid="uid://v1i8wp73rjdi" path="res://assets/sound/coins_achat_86926-Coin_purse_drop_wood_surface-BLASTWAVEFX-23502.ogg" id="14_7nt8q"]
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_track_resource.gd" id="14_55fli"]
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_stem_resource.gd" id="15_hxprc"]
+[ext_resource type="AudioStream" uid="uid://b7ueu5nsdehp8" path="res://assets/sound/coins_argent-collecter_49995-FOLEY_COIN_DROP_GLASS_01.ogg" id="15_kbsbt"]
+[ext_resource type="AudioStream" uid="uid://cq65fu8uf64wb" path="res://assets/sound/coin_argent-collecter_49218-FOLEY_COIN_DROP_ROLL_SETTLE_SHORT_CEMENT_01.ogg" id="16_1y0rg"]
 [ext_resource type="AudioStream" uid="uid://chjmmcwis8cq4" path="res://assets/sound/bruit-de-fond-entrepot_fond_479937-Country_House_Empty_Warehouse_Night_Spooky_Distant_Hits.ogg" id="16_30o5a"]
+[ext_resource type="AudioStream" uid="uid://bxliuppnakquh" path="res://assets/sound/tapis-roulant_fond-simulation_285238-Coal_Mine-Hall-Coal_Blending-Belt_Conveyor-Spreader-Knock-Rattle.ogg" id="16_csy2o"]
 
 [sub_resource type="Resource" id="Resource_10f5n"]
 script = ExtResource("11_nhf02")
-name = ""
-bus = ""
+name = "alert"
+bus = "Master"
 volume = 0.0
 pitch = 1.0
-streams = Array[AudioStream]([ExtResource("16_30o5a")])
+streams = Array[AudioStream]([ExtResource("12_vlc6j")])
+
+[sub_resource type="Resource" id="Resource_l2plf"]
+script = ExtResource("11_nhf02")
+name = "bong"
+bus = "Master"
+volume = 0.0
+pitch = 1.0
+streams = Array[AudioStream]([ExtResource("13_6ntm3")])
+
+[sub_resource type="Resource" id="Resource_t0s0g"]
+script = ExtResource("11_nhf02")
+name = "coins-buy"
+bus = "Master"
+volume = -12.8
+pitch = 1.0
+streams = Array[AudioStream]([ExtResource("14_7nt8q"), ExtResource("15_kbsbt"), ExtResource("16_1y0rg")])
 
 [sub_resource type="Resource" id="Resource_2j55l"]
 script = ExtResource("15_hxprc")
-name = "background"
+name = "main"
 enabled = true
 volume = 0.0
 stream = ExtResource("16_30o5a")
 
+[sub_resource type="Resource" id="Resource_fb1jy"]
+script = ExtResource("15_hxprc")
+name = "simulation"
+enabled = false
+volume = 0.0
+stream = ExtResource("16_csy2o")
+
 [sub_resource type="Resource" id="Resource_h171v"]
 script = ExtResource("14_55fli")
-name = "background"
+name = "main"
 bus = "Master"
-stems = Array[ExtResource("15_hxprc")]([SubResource("Resource_2j55l")])
+stems = Array[ExtResource("15_hxprc")]([SubResource("Resource_2j55l"), SubResource("Resource_fb1jy")])
 
 [node name="Node2D" type="Node2D"]
 
@@ -121,9 +150,9 @@ texture_normal = ExtResource("8_oewop")
 
 [node name="SoundBank" type="Node" parent="."]
 script = ExtResource("10_0ahj7")
-label = "Background"
-bus = "master"
-events = Array[ExtResource("11_nhf02")]([SubResource("Resource_10f5n")])
+label = "main"
+bus = "Master"
+events = Array[ExtResource("11_nhf02")]([SubResource("Resource_10f5n"), SubResource("Resource_l2plf"), SubResource("Resource_t0s0g")])
 
 [node name="MusicBank" type="Node" parent="."]
 script = ExtResource("13_nfnoc")

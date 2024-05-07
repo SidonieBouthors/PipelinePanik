@@ -57,6 +57,8 @@ func _ready():
 			
 	fill_instructions()
 			
+	MusicManager.loaded.connect(func(): MusicManager.play("background", "main", 2.0, true))
+	
 
 # Returns the position of a cell's center in pixels.
 func calculate_map_position(grid_position: Vector2) -> Vector2:
@@ -93,6 +95,8 @@ func add_unit(type):
 	sprite.position = get_local_mouse_position()
 	get_node(".").add_child(sprite)
 	sprite._on_mouse_entered()
+	SoundManager.play("main", "coins-buy")	
+	
 
 
 func _on_f_button_down():
@@ -115,6 +119,10 @@ func _on_play_button_pressed():
 	calc_pipeline()
 	print(pipeline_state)
 	level.create(pipeline_state, size, instructions)
+	MusicManager.enable_stem("simulation") # Starts the simulation background sound
+	# TODO : put the following line when the pipeline stops running
+	# MusicManager.disable_stem("simulation")
+	
 	
 	
 func fill_instructions():
