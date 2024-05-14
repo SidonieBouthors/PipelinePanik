@@ -55,7 +55,7 @@ func set_sprite(image):
 
 func _ready():
 	noPos = true
-	$InstructionPanel.visible = false
+	$InstrPanel.visible = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -82,11 +82,11 @@ func _process(delta):
 
 func draw_instruction(instruction):
 	var label_text = str(instruction.pc) + " " + Instruction.Type.keys()[instruction.type]
-	$InstructionPanel.visible = true
-	$InstructionPanel.set_label(label_text)
+	$InstrPanel.visible = true
+	$InstrPanel.set_label(label_text)
 
 func hide_instruction():
-	$InstructionPanel.visible = false
+	$InstrPanel.visible = false
 
 func _on_mouse_entered():
 	if not global.is_dragging:
@@ -102,7 +102,8 @@ func _on_mouse_exited():
 
 func _on_body_entered(zone):
 	if zone.is_in_group("dropzone"):
-		if zone.occupy(self):
+		if zone.occupy(self) and not is_inside_dropzone:
+			print("occupyd")
 			is_inside_dropzone = true
 			zone_ref = zone
 

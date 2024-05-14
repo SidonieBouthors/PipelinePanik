@@ -1,8 +1,9 @@
-[gd_resource type="Theme" load_steps=6 format=3 uid="uid://dwctb0tlytcoo"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://dwctb0tlytcoo"]
 
 [ext_resource type="Texture2D" uid="uid://4w52kr46cjy7" path="res://assets/UI_Flat_Frame_01_Horizontal.png" id="1_4lh4t"]
 [ext_resource type="Texture2D" uid="uid://3o1iikydp2a3" path="res://assets/instruction_panel.png" id="1_uusde"]
 [ext_resource type="FontFile" uid="uid://cp3ue7ptwmpr8" path="res://assets/fonts/pixel_operator/PixelOperatorMono.ttf" id="2_76m02"]
+[ext_resource type="FontFile" uid="uid://dnsh0g58gjw40" path="res://assets/fonts/m5x7.ttf" id="4_kqchf"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_no5a6"]
 texture = ExtResource("1_uusde")
@@ -11,6 +12,8 @@ texture_margin_top = 8.0
 texture_margin_right = 4.0
 texture_margin_bottom = 4.0
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0cjmq"]
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_to40r"]
 texture = ExtResource("1_4lh4t")
 texture_margin_left = 5.0
@@ -18,9 +21,17 @@ texture_margin_top = 5.0
 texture_margin_right = 5.0
 texture_margin_bottom = 5.0
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1u6ic"]
+
 [resource]
 InstructionPanel/base_type = &"PanelContainer"
 InstructionPanel/styles/panel = SubResource("StyleBoxTexture_no5a6")
+InvisiPanel/base_type = &"PanelContainer"
+InvisiPanel/styles/panel = SubResource("StyleBoxEmpty_0cjmq")
 Label/colors/font_color = Color(0, 0, 0, 1)
 Label/fonts/font = ExtResource("2_76m02")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_to40r")
+ScreenText/base_type = &"Label"
+ScreenText/colors/font_color = Color(0.313726, 1, 0.156863, 1)
+ScreenText/fonts/font = ExtResource("4_kqchf")
+ScreenText/styles/panel = SubResource("StyleBoxEmpty_1u6ic")
