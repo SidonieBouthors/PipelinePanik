@@ -18,14 +18,11 @@ func _process(delta):
 
 func occupy(object) -> bool:
 	if occupant == null:
-		print("occupy dropzone")
 		occupant = object
 		return true
 	else:
-		print("failed occupy dropzone")
 		return false
 		
 func unoccupy(object):
 	if occupant == object:
-		print("unoccupy dropzone")
 		occupant = null

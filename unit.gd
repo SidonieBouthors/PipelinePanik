@@ -61,6 +61,11 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if draggable:
+		if Input.is_action_just_pressed("right_click"):
+			if zone_ref != null:
+				zone_ref.unoccupy(self)
+			self.queue_free()
+			return
 		if Input.is_action_just_pressed("left_click"):
 			initialPos = global_position
 			offset = get_global_mouse_position() - global_position
@@ -103,7 +108,6 @@ func _on_mouse_exited():
 func _on_body_entered(zone):
 	if zone.is_in_group("dropzone"):
 		if zone.occupy(self) and zone_ref != zone:
-			print("set my dropzone")
 			if zone_ref != null:
 				zone_ref.unoccupy(self)
 			is_inside_dropzone = true
@@ -114,6 +118,5 @@ func _on_body_exited(zone):
 	if zone.is_in_group("dropzone"):
 		zone.unoccupy(self)
 		if zone == zone_ref:
-			print("unset my dropzone")
 			is_inside_dropzone = false
 			
