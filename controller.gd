@@ -118,4 +118,10 @@ func _draw_state() :
 					u.draw_instruction(u.instr)
 				else:
 					u.hide_instruction()
-
+			elif u is ROB:
+				#Recursively traverse the tree to find the ROB UI
+					var parent = u.get_parent()
+					while parent.name != "Node2D":
+						parent = parent.get_parent()
+					var rob = parent.find_child("ROB")
+					rob.repopulate(u.stack)
