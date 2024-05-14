@@ -102,8 +102,10 @@ func _on_mouse_exited():
 
 func _on_body_entered(zone):
 	if zone.is_in_group("dropzone"):
-		if zone.occupy(self) and not is_inside_dropzone:
-			print("occupyd")
+		if zone.occupy(self) and zone_ref != zone:
+			print("set my dropzone")
+			if zone_ref != null:
+				zone_ref.unoccupy(self)
 			is_inside_dropzone = true
 			zone_ref = zone
 
@@ -112,5 +114,6 @@ func _on_body_exited(zone):
 	if zone.is_in_group("dropzone"):
 		zone.unoccupy(self)
 		if zone == zone_ref:
+			print("unset my dropzone")
 			is_inside_dropzone = false
 			
