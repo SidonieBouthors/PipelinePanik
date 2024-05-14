@@ -62,20 +62,6 @@ texture_normal = ExtResource("5_t8235")
 layout_mode = 2
 texture_normal = ExtResource("6_btnbs")
 
-[node name="CodePanel" type="PanelContainer" parent="UILayer"]
-offset_left = 3.0
-offset_top = 3.0
-offset_right = 112.0
-offset_bottom = 136.0
-script = ExtResource("8_kg6wt")
-
-[node name="InstructionsContainer" type="VBoxContainer" parent="UILayer/CodePanel"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UILayer/CodePanel/InstructionsContainer"]
-layout_mode = 2
-text = "Instructions"
-
 [node name="PlayPanel" type="PanelContainer" parent="UILayer"]
 anchors_preset = 1
 anchor_left = 1.0
@@ -91,6 +77,34 @@ size_flags_vertical = 8
 [node name="PlayButton" type="TextureButton" parent="UILayer/PlayPanel"]
 layout_mode = 2
 texture_normal = ExtResource("8_oewop")
+
+[node name="CodeContainer" type="VBoxContainer" parent="UILayer"]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 77.0
+offset_bottom = 52.0
+
+[node name="InstructionsPanel" type="PanelContainer" parent="UILayer/CodeContainer"]
+layout_mode = 2
+script = ExtResource("8_kg6wt")
+
+[node name="InstructionsContainer" type="VBoxContainer" parent="UILayer/CodeContainer/InstructionsPanel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UILayer/CodeContainer/InstructionsPanel/InstructionsContainer"]
+layout_mode = 2
+text = "Instructions"
+
+[node name="ROB" type="PanelContainer" parent="UILayer/CodeContainer"]
+layout_mode = 2
+script = ExtResource("8_kg6wt")
+
+[node name="InstructionsContainer" type="VBoxContainer" parent="UILayer/CodeContainer/ROB"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UILayer/CodeContainer/ROB/InstructionsContainer"]
+layout_mode = 2
+text = "ROB"
 
 [connection signal="button_down" from="UILayer/ShopPanel/HBoxContainer/F-Button" to="CanvasLayer2/Pipeline" method="_on_f_button_down"]
 [connection signal="pressed" from="UILayer/ShopPanel/HBoxContainer/F-Button" to="CanvasLayer2/Pipeline" method="_on_f_pressed"]

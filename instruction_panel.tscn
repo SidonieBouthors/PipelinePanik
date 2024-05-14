@@ -3,9 +3,8 @@
 [ext_resource type="Script" path="res://instruction_panel.gd" id="1_46ljf"]
 
 [node name="InstructionPanel" type="PanelContainer"]
-offset_top = -6.0
-offset_right = 31.0
-offset_bottom = 22.0
+offset_right = 26.0
+offset_bottom = 17.0
 theme_type_variation = &"InstructionPanel"
 script = ExtResource("1_46ljf")
 

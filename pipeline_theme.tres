@@ -7,9 +7,9 @@
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_no5a6"]
 texture = ExtResource("1_uusde")
 texture_margin_left = 3.0
-texture_margin_top = 8.0
-texture_margin_right = 4.0
-texture_margin_bottom = 4.0
+texture_margin_top = 1.0
+texture_margin_right = 3.0
+texture_margin_bottom = 1.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0cjmq"]
 

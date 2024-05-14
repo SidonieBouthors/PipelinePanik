@@ -139,4 +139,4 @@ func fill_instructions():
 	add_child(instruction)
 	instructions.append(instruction)
 	
-	$"../../UILayer/CodePanel".populate(instructions)
+	$"../../UILayer/CodeContainer/InstructionsPanel".populate(instructions)
