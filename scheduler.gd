@@ -52,6 +52,10 @@ func update_available():
 	available_inputs = inputs.filter(func(unit: Unit): 
 		return unit.instr != null
 	)
+	
+	available_inputs.sort_custom(func(a: Unit, b: Unit):
+		return a.instr.pc < b.instr.pc
+	)
 
 	available_outputs = outputs.filter(func(unit: Unit): 
 		return unit.is_stalled == false

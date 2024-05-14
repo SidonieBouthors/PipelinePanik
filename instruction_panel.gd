@@ -4,6 +4,6 @@ func _ready():
 	pass
 
 func set_label(text):
-	print(text)
+	#print(text)
 	var label = get_node("Label")
 	label.text = text

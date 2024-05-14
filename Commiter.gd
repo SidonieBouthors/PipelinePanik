@@ -9,7 +9,9 @@ func _ready():
 	pass # Replace with function body.
 	
 func run():
+	instructions = []
+
 	for input in inputs:
-		instructions.pop_front()
 		instructions.append(input.instr)
+		input.instr = null
 		input.run()

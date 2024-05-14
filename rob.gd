@@ -50,6 +50,9 @@ func run():
 
 		# First fill the stack with instructions that are ready to be written back
 		for unit in available_units:
+			if not unit.instr:
+				continue
+			
 			if unit.instr.pc < pc + size:
 				stack.append(unit.instr)
 

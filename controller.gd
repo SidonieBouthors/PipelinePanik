@@ -1,7 +1,7 @@
 extends Node
 class_name Controller
 
-@export var timer_wait_time = 3.0
+@export var timer_wait_time = 4.0
 var timer: Timer
 
 var clock_cycle_counter = 0
@@ -25,7 +25,7 @@ func _ready():
 
 func _init(_instructions : Array, _instruction_count : int, _first_units : Array, _last_unit : Commiter, _components: Array):
 	instructions = _instructions
-	instruction_count = _instruction_count
+	instruction_count = _instructions.size()
 	first_units = _first_units
 	last_unit = _last_unit
 	components = _components
@@ -94,39 +94,21 @@ func set_timer():
 	add_child(timer)
 
 func _print_state():
+	print()
 	print("Clock cycle: ", clock_cycle_counter)
 
-	if not first_units.is_empty():
-		var unit = first_units[0]
-		while unit:
-			if unit is Scheduler:
-				print("   Scheduler")
-				unit = unit.outputs[0]
-			elif unit is Commiter:
-				print("   Commiter")
-				for instr in unit.instructions:
-					if instr:
-						print("   PC : ", instr.pc)
-				unit = null
-			elif unit is ROB:
-				print("   Reorder Buffer")
-				for instr in unit.stack:
-					if instr:
-						print("   PC : ", instr.pc)
-				unit = null
-			else:
-				# if unit.instr:
-				# 	unit.draw_instruction(unit.instr)
-				# else:
-				# 	unit.hide_instruction()
-				print("   Unit Type: ", Pipeline.Unit.keys()[unit.unit_type])
-				print("   Instruction: ", Instruction.Type.keys()[unit.instr.type] if unit.instr else "None")
-				print("   Program Counter: ", unit.instr.pc if unit.instr else "None")
-				print("   Is Stalled: ", unit.is_stalled)
-				unit = unit.next_unit
-			print("")
-
-		print("")
+	for unit in components:
+		if unit is Unit:
+			if unit.unit_type == Pipeline.Unit.WRITEBACK:
+				if unit.instr:
+					print("Writeback : ", unit.instr.pc)
+			
+		elif unit is Commiter:
+			print("Committer: ", unit.instructions.map(func(i): 
+				if i:
+					return i.pc))
+		
+	print()
 
 func _draw_state() :
 	if not first_units.is_empty():

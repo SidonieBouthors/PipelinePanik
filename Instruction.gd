@@ -12,14 +12,14 @@ enum Type {
 } 
 
 enum Register {
-	r0,
+	r0 = 2**17,
 	r1,
 	r2,
 	r3,
 	r4,
 	r5,
 	r6,
-	r7
+	r7,
 }
 
 func _init(_pc : int, _type : Type, _inputs : Array, _output : Register):
@@ -31,7 +31,10 @@ func _init(_pc : int, _type : Type, _inputs : Array, _output : Register):
 func get_text():
 	var ins = ""
 	for inp in inputs:
-		ins += str(inp) + " "
-	var text = str(pc) + " " + Type.keys()[type] + " " + Register.keys()[output] + " " + ins
+		if inp in Register.values():
+			ins += Register.keys()[inp - Register.r0] + " "
+		else:
+			ins += str(inp) + " "
+	var text = str(pc) + " " + Type.keys()[type] + " " + Register.keys()[output - Register.r0] + " " + ins
 	print(text)
 	return text
