@@ -147,7 +147,7 @@ alignment = 2
 [node name="Label" type="Label" parent="UILayer/ScoreContainer/ScorePanel/SContainer"]
 clip_contents = true
 layout_mode = 2
-text = "Score: 0.23 IPC"
+text = "Score: 0 IPC"
 
 [connection signal="button_down" from="UILayer/ShopPanel/HBoxContainer/F-Button" to="CanvasLayer2/Pipeline" method="_on_f_button_down"]
 [connection signal="pressed" from="UILayer/ShopPanel/HBoxContainer/F-Button" to="CanvasLayer2/Pipeline" method="_on_f_pressed"]
