@@ -70,7 +70,8 @@ func create(pipeline: Array, size: Vector2, instructions: Array, rob_size: int =
 			
 			if not next_u:
 				curr_unit.next_unit = rob
-				rob.inputs.append(curr_unit)
+				if curr_unit not in rob.inputs:
+					rob.inputs.append(curr_unit)
 
 		line += 1
 

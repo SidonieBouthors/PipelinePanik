@@ -24,7 +24,6 @@ func scheduler():
 				# if input is a fetch unit, schedule it to the first available output (decode)
 				if not available_outputs.is_empty():
 					unit = available_outputs[0]
-				
 			else:
 				# if input is not a fetch unit, find a compatible unit
 				unit = get_compatible_unit(input.instr, available_outputs)
@@ -153,9 +152,6 @@ func run():
 			unit.run()
 		
 		update_semaphore()
-	
-	print(inputs.size())
-	print(outputs.size())
 
 func clear():
 	update_semaphore()

@@ -1,7 +1,7 @@
 extends Node
 class_name Controller
 
-@export var timer_wait_time = 1.0
+@export var timer_wait_time = 3.0
 var timer: Timer
 
 var clock_cycle_counter = 0
