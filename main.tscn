@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bd0hbatixfv0y"]
+[gd_scene load_steps=11 format=3 uid="uid://bd0hbatixfv0y"]
 
 [ext_resource type="Script" path="res://pipeline.gd" id="1_34f1b"]
 [ext_resource type="Texture2D" uid="uid://m2lbprrvl8s7" path="res://assets/CharacterColored.png" id="2_36yq3"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dug68doo48oo3" path="res://assets/writeback-box.png" id="6_btnbs"]
 [ext_resource type="Script" path="res://code_panel.gd" id="8_kg6wt"]
 [ext_resource type="Texture2D" uid="uid://7vfokthmbssf" path="res://assets/play-button.png" id="8_oewop"]
+[ext_resource type="Script" path="res://ScorePanel.gd" id="10_b7enc"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -121,6 +122,32 @@ layout_mode = 2
 [node name="Label" type="Label" parent="UILayer/CodeContainer/ROB/InstructionsContainer"]
 layout_mode = 2
 text = "ROB"
+
+[node name="ScoreContainer" type="VBoxContainer" parent="UILayer"]
+clip_contents = true
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -186.0
+offset_top = 2.0
+offset_right = -66.0
+offset_bottom = 52.0
+grow_horizontal = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ScorePanel" type="PanelContainer" parent="UILayer/ScoreContainer"]
+layout_mode = 2
+script = ExtResource("10_b7enc")
+
+[node name="SContainer" type="VBoxContainer" parent="UILayer/ScoreContainer/ScorePanel"]
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="UILayer/ScoreContainer/ScorePanel/SContainer"]
+clip_contents = true
+layout_mode = 2
+text = "Score: 0.23 IPC"
 
 [connection signal="button_down" from="UILayer/ShopPanel/HBoxContainer/F-Button" to="CanvasLayer2/Pipeline" method="_on_f_button_down"]
 [connection signal="pressed" from="UILayer/ShopPanel/HBoxContainer/F-Button" to="CanvasLayer2/Pipeline" method="_on_f_pressed"]

@@ -3,6 +3,7 @@ class_name Controller
 
 @export var timer_wait_time = 3.0
 var timer: Timer
+var score = 0.0
 
 var clock_cycle_counter = 0
 var instructions: Array
@@ -50,6 +51,14 @@ func _on_timer_timeout():
 	_draw_state()
 	
 	clock_cycle_counter += 1
+
+	score = float(last_unit.number_of_commits) / clock_cycle_counter
+	var parent = self.get_parent()
+	while parent.name != "Node2D":
+		parent = parent.get_parent()
+	var scorePanel = parent.find_child("ScorePanel")
+	scorePanel.set_label(score)
+
 	#if last unit contains the last instruction, then we are done
 	var pc = last_unit.instructions.map(func(instr):
 		if instr == null:
