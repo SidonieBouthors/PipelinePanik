@@ -15,3 +15,7 @@ func run():
 		instructions.append(input.instr)
 		input.instr = null
 		input.run()
+
+func clear():
+	instructions = []
+	

@@ -38,6 +38,11 @@ func run():
 
 func find_types() -> Array:
 	return []
+
+func clear():
+	instr = null
+	is_stalled = false
+	
 	
 ######## VISUAL ########
 

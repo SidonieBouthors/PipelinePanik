@@ -1,7 +1,7 @@
 extends Node
 class_name Controller
 
-@export var timer_wait_time = 4.0
+@export var timer_wait_time = 1.0
 var timer: Timer
 
 var clock_cycle_counter = 0
@@ -23,7 +23,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 
-func _init(_instructions : Array, _instruction_count : int, _first_units : Array, _last_unit : Commiter, _components: Array):
+func _init(_instructions : Array, _first_units : Array, _last_unit : Commiter, _components: Array):
 	instructions = _instructions
 	instruction_count = _instructions.size()
 	first_units = _first_units
@@ -56,7 +56,7 @@ func _on_timer_timeout():
 			return null
 		else: return instr.pc)
 	if (instruction_count - 1) in pc:
-		pause_clock()
+		toggle_clock()
 		print("Simulation done")
 		print("Score : ", str(float(instruction_count)/clock_cycle_counter), " IPC")
 		return
@@ -78,12 +78,15 @@ func start_clock():
 	else:
 		print("Timer not in scene tree")
 
-func pause_clock():
-	timer.stop()
+func toggle_clock():
+	if (timer.is_stopped()):
+		timer.start()
+	else:
+		timer.stop()
 	
 func reset_counter():
 	clock_cycle_counter = 0
-	pause_clock()
+	timer.stop()
 
 func set_timer():
 	timer = Timer.new()
@@ -125,3 +128,8 @@ func _draw_state() :
 						parent = parent.get_parent()
 					var rob = parent.find_child("ROB")
 					rob.repopulate(u.stack)
+
+func clear():
+	instructions = []
+	instruction_count = 0
+	reset_counter()

@@ -77,3 +77,8 @@ func run():
 			unit.run()
 
 		update_semaphore()
+
+func clear():
+	stack.clear()
+	pc = 0
+	update_semaphore()

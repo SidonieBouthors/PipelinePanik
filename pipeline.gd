@@ -38,6 +38,8 @@ var _half_cell_size = cell_size / 2
 
 var level
 
+var first_start = true
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	level = levelMaker.instantiate()
@@ -110,14 +112,48 @@ func _on_m_button_down():
 func _on_w_button_down():
 	add_unit(Unit.WRITEBACK)
 
-
 func _on_play_button_pressed():
-	calc_pipeline()
-	print(pipeline_state)
-	level.create(pipeline_state, size, instructions)
-	
-	
+	if first_start:
+		calc_pipeline()
+		print(pipeline_state)
+		level.create(pipeline_state, size, instructions)
+		first_start = false
+	else:
+		var controller
+
+		for child in level.get_children():
+			if child as Controller:
+				controller = child
+
+		controller.toggle_clock()
+
+func _on_restart_button_pressed():
+	# Level Maker children:
+	# 
+	"""
+	Level Maker children:
+		- Controller
+		- ROB
+		- Commiter
+		- Schedulers (always 2)
+	"""
+	level.get_children().map(func (child): child.clear())
+
+	"""
+	Pipeline children:
+		- All units
+	"""
+	pipeline_state.map(func (u): if u: u.clear())
+
+	instructions.map(func (i): if i as Instruction: i.queue_free())
+
+	fill_instructions()
+	level.reset(instructions)
+
 func fill_instructions():
+	# Clear the instructions
+	instructions = []
+
 	# First instruction: ADD r0, r1, r2
 	var instruction = Instruction.new(0, Instruction.Type.ALU, [Instruction.Register.r1, Instruction.Register.r2], Instruction.Register.r0)
 	add_child(instruction)
@@ -139,4 +175,4 @@ func fill_instructions():
 	add_child(instruction)
 	instructions.append(instruction)
 	
-	$"../../UILayer/CodeContainer/InstructionsPanel".populate(instructions)
+	$"../../UILayer/CodeContainer/InstructionsPanel".repopulate(instructions)

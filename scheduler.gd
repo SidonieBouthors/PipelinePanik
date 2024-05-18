@@ -153,3 +153,9 @@ func run():
 			unit.run()
 		
 		update_semaphore()
+	
+	print(inputs.size())
+	print(outputs.size())
+
+func clear():
+	update_semaphore()

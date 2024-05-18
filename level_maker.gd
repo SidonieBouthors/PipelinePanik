@@ -1,7 +1,10 @@
 extends Node
+class_name Level_Maker
+
 @export var first_units: Array = []
 @export var last_units: Array = []
 @export var components : Array = []
+@export var controller: Controller
 
 func create(pipeline: Array, size: Vector2, instructions: Array, rob_size: int = 10):
 
@@ -76,7 +79,7 @@ func create(pipeline: Array, size: Vector2, instructions: Array, rob_size: int =
 	
 	#Commiter
 	var commiter = Commiter.new()
-	add_child(curr_unit)
+	add_child(commiter)
 	components.append(commiter)
 	commiter.inputs = last_units
 
@@ -87,7 +90,7 @@ func create(pipeline: Array, size: Vector2, instructions: Array, rob_size: int =
 	sch_decode.components = components
 
 	# Instantiate the controller
-	var controller = Controller.new(instructions, instructions.size(), first_units, commiter, components)
+	controller = Controller.new(instructions, first_units, commiter, components)
 	add_child(controller)
 	controller.set_timer()
 
@@ -104,3 +107,8 @@ func get_line(pipeline: Array, size: Vector2, j: int, from: int = 0) -> Array:
 	for idx in range(from, size.x):
 		res.append(pipeline[idx * size.y + j])
 	return res
+
+func reset(instructions: Array):
+	controller.instructions = instructions
+	controller.start_clock()
+	

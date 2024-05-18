@@ -66,6 +66,22 @@ texture_normal = ExtResource("6_btnbs")
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
+offset_left = -60.0
+offset_top = 2.0
+offset_right = -34.0
+offset_bottom = 28.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="PlayButton" type="TextureButton" parent="UILayer/PlayPanel"]
+layout_mode = 2
+texture_normal = ExtResource("8_oewop")
+
+[node name="RestartPanel" type="PanelContainer" parent="UILayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
 offset_left = -28.0
 offset_top = 2.0
 offset_right = -2.0
@@ -74,7 +90,7 @@ grow_horizontal = 0
 size_flags_horizontal = 8
 size_flags_vertical = 8
 
-[node name="PlayButton" type="TextureButton" parent="UILayer/PlayPanel"]
+[node name="RestartButton" type="TextureButton" parent="UILayer/RestartPanel"]
 layout_mode = 2
 texture_normal = ExtResource("8_oewop")
 
@@ -118,3 +134,4 @@ text = "ROB"
 [connection signal="button_down" from="UILayer/ShopPanel/HBoxContainer/W-Button" to="CanvasLayer2/Pipeline" method="_on_w_button_down"]
 [connection signal="pressed" from="UILayer/ShopPanel/HBoxContainer/W-Button" to="CanvasLayer2/Pipeline" method="_on_w_pressed"]
 [connection signal="pressed" from="UILayer/PlayPanel/PlayButton" to="CanvasLayer2/Pipeline" method="_on_play_button_pressed"]
+[connection signal="pressed" from="UILayer/RestartPanel/RestartButton" to="CanvasLayer2/Pipeline" method="_on_restart_button_pressed"]
