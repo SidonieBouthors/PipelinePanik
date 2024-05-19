@@ -22,10 +22,11 @@ func update_instruction(instruction):
 # then backtracks to the beginning.
 func run():
 	if previous_unit:
-		var prev := previous_unit as Scheduler
+		# TODO: check this causes a crash
+		var prev := (previous_unit as Scheduler) or (previous_unit as ROB)
 
 		if prev:
-			# if previous is a scheduler
+			# if previous is a scheduler or a ROB
 			pass
 		else:
 			# if previous is a unit
@@ -37,6 +38,11 @@ func run():
 
 func find_types() -> Array:
 	return []
+
+func clear():
+	instr = null
+	is_stalled = false
+	
 	
 ######## VISUAL ########
 
@@ -54,12 +60,17 @@ func set_sprite(image):
 
 func _ready():
 	noPos = true
-	$InstructionPanel.visible = false
+	$InstrPanel.visible = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if draggable:
+		if Input.is_action_just_pressed("right_click"):
+			if zone_ref != null:
+				zone_ref.unoccupy(self)
+			self.queue_free()
+			return
 		if Input.is_action_just_pressed("left_click"):
 			initialPos = global_position
 			offset = get_global_mouse_position() - global_position
@@ -82,11 +93,11 @@ func _process(delta):
 
 func draw_instruction(instruction):
 	var label_text = str(instruction.pc) + " " + Instruction.Type.keys()[instruction.type]
-	$InstructionPanel.visible = true
-	$InstructionPanel.set_label(label_text)
+	$InstrPanel.visible = true
+	$InstrPanel.set_label(label_text)
 
 func hide_instruction():
-	$InstructionPanel.visible = false
+	$InstrPanel.visible = false
 
 func _on_mouse_entered():
 	if not global.is_dragging:
@@ -102,7 +113,9 @@ func _on_mouse_exited():
 
 func _on_body_entered(zone):
 	if zone.is_in_group("dropzone"):
-		if zone.occupy(self):
+		if zone.occupy(self) and zone_ref != zone:
+			if zone_ref != null:
+				zone_ref.unoccupy(self)
 			is_inside_dropzone = true
 			zone_ref = zone
 

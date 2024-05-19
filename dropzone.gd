@@ -1,7 +1,6 @@
 extends StaticBody2D
 class_name DropZone
 
-var occupied = false
 var occupant
 
 const color = Color.AQUAMARINE
@@ -10,7 +9,7 @@ const color = Color.AQUAMARINE
 func _process(delta):
 	if global.is_dragging:
 		visible = true
-		if occupied:
+		if occupant != null:
 			modulate = Color(color, 1)
 		else:
 			modulate = Color(color, 0.7)
@@ -18,8 +17,7 @@ func _process(delta):
 		visible = false
 
 func occupy(object) -> bool:
-	if not occupied:
-		occupied = true
+	if occupant == null:
 		occupant = object
 		return true
 	else:
@@ -27,5 +25,4 @@ func occupy(object) -> bool:
 		
 func unoccupy(object):
 	if occupant == object:
-		occupied = false
 		occupant = null

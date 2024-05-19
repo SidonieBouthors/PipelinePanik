@@ -1,8 +1,9 @@
 extends Node
 class_name Controller
 
-@export var timer_wait_time = 1.0
+@export var timer_wait_time = 3.0
 var timer: Timer
+var score = 0.0
 
 var clock_cycle_counter = 0
 var instructions: Array
@@ -11,18 +12,24 @@ var first_units: Array
 var last_unit: Commiter
 
 var scheduler_list: Array = []
+var components: Array = []
 
 signal increment_clock(clock_cycle_counter)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print("ready called")
+	pass
 	#set_timer()
 	#start_clock()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+
+func _init(_instructions : Array, _first_units : Array, _last_unit : Commiter, _components: Array):
+	instructions = _instructions
+	instruction_count = _instructions.size()
+	first_units = _first_units
+	last_unit = _last_unit
+	components = _components
 
 func searchAllSchedulers(unit, accumulator):
 	if not unit:
@@ -41,23 +48,25 @@ func searchAllSchedulers(unit, accumulator):
 func _on_timer_timeout():
 	pop_instructions(first_units, instructions)
 	_print_state()
-
-	if clock_cycle_counter == 0:
-		for unit in first_units:
-			searchAllSchedulers(unit, scheduler_list)
-
-	for sch in scheduler_list:
-		sch.update_semaphore()
+	_draw_state()
 	
 	clock_cycle_counter += 1
+
+	score = float(last_unit.number_of_commits) / clock_cycle_counter
+	var parent = self.get_parent()
+	while parent.name != "Node2D":
+		parent = parent.get_parent()
+	var scorePanel = parent.find_child("ScorePanel")
+	scorePanel.set_label(score)
+
 	#if last unit contains the last instruction, then we are done
 	var pc = last_unit.instructions.map(func(instr):
 		if instr == null:
 			return null
 		else: return instr.pc)
-	if (instruction_count - 1) in pc: # pipeline is finished
-		MusicManager.disable_stem("simulation")		
-		pause_clock()
+	if (instruction_count - 1) in pc:
+    MusicManager.disable_stem("simulation")
+		toggle_clock()
 		print("Simulation done")
 		print("Score : ", str(float(instruction_count)/clock_cycle_counter), " IPC")
 		return
@@ -67,7 +76,7 @@ func _on_timer_timeout():
 func pop_instructions(units: Array, instr: Array):
 	for unit in units:
 		if not unit.is_stalled:
-			unit.instr = instr.pop_at(0)
+			unit.instr = instr.pop_front()
 
 func run():
 	start_clock()
@@ -79,12 +88,15 @@ func start_clock():
 	else:
 		print("Timer not in scene tree")
 
-func pause_clock():
-	timer.stop()
+func toggle_clock():
+	if (timer.is_stopped()):
+		timer.start()
+	else:
+		timer.stop()
 	
 func reset_counter():
 	clock_cycle_counter = 0
-	pause_clock()
+	timer.stop()
 
 func set_timer():
 	timer = Timer.new()
@@ -95,32 +107,42 @@ func set_timer():
 	add_child(timer)
 
 func _print_state():
+	print()
 	print("Clock cycle: ", clock_cycle_counter)
 
-	if not first_units.is_empty():
-		var unit = first_units[0]
-		while unit:
-			if unit is Scheduler:
-				print("   Scheduler")
-				unit = unit.outputs[0]
-			elif unit is Commiter:
-				print("   Commiter")
-				for instr in unit.instructions:
-					if instr:
-						print("   PC : ", instr.pc)
-				unit = null
-			else:
-				if unit.is_stalled:
-					SoundManager.play("main", "alert")	
-				if unit.instr:
-					unit.draw_instruction(unit.instr)
-				else:
-					unit.hide_instruction()
-				print("   Unit Type: ", Pipeline.Unit.keys()[unit.unit_type])
-				print("   Instruction: ", Instruction.Type.keys()[unit.instr.type] if unit.instr else "None")
-				print("   Program Counter: ", unit.instr.pc if unit.instr else "None")
-				print("   Is Stalled: ", unit.is_stalled)
-				unit = unit.next_unit
-			print("")
+	for unit in components:
+		if unit is Unit:
+      if unit.is_stalled:
+					SoundManager.play("main", "alert")
+			if unit.unit_type == Pipeline.Unit.WRITEBACK:
 
-		print("")
+				if unit.instr:
+					print("Writeback : ", unit.instr.pc)
+			
+		elif unit is Commiter:
+			print("Committer: ", unit.instructions.map(func(i): 
+				if i:
+					return i.pc))
+		
+	print()
+
+func _draw_state() :
+	if not first_units.is_empty():
+		for u in components:
+			if u is Unit:
+				if u.instr:
+					u.draw_instruction(u.instr)
+				else:
+					u.hide_instruction()
+			elif u is ROB:
+				#Recursively traverse the tree to find the ROB UI
+					var parent = u.get_parent()
+					while parent.name != "Node2D":
+						parent = parent.get_parent()
+					var rob = parent.find_child("ROB")
+					rob.repopulate(u.stack)
+
+func clear():
+	instructions = []
+	instruction_count = 0
+	reset_counter()

@@ -1,26 +1,41 @@
-[gd_scene load_steps=5 format=3 uid="uid://besoyubbke5bo"]
+[gd_scene load_steps=6 format=3 uid="uid://besoyubbke5bo"]
 
 [ext_resource type="Script" path="res://unit.gd" id="1_26vih"]
-[ext_resource type="Texture2D" uid="uid://mcyihy0kvcvh" path="res://assets/memory-box.png" id="2_7mqyk"]
-[ext_resource type="PackedScene" uid="uid://evx3b8b67dsp" path="res://instruction_panel.tscn" id="3_alcx1"]
+[ext_resource type="Texture2D" uid="uid://clggv5ba8y7ai" path="res://assets/fetch-box.png" id="2_3b1nw"]
+[ext_resource type="Theme" uid="uid://dwctb0tlytcoo" path="res://pipeline_theme.tres" id="4_aa82n"]
+[ext_resource type="Script" path="res://instr-panel.gd" id="4_f0k8j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_osmur"]
-size = Vector2(46, 46)
+size = Vector2(52, 52)
 
 [node name="Unit" type="Area2D"]
 script = ExtResource("1_26vih")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_7mqyk")
+texture = ExtResource("2_3b1nw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_osmur")
 
-[node name="InstructionPanel" parent="." instance=ExtResource("3_alcx1")]
-offset_left = -22.0
-offset_top = 3.0
+[node name="InstrPanel" type="PanelContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -9.0
 offset_right = 9.0
-offset_bottom = 31.0
+offset_bottom = 13.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("4_aa82n")
+theme_type_variation = &"InvisiPanel"
+script = ExtResource("4_f0k8j")
+
+[node name="Label" type="Label" parent="InstrPanel"]
+layout_mode = 2
+theme = ExtResource("4_aa82n")
+theme_type_variation = &"ScreenText"
+text = "add"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

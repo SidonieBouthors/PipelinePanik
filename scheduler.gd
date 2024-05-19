@@ -4,6 +4,7 @@ class_name Scheduler
 @export var inputs: Array = []
 @export var outputs: Array = []
 @export var semaphore : int
+@export var components: Array = []
 
 # Available inputs = inputs - NOPs
 var available_inputs = []
@@ -23,7 +24,6 @@ func scheduler():
 				# if input is a fetch unit, schedule it to the first available output (decode)
 				if not available_outputs.is_empty():
 					unit = available_outputs[0]
-				
 			else:
 				# if input is not a fetch unit, find a compatible unit
 				unit = get_compatible_unit(input.instr, available_outputs)
@@ -51,6 +51,10 @@ func update_available():
 	available_inputs = inputs.filter(func(unit: Unit): 
 		return unit.instr != null
 	)
+	
+	available_inputs.sort_custom(func(a: Unit, b: Unit):
+		return a.instr.pc < b.instr.pc
+	)
 
 	available_outputs = outputs.filter(func(unit: Unit): 
 		return unit.is_stalled == false
@@ -73,7 +77,7 @@ func is_type_compat(instruction : Instruction, unit: Unit) -> bool:
 	return type
 
 func get_compatible_unit(instruction: Instruction, units: Array) -> Unit:
-	if is_dependent(instruction, outputs):
+	if is_dependent(instruction):
 		return null
 
 	var pool: Dictionary = {}
@@ -97,7 +101,7 @@ func get_compatible_unit(instruction: Instruction, units: Array) -> Unit:
 				for child in unit.inputs:
 					pool[child] = i
 			else:
-				if unit.next_unit and unit.next_unit.unit_type != Pipeline.Unit.WRITEBACK:
+				if unit.next_unit and not (unit.next_unit as ROB):
 					pool[unit.next_unit] = i
 			
 			pool.erase(unit)
@@ -115,49 +119,23 @@ func is_instr_independent(input: Instruction, output: Instruction) -> bool:
 		return inp == output.output
 	).is_empty()
 
-func is_dependent(instruction: Instruction, out: Array) -> bool:
-	if out.filter(func(unit): 
-		return unit != null
-	).is_empty():
-		return false
-
-	var dependent = false
-
-	for output in out:
-		if output is Scheduler:
-			dependent = is_dependent(instruction, output.outputs)
-
-			if dependent:
-				return true
-		elif output is Commiter:
-				for instr in output.instructions:
-					if instr:
-						dependent = not is_instr_independent(instruction, instr)
-						if dependent:
-							return true
-		else:
-			if output.instr:
-				dependent = not is_instr_independent(instruction, output.instr)
-				
-				if dependent:
+func is_dependent(instruction: Instruction) -> bool:
+	for comp in components:
+		if comp is Unit:
+			if comp.instr and comp.instr.pc < instruction.pc:
+				if not is_instr_independent(instruction, comp.instr):
 					return true
-
-			dependent = is_dependent(instruction, [output.next_unit])
-
-			if dependent:
-				return true
-						
-
+		elif comp is Commiter:
+			for instr in comp.instructions:
+				if instr and instr.pc < instruction.pc:
+					if not is_instr_independent(instruction, instr):
+						return true
+		elif comp is ROB:
+			for instr in comp.stack:
+				if instr and instr.pc < instruction.pc:
+					if not is_instr_independent(instruction, instr):
+						return true
 	return false
-	
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
 func update_semaphore():
 	semaphore = outputs.size()
@@ -172,3 +150,8 @@ func run():
 
 		for unit in inputs:
 			unit.run()
+		
+		update_semaphore()
+
+func clear():
+	update_semaphore()
