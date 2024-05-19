@@ -118,7 +118,7 @@ func _on_w_button_down():
 
 func _on_play_button_pressed():
 
-  MusicManager.enable_stem("simulation") # Starts the simulation background sound
+	MusicManager.enable_stem("simulation") # Starts the simulation background sound
   # TODO : put the following line when the pipeline stops running
 	# MusicManager.disable_stem("simulation")
   

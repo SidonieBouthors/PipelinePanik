@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/coin_argent-collecter_49218-FOLEY_COIN_DROP_R
 [params]
 
 loop=false
-loop_offset=0
-bpm=0
+loop_offset=0.0
+bpm=0.0
 beat_count=0
 bar_beats=4
