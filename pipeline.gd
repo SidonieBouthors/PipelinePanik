@@ -126,9 +126,10 @@ func _on_play_button_pressed():
 		level.create(pipeline_state, size, instructions)
 		first_start = false
 	else:
-		MusicManager.disable_stem("simulation")
-		if (MusicManager.is_playing("background", "simulation")) :
+		
+		if (is_playing) :
 			MusicManager.enable_stem("simulation")
+		else : MusicManager.disable_stem("simulation")
 		var controller = level.controller
 		controller.toggle_clock()
 
