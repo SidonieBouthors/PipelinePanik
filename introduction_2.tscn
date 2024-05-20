@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cxj0vcodmmf5w"]
+[gd_scene load_steps=5 format=3 uid="uid://3ycot22gtqcg"]
 
 [ext_resource type="Script" path="res://introduction_2.gd" id="1_kb3q1"]
 [ext_resource type="Theme" uid="uid://dwctb0tlytcoo" path="res://pipeline_theme.tres" id="1_mewcv"]
+[ext_resource type="PackedScene" uid="uid://2www521xcgdj" path="res://background_tiled.tscn" id="2_l32m7"]
 [ext_resource type="FontFile" uid="uid://dnsh0g58gjw40" path="res://assets/fonts/m5x7.ttf" id="2_tj6w6"]
 
 [node name="introduction_2" type="Control"]
@@ -12,6 +13,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_kb3q1")
+
+[node name="Background" parent="." instance=ExtResource("2_l32m7")]
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 1
