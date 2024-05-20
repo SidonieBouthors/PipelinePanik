@@ -117,19 +117,20 @@ func _on_w_button_down():
 	add_unit(Unit.WRITEBACK)
 
 func _on_play_button_pressed():
-
-	MusicManager.enable_stem("simulation") # Starts the simulation background sound
-  # TODO : put the following line when the pipeline stops running
-	# MusicManager.disable_stem("simulation")
   
 	if first_start:
+		MusicManager.enable_stem("simulation") # Starts the simulation background sound
 		calc_pipeline()
 		print(pipeline_state)
 		level.create(pipeline_state, size, instructions)
 		first_start = false
 	else:
 		var controller
-
+		
+		MusicManager.disable_stem("simulation")
+		if (MusicManager.is_playing("background", "simulation")) :
+			MusicManager.enable_stem("simulation")
+		
 		for child in level.get_children():
 			if child as Controller:
 				controller = child
@@ -156,6 +157,7 @@ func _on_restart_button_pressed():
 
 	instructions.map(func (i): if i as Instruction: i.queue_free())
 
+	MusicManager.enable_stem("simulation")
 	fill_instructions()
 	level.reset(instructions)
 
