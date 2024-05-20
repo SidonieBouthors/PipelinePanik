@@ -32,7 +32,7 @@
 script = ExtResource("3_a84p1")
 name = "bong"
 bus = ""
-volume = 0.0
+volume = -20.0
 pitch = 1.0
 streams = Array[AudioStream]([ExtResource("4_okknu")])
 
@@ -40,7 +40,7 @@ streams = Array[AudioStream]([ExtResource("4_okknu")])
 script = ExtResource("3_a84p1")
 name = "coins-buy"
 bus = ""
-volume = 0.0
+volume = -15.0
 pitch = 1.0
 streams = Array[AudioStream]([ExtResource("5_8v3tu"), ExtResource("6_mbeeq"), ExtResource("7_aan85")])
 
@@ -63,7 +63,7 @@ stream = ExtResource("12_xy8md")
 script = ExtResource("11_cawjm")
 name = "simulation"
 enabled = false
-volume = 0.0
+volume = -8.0
 stream = ExtResource("13_gaudq")
 
 [sub_resource type="Resource" id="Resource_3wbsa"]
