@@ -1,0 +1,83 @@
+[gd_scene load_steps=4 format=3 uid="uid://cxj0vcodmmf5w"]
+
+[ext_resource type="Script" path="res://introduction_2.gd" id="1_kb3q1"]
+[ext_resource type="Theme" uid="uid://dwctb0tlytcoo" path="res://pipeline_theme.tres" id="1_mewcv"]
+[ext_resource type="FontFile" uid="uid://dnsh0g58gjw40" path="res://assets/fonts/m5x7.ttf" id="2_tj6w6"]
+
+[node name="introduction_2" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kb3q1")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -235.0
+offset_top = 5.0
+offset_right = 237.0
+offset_bottom = 239.0
+grow_horizontal = 2
+theme = ExtResource("1_mewcv")
+theme_override_fonts/normal_font = ExtResource("2_tj6w6")
+text = "Chaque étape est symbolisée par sa première lettre : F, D, E, M, et W.
+
+- Fetch : Récupère la prochaine instruction de la mémoire
+- Decode : Prépare les registres et décide si l'instruction peut continuer dans la pipeline, en fonction des instructions déjà présentes et de leurs dépendances
+- Execute : Effectue les opérations arithmétiques
+- Memory : Si une instruction sollicite la mémoire, elle passe par là
+- Writeback : Marque l'instruction comme étant terminée et enregistre le résultat dans le registre correspondant
+
+Une instruction est l'élément élémentaire de l'exécution d’un programme informatique, elle se présente sous la forme suivante : opération à exécuter, résultat, premier paramètre, deuxième paramètre.
+L'opération peut être de plusieurs types :
+ALU : une opération mathématique simple (addition, soustraction), elle ne nécessite pas d'accéder à la mémoire.
+MEM : une lecture ou écriture de la mémoire, nécessite donc d'accéder à la mémoire.
+Un exemple d’instruction est : ALU r1 r2 r3, qui est équivalent à r1 = r2 ± r3.
+Comme cette instruction ne nécessite pas d'accéder à la mémoire, elle n'aura pas besoin de passer par l'étape M. 
+
+Un concept important est la notion de temps, dans un processeur chaque étape est régie par un tempo bien précis, le Clock Cycle (abrégé cc). Toutes les étapes prennent exactement 1cc, hormis l’étape M qui peut en prendre plus. Ainsi, comme les étapes sont en série, si une étape est bloquée, elle bloquera toutes les étapes en amont : la pipeline \"stall\".
+
+Les instructions sont données dans un certain ordre, et certaines sont dépendantes de cet ordre d'exécution pour obtenir le bon résultat. Voici un exemple simple : 
+	Instruction 0 : lit le contenu de la mémoire et le stocke dans r1
+	Instruction 1 : additionne r1 et r2, et stocke le résultat dans r3
+
+On voit ici que si DECODE lance l'instruction 1 avant que l'instruction 0 n'ait le temps de finir, on obtient un comportement non défini.
+
+C'est parti pour l'exploration de la pipeline ! Deviens un ingénieur, qui a pour rôle de construire la pipeline optimale pour ton processeur !
+
+
+
+
+
+"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -147.0
+offset_top = -30.0
+offset_right = -27.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 20
+
+[node name="Begin" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_tj6w6")
+theme_override_font_sizes/font_size = 16
+text = "Commencer à jouer
+"
+
+[connection signal="pressed" from="HBoxContainer/Begin" to="." method="_on_begin_pressed"]
