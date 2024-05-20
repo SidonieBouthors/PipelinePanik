@@ -59,8 +59,8 @@ func _ready():
 			drop_zones[i * size.y + j] = drop
 			
 	fill_instructions()
-			
-	MusicManager.loaded.connect(func(): MusicManager.play("background", "main", 2.0, true))
+
+	MusicManager.play("background", "main", 2.0, true)
 	
 
 # Returns the position of a cell's center in pixels.
