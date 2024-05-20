@@ -161,4 +161,4 @@ text = "Score: 0 IPC"
 [connection signal="button_down" from="UILayer/ShopPanel/HBoxContainer/W-Button" to="CanvasLayer2/Pipeline" method="_on_w_button_down"]
 [connection signal="pressed" from="UILayer/ShopPanel/HBoxContainer/W-Button" to="CanvasLayer2/Pipeline" method="_on_w_pressed"]
 [connection signal="pressed" from="UILayer/PlayPanel/PlayButton" to="CanvasLayer2/Pipeline" method="_on_play_button_pressed"]
-[connection signal="pressed" from="UILayer/RestartPanel/RestartButton" to="CanvasLayer2/Pipeline" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="UILayer/RestartPanel/RestartButton" to="CanvasLayer2/Pipeline" method="_on_reset_button_pressed"]

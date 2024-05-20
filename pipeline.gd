@@ -39,6 +39,7 @@ var _half_cell_size = cell_size / 2
 var level
 
 var first_start = true
+var is_playing : bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -113,23 +114,22 @@ func _on_w_button_down():
 	add_unit(Unit.WRITEBACK)
 
 func _on_play_button_pressed():
+	is_playing = not is_playing
 	if first_start:
 		calc_pipeline()
 		print(pipeline_state)
 		level.create(pipeline_state, size, instructions)
 		first_start = false
 	else:
-		var controller
+		var controller = level.controller
 
-		for child in level.get_children():
-			if child as Controller:
-				controller = child
+#		for child in level.get_children():
+#			if child as Controller:
+#				controller = child
 
 		controller.toggle_clock()
 
 func _on_restart_button_pressed():
-	# Level Maker children:
-	# 
 	"""
 	Level Maker children:
 		- Controller
@@ -149,6 +149,22 @@ func _on_restart_button_pressed():
 
 	fill_instructions()
 	level.reset(instructions)
+	
+# Remove all children from the scene
+func _on_reset_button_pressed():
+	if not first_start:
+		var components = level.components
+		for component in components:
+			component.queue_free()
+		var controller = level.controller
+		controller.queue_free()
+		level.first_units = []
+		level.last_units = []
+		level.components = []
+		fill_instructions()
+		first_start = true
+		is_playing = false
+	
 
 func fill_instructions():
 	# Clear the instructions
