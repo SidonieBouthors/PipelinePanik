@@ -228,6 +228,59 @@ clip_contents = true
 layout_mode = 2
 text = "Score: 0 IPC"
 
+[node name="Level0" type="CanvasLayer" parent="UILayer"]
+
+[node name="PanelContainer" type="PanelContainer" parent="UILayer/Level0"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -90.5
+offset_top = -51.0
+offset_right = 90.5
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/Level0/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HelpText" type="Label" parent="UILayer/Level0/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+text = "Cette pipeline ne pourra pas exécuter cette instruction.
+Essayez avec F, D, A, M, W"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Restart0" type="Button" parent="UILayer/Level0/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("26_i1crj")
+theme_override_fonts/font = ExtResource("27_fbt6k")
+theme_override_font_sizes/font_size = 16
+text = "Recommencer"
+
+[node name="HelpButtonPanel" type="PanelContainer" parent="UILayer"]
+custom_minimum_size = Vector2(0, 26)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -53.0
+offset_right = 53.0
+offset_bottom = 31.0
+grow_horizontal = 2
+
+[node name="HelpButton" type="Button" parent="UILayer/HelpButtonPanel"]
+layout_mode = 2
+theme = ExtResource("26_i1crj")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("27_fbt6k")
+text = "Comment jouer ?"
+flat = true
+
 [node name="PopupLayer" type="CanvasLayer" parent="."]
 layer = 3
 
@@ -345,6 +398,7 @@ text = "Retourner au menu"
 [connection signal="pressed" from="UILayer/ShopPanel/HBoxContainer/W-Button" to="CanvasLayer2/Pipeline" method="_on_w_pressed"]
 [connection signal="pressed" from="UILayer/PlayPanel/PlayButton" to="CanvasLayer2/Pipeline" method="_on_play_button_pressed"]
 [connection signal="pressed" from="UILayer/RestartPanel/RestartButton" to="CanvasLayer2/Pipeline" method="_on_reset_button_pressed"]
+[connection signal="pressed" from="UILayer/Level0/PanelContainer/VBoxContainer/Restart0" to="CanvasLayer2/Pipeline" method="_on_restart_0_pressed"]
 [connection signal="pressed" from="PopupLayer/EscapeMenu/VBoxContainer/Resume" to="CanvasLayer2/Pipeline" method="_on_resume_pressed"]
 [connection signal="pressed" from="PopupLayer/EscapeMenu/VBoxContainer/HBoxContainer/Minus" to="CanvasLayer2/Pipeline" method="_on_minus_pressed"]
 [connection signal="pressed" from="PopupLayer/EscapeMenu/VBoxContainer/HBoxContainer/Plus" to="CanvasLayer2/Pipeline" method="_on_plus_pressed"]

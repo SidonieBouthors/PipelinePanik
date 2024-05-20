@@ -1,16 +1,16 @@
 extends Node2D
 class_name Pipeline
 
-const unit = preload("res://unit.tscn")
-const dropZone = preload("res://dropzone.tscn")
-const levelMaker = preload("res://level_maker.tscn")
+const unit = preload ("res://unit.tscn")
+const dropZone = preload ("res://dropzone.tscn")
+const levelMaker = preload ("res://level_maker.tscn")
 
 const unitImages = [
-	preload("res://assets/fetch-box.png"),
-	preload("res://assets/decode-box.png"),
-	preload("res://assets/execute-box.png"),
-	preload("res://assets/memory-box.png"),
-	preload("res://assets/writeback-box.png"),
+	preload ("res://assets/fetch-box.png"),
+	preload ("res://assets/decode-box.png"),
+	preload ("res://assets/execute-box.png"),
+	preload ("res://assets/memory-box.png"),
+	preload ("res://assets/writeback-box.png"),
 	]
 
 enum Unit {
@@ -39,15 +39,15 @@ var _half_cell_size = cell_size / 2
 var level
 
 var first_start = true
-var is_playing : bool = false
+var is_playing: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if global.level_number == 0:
-		size = Vector2(5,1)
+		size = Vector2(5, 1)
 		set_position(Vector2(105, 94))
-	else :
-		size = Vector2(5,3)
+	else:
+		size = Vector2(5, 3)
 		set_position(Vector2(105, 28))
 	
 	level = levelMaker.instantiate()
@@ -67,7 +67,6 @@ func _ready():
 	fill_instructions()
 
 	MusicManager.play("background", "main", 2.0, true)
-	
 
 # Returns the position of a cell's center in pixels.
 func calculate_map_position(grid_position: Vector2) -> Vector2:
@@ -104,7 +103,7 @@ func add_unit(type):
 	sprite.position = get_local_mouse_position()
 	get_node(".").add_child(sprite)
 	sprite._on_mouse_entered()
-	SoundManager.play("main", "coins-buy")	
+	SoundManager.play("main", "coins-buy")
 	
 func _on_f_button_down():
 	add_unit(Unit.FETCH)
@@ -126,7 +125,6 @@ func _unhandled_input(event):
 		if event.pressed and event.keycode == KEY_ESCAPE:
 			escape()
 			
-			
 func escape():
 	if is_playing:
 		_on_play_button_pressed()
@@ -138,22 +136,25 @@ func escape():
 		var resume = escapeMenu.find_child("Resume")
 		resume.grab_focus()
 
-
 func _on_play_button_pressed():
 	is_playing = not is_playing
 	if first_start:
 		MusicManager.enable_stem("simulation") # Starts the simulation background sound
 		calc_pipeline()
-		print(pipeline_state)
+		
+		#If level 0, assert the pipeline is correct
+		if global.level_number == 0:
+			#if it's not, reset the level and display a help box
+			if not check_correct_pipeline():
+				return
 		level.create(pipeline_state, size, instructions)
 		first_start = false
 	else:
-		if (is_playing) :
+		if (is_playing):
 			MusicManager.enable_stem("simulation")
-		else : MusicManager.disable_stem("simulation")
+		else: MusicManager.disable_stem("simulation")
 		var controller = level.controller
 		controller.toggle_clock()
-		
 	
 # Remove all children from the scene
 func _on_reset_button_pressed():
@@ -171,19 +172,34 @@ func _on_reset_button_pressed():
 		is_playing = false
 		var playButton = get_parent().get_parent().get_node("UILayer/PlayPanel/PlayButton")
 		playButton._pressed()
-	
+		
+func check_correct_pipeline():
+	if (pipeline_state.size() != 5 or pipeline_state[0].unit_type != Unit.FETCH or pipeline_state[1].unit_type != Unit.DECODE or (pipeline_state[2].unit_type != Unit.ALU and pipeline_state[3].unit_type != Unit.ALU) or (pipeline_state[3].unit_type != Unit.WRITEBACK and pipeline_state[4].unit_type != Unit.WRITEBACK)):
+		for unit in pipeline_state:
+			if unit:
+				unit.queue_free()
+		pipeline_state = []
+		for i in (size.x * size.y):
+			pipeline_state.append(null)
+		first_start = true
+		is_playing = false
+		var playButton = get_parent().get_parent().get_node("UILayer/PlayPanel/PlayButton")
+		playButton._pressed()
+		get_parent().get_parent().get_node("UILayer/Level0/PanelContainer").visible = true
+		return false
+	return true
 
 func fill_instructions():
 	# Clear the instructions
 	instructions = []
 	
-	if global.level_number == 0 :
+	if global.level_number == 0:
 		# Only instructon : ADD r0, r1, r2
 		var instruction = Instruction.new(0, Instruction.Type.ALU, [Instruction.Register.r1, Instruction.Register.r2], Instruction.Register.r0)
 		add_child(instruction)
 		instructions.append(instruction)
 		
-	elif global.level_number == 1 :
+	elif global.level_number == 1:
 		# First instruction: ADD r0, r1, r2
 		var instruction = Instruction.new(0, Instruction.Type.ALU, [Instruction.Register.r1, Instruction.Register.r2], Instruction.Register.r0)
 		add_child(instruction)
@@ -203,7 +219,7 @@ func fill_instructions():
 		instruction = Instruction.new(3, Instruction.Type.MEM, [0, Instruction.Register.r0], Instruction.Register.r3)
 		add_child(instruction)
 		instructions.append(instruction)
-	else :
+	else:
 		# First instruction: LW r2, 0(r0)
 		var instruction = Instruction.new(0, Instruction.Type.MEM, [0, Instruction.Register.r0], Instruction.Register.r2)
 		add_child(instruction)
@@ -223,18 +239,14 @@ func fill_instructions():
 		instruction = Instruction.new(3, Instruction.Type.ALU, [Instruction.Register.r1, Instruction.Register.r3], Instruction.Register.r0)
 		add_child(instruction)
 		instructions.append(instruction)
-		
 	
 	$"../../UILayer/CodeContainer/InstructionsPanel".repopulate(instructions)
-
 
 func _on_resume_pressed():
 	escape()
 
-
 func _on_exit_pressed():
-	get_tree().change_scene_to_file("res://menu.tscn")	
-
+	get_tree().change_scene_to_file("res://menu.tscn")
 
 func _on_next_level_pressed():
 	if global.level_number < 2:
@@ -244,14 +256,16 @@ func _on_next_level_pressed():
 		global.level_number = 0
 		get_tree().change_scene_to_file("res://menu.tscn")
 
-
 func _on_plus_pressed():
 	var controller = level.controller
 	if controller:
 		controller.change_speed(true)
 
-
 func _on_minus_pressed():
 	var controller = level.controller
 	if controller:
 		controller.change_speed(false)
+
+func _on_restart_0_pressed():
+	var level0_UI = get_parent().get_parent().get_node("UILayer/Level0/PanelContainer")
+	level0_UI.visible = false
