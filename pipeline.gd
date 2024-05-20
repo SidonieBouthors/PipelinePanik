@@ -49,6 +49,8 @@ func _ready():
 	else:
 		size = Vector2(5, 3)
 		set_position(Vector2(105, 28))
+		
+	set_dev_score()
 	
 	level = levelMaker.instantiate()
 	add_child(level)
@@ -105,6 +107,7 @@ func add_unit(type):
 	sprite._on_mouse_entered()
 	SoundManager.play("main", "coins-buy")
 	
+	
 func _on_f_button_down():
 	add_unit(Unit.FETCH)
 
@@ -119,6 +122,18 @@ func _on_m_button_down():
 
 func _on_w_button_down():
 	add_unit(Unit.WRITEBACK)
+	
+func set_dev_score():
+	var devScore = get_parent().get_parent().get_node("UILayer/DevScore")
+	match global.level_number:
+		0:
+			devScore.set_score(0.2)
+		1:
+			devScore.set_score(0.5)
+		2:
+			devScore.set_score(0.36)
+		_:
+			devScore.set_score(0.0)
 
 func _unhandled_input(event):
 	if event is InputEventKey:
@@ -188,6 +203,7 @@ func check_correct_pipeline():
 		get_parent().get_parent().get_node("UILayer/Level0/PanelContainer").visible = true
 		return false
 	return true
+	
 
 func fill_instructions():
 	# Clear the instructions
@@ -241,6 +257,8 @@ func fill_instructions():
 		instructions.append(instruction)
 	
 	$"../../UILayer/CodeContainer/InstructionsPanel".repopulate(instructions)
+	
+
 
 func _on_resume_pressed():
 	escape()
@@ -269,3 +287,17 @@ func _on_minus_pressed():
 func _on_restart_0_pressed():
 	var level0_UI = get_parent().get_parent().get_node("UILayer/Level0/PanelContainer")
 	level0_UI.visible = false
+
+
+func _on_help_button_pressed():
+	if is_playing:
+		_on_play_button_pressed()
+		var playButton = get_parent().get_parent().get_node("UILayer/PlayPanel/PlayButton")
+		playButton._pressed()
+	var tutoPanel =  get_parent().get_parent().get_node("PopupLayer/TutoPanel")
+	tutoPanel.visible = not tutoPanel.visible
+	if tutoPanel.visible:
+		var resume = tutoPanel.find_child("ResumeTuto")
+		resume.grab_focus()
+	
+	

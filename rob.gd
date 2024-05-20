@@ -70,8 +70,6 @@ func run():
 					pc += 1
 			else:
 				unit.instr = null
-
-		
 		
 		for unit in inputs:
 			unit.run()

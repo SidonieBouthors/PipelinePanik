@@ -13,18 +13,17 @@ var last_unit: Commiter
 
 var components: Array = []
 
-func _init(_instructions : Array, _first_units : Array, _last_unit : Commiter, _components: Array):
+func _init(_instructions: Array, _first_units: Array, _last_unit: Commiter, _components: Array):
 	instructions = _instructions
 	instruction_count = _instructions.size()
 	first_units = _first_units
 	last_unit = _last_unit
 	components = _components
 
-
 # Main function, called every clock cycle. It handles the simulation of the pipeline
 func _on_timer_timeout():
 	pop_instructions(first_units, instructions)
-	_print_state()
+	#_print_state()
 	_draw_state()
 	
 	clock_cycle_counter += 1
@@ -78,13 +77,13 @@ func set_timer():
 	timer.one_shot = false
 	add_child(timer)
 
-func change_speed(faster : bool):
+func change_speed(faster: bool):
 	if faster:
 		if timer_wait_time >= 2:
-			timer_wait_time-=1
+			timer_wait_time -= 1
 	else:
-		if timer_wait_time <=4:
-			timer_wait_time+=1
+		if timer_wait_time <= 4:
+			timer_wait_time += 1
 	timer.wait_time = timer_wait_time
 
 func _print_state():
@@ -101,13 +100,13 @@ func _print_state():
 					print("Writeback : ", unit.instr.pc)
 			
 		elif unit is Commiter:
-			print("Committer: ", unit.instructions.map(func(i): 
+			print("Committer: ", unit.instructions.map(func(i):
 				if i:
 					return i.pc))
 		
 	print()
 
-func _draw_state() :
+func _draw_state():
 	if not first_units.is_empty():
 		for u in components:
 			if u is Unit:
@@ -126,8 +125,6 @@ func _draw_state() :
 func end_game():
 	MusicManager.disable_stem("simulation")
 	toggle_clock()
-	print("Simulation done")
-	print("Score : ", score, " IPC")
 	var parent = self.get_parent()
 	while parent.name != "Node2D":
 		parent = parent.get_parent()
@@ -135,7 +132,6 @@ func end_game():
 	endLevel.find_child("Score").text = "Score: " + str(snapped(score, 0.01)) + " IPC"
 	endLevel.visible = true
 	endLevel.find_child("NextLevel").grab_focus()
-
 
 func clear():
 	instructions = []

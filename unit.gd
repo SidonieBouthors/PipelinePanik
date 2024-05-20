@@ -4,11 +4,11 @@ class_name Unit
 ######## RUNNABLE ########
 
 @export var unit_type: Pipeline.Unit
-@export var instr : Instruction
-@export var is_stalled : bool = false
+@export var instr: Instruction
+@export var is_stalled: bool = false
 
 # Either a unit or a scheduler
-var previous_unit 
+var previous_unit
 var next_unit
 	
 # Run the unit every clock cycle. 
@@ -34,10 +34,9 @@ func clear():
 	instr = null
 	is_stalled = false
 	
-	
 ######## VISUAL ########
 
-const instruction_panel = preload("res://instruction_panel.tscn")
+const instruction_panel = preload ("res://instruction_panel.tscn")
 
 var draggable = false
 var is_inside_dropzone = false
@@ -52,7 +51,6 @@ func set_sprite(image):
 func _ready():
 	noPos = true
 	$InstrPanel.visible = false
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -74,9 +72,9 @@ func _process(delta):
 			if is_inside_dropzone and zone_ref.occupant == self:
 				noPos = false
 				tween.tween_property(self, "position", zone_ref.position, 0.2).set_ease(Tween.EASE_OUT)
-				SoundManager.play("main", "bong")	
+				SoundManager.play("main", "bong")
 			else:
-				if (noPos): 
+				if (noPos):
 					queue_free()
 				else:
 					noPos = false
@@ -95,12 +93,10 @@ func _on_mouse_entered():
 		draggable = true
 		scale = Vector2(1.05, 1.05)
 
-
 func _on_mouse_exited():
 	if not global.is_dragging:
 		draggable = false
 		scale = Vector2(1, 1)
-
 
 func _on_body_entered(zone):
 	if zone.is_in_group("dropzone"):
@@ -110,10 +106,8 @@ func _on_body_entered(zone):
 			is_inside_dropzone = true
 			zone_ref = zone
 
-
 func _on_body_exited(zone):
 	if zone.is_in_group("dropzone"):
 		zone.unoccupy(self)
 		if zone == zone_ref:
 			is_inside_dropzone = false
-			

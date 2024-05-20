@@ -1,18 +1,18 @@
 extends Node
 class_name Instruction
-var pc : int
-var type : Type
-var inputs : Array #Array of type Register or int (immediate values)
-var output : Register
+var pc: int
+var type: Type
+var inputs: Array # Array of type Register or int (immediate values)
+var output: Register
 
 enum Type {
 	ALU,
 	MEM,
 	BRANCH
-} 
+}
 
 enum Register {
-	r0 = 2**17,
+	r0 = 2 * * 17,
 	r1,
 	r2,
 	r3,
@@ -22,7 +22,7 @@ enum Register {
 	r7,
 }
 
-func _init(_pc : int, _type : Type, _inputs : Array, _output : Register):
+func _init(_pc: int, _type: Type, _inputs: Array, _output: Register):
 	pc = _pc
 	type = _type
 	inputs = _inputs
@@ -36,5 +36,4 @@ func get_text():
 		else:
 			ins += str(inp) + " "
 	var text = str(pc) + " " + Type.keys()[type] + " " + Register.keys()[output - Register.r0] + " " + ins
-	print(text)
 	return text

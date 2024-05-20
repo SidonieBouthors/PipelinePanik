@@ -1,6 +1,6 @@
 extends PanelContainer
 
-const instruction = preload("res://instruction_panel.tscn")
+const instruction = preload ("res://instruction_panel.tscn")
 var instruction_children = []
 
 func _ready():

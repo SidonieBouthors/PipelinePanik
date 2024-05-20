@@ -3,7 +3,7 @@ class_name Scheduler
 
 @export var inputs: Array = []
 @export var outputs: Array = []
-@export var semaphore : int
+@export var semaphore: int
 @export var components: Array = []
 
 # Available inputs = inputs - NOPs
@@ -32,7 +32,7 @@ func scheduler():
 				schedule(input, unit)
 				inputs_to_skip[input] = true
 				available_outputs = available_outputs.filter(
-					func(i: Unit): 
+					func(i: Unit):
 						return i != unit
 			)
 			else:
@@ -48,7 +48,7 @@ func schedule(old: Unit, new: Unit):
 		old.is_stalled = false
 
 func update_available():
-	available_inputs = inputs.filter(func(unit: Unit): 
+	available_inputs = inputs.filter(func(unit: Unit):
 		return unit.instr != null
 	)
 	
@@ -56,14 +56,14 @@ func update_available():
 		return a.instr.pc < b.instr.pc
 	)
 
-	available_outputs = outputs.filter(func(unit: Unit): 
+	available_outputs = outputs.filter(func(unit: Unit):
 		return unit.is_stalled == false
 	)
 	
 func update_stall():
 	pass
 
-func is_type_compat(instruction : Instruction, unit: Unit) -> bool:
+func is_type_compat(instruction: Instruction, unit: Unit) -> bool:
 	var type = false
 
 	match instruction.type:
@@ -109,11 +109,11 @@ func get_compatible_unit(instruction: Instruction, units: Array) -> Unit:
 	return null
 	
 func is_instr_independent(input: Instruction, output: Instruction) -> bool:
-	return input.inputs.filter(func(i): 
-		var inp := i as Instruction.Register
+	return input.inputs.filter(func(i):
+		var inp:=i as Instruction.Register
 
 		# if input is not a register (e.g. immediate), it is always independent
-		if not inp :
+		if not inp:
 			return false
 		
 		return inp == output.output

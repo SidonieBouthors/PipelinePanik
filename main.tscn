@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bd0hbatixfv0y"]
+[gd_scene load_steps=35 format=3 uid="uid://bd0hbatixfv0y"]
 
 [ext_resource type="Texture2D" uid="uid://bnhkhnr1ta8io" path="res://assets/background_light.png" id="1_3uv06"]
 [ext_resource type="Script" path="res://pipeline.gd" id="1_34f1b"]
@@ -27,6 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://bnkvwimd7ktp5" path="res://assets/replay-button.png" id="22_bnavf"]
 [ext_resource type="Theme" uid="uid://dwctb0tlytcoo" path="res://pipeline_theme.tres" id="26_i1crj"]
 [ext_resource type="FontFile" uid="uid://dnsh0g58gjw40" path="res://assets/fonts/m5x7.ttf" id="27_fbt6k"]
+[ext_resource type="Script" path="res://DevScore.gd" id="28_heh4c"]
 
 [sub_resource type="Resource" id="Resource_2jami"]
 script = ExtResource("3_a84p1")
@@ -228,6 +229,24 @@ clip_contents = true
 layout_mode = 2
 text = "Score: 0 IPC"
 
+[node name="HelpButtonPanel" type="PanelContainer" parent="UILayer"]
+custom_minimum_size = Vector2(0, 26)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -53.0
+offset_top = 2.0
+offset_right = 53.0
+offset_bottom = 28.0
+grow_horizontal = 2
+
+[node name="HelpButton" type="TextureButton" parent="UILayer/HelpButtonPanel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UILayer/HelpButtonPanel"]
+layout_mode = 2
+text = "Comment jouer ?"
+
 [node name="Level0" type="CanvasLayer" parent="UILayer"]
 
 [node name="PanelContainer" type="PanelContainer" parent="UILayer/Level0"]
@@ -263,26 +282,56 @@ theme_override_fonts/font = ExtResource("27_fbt6k")
 theme_override_font_sizes/font_size = 16
 text = "Recommencer"
 
-[node name="HelpButtonPanel" type="PanelContainer" parent="UILayer"]
-custom_minimum_size = Vector2(0, 26)
-anchors_preset = 5
+[node name="DevScore" type="Label" parent="UILayer"]
+anchors_preset = 7
 anchor_left = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-offset_left = -53.0
-offset_right = 53.0
-offset_bottom = 31.0
+anchor_bottom = 1.0
+offset_left = 176.0
+offset_top = -75.0
+offset_right = 238.0
+offset_bottom = -30.0
 grow_horizontal = 2
-
-[node name="HelpButton" type="Button" parent="UILayer/HelpButtonPanel"]
-layout_mode = 2
-theme = ExtResource("26_i1crj")
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("27_fbt6k")
-text = "Comment jouer ?"
-flat = true
+grow_vertical = 0
+text = "Score des devs :
+"
+autowrap_mode = 3
+script = ExtResource("28_heh4c")
 
 [node name="PopupLayer" type="CanvasLayer" parent="."]
 layer = 3
+
+[node name="TutoPanel" type="PanelContainer" parent="PopupLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -209.0
+offset_top = -70.0
+offset_right = 209.0
+offset_bottom = 42.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PopupLayer/TutoPanel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PopupLayer/TutoPanel/VBoxContainer"]
+custom_minimum_size = Vector2(40, 26)
+layout_mode = 2
+text = "Construisez votre pipeline en y déposant les unités ou en en retirant avec CLIC DROIT, puis appuyez sur PLAY (ne la changez plus après).
+Si l'exécution ne vous plaît pas, appuyez sur RESET pour recommencer.
+En appuyant sur ESC, vous pouvez ouvrir un menu pour changer la vitesse du jeu ou revenir à l'écran principal.
+"
+autowrap_mode = 3
+
+[node name="ResumeTuto" type="Button" parent="PopupLayer/TutoPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("27_fbt6k")
+text = "Reprendre"
 
 [node name="EscapeMenu" type="PanelContainer" parent="PopupLayer"]
 visible = false
@@ -398,7 +447,9 @@ text = "Retourner au menu"
 [connection signal="pressed" from="UILayer/ShopPanel/HBoxContainer/W-Button" to="CanvasLayer2/Pipeline" method="_on_w_pressed"]
 [connection signal="pressed" from="UILayer/PlayPanel/PlayButton" to="CanvasLayer2/Pipeline" method="_on_play_button_pressed"]
 [connection signal="pressed" from="UILayer/RestartPanel/RestartButton" to="CanvasLayer2/Pipeline" method="_on_reset_button_pressed"]
+[connection signal="pressed" from="UILayer/HelpButtonPanel/HelpButton" to="CanvasLayer2/Pipeline" method="_on_help_button_pressed"]
 [connection signal="pressed" from="UILayer/Level0/PanelContainer/VBoxContainer/Restart0" to="CanvasLayer2/Pipeline" method="_on_restart_0_pressed"]
+[connection signal="pressed" from="PopupLayer/TutoPanel/VBoxContainer/ResumeTuto" to="CanvasLayer2/Pipeline" method="_on_help_button_pressed"]
 [connection signal="pressed" from="PopupLayer/EscapeMenu/VBoxContainer/Resume" to="CanvasLayer2/Pipeline" method="_on_resume_pressed"]
 [connection signal="pressed" from="PopupLayer/EscapeMenu/VBoxContainer/HBoxContainer/Minus" to="CanvasLayer2/Pipeline" method="_on_minus_pressed"]
 [connection signal="pressed" from="PopupLayer/EscapeMenu/VBoxContainer/HBoxContainer/Plus" to="CanvasLayer2/Pipeline" method="_on_plus_pressed"]
