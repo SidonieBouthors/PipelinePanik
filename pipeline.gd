@@ -187,7 +187,7 @@ func fill_instructions():
 		add_child(instruction)
 		instructions.append(instruction)
 		
-	else :
+	elif global.level_number == 1 :
 		# First instruction: ADD r0, r1, r2
 		var instruction = Instruction.new(0, Instruction.Type.ALU, [Instruction.Register.r1, Instruction.Register.r2], Instruction.Register.r0)
 		add_child(instruction)
@@ -207,5 +207,26 @@ func fill_instructions():
 		instruction = Instruction.new(3, Instruction.Type.MEM, [0, Instruction.Register.r0], Instruction.Register.r3)
 		add_child(instruction)
 		instructions.append(instruction)
+	else :
+		# First instruction: LW r2, 0(r0)
+		var instruction = Instruction.new(0, Instruction.Type.MEM, [0, Instruction.Register.r0], Instruction.Register.r2)
+		add_child(instruction)
+		instructions.append(instruction)
+
+		# Second instruction: ADD r1, r1, r3
+		instruction = Instruction.new(1, Instruction.Type.ALU, [Instruction.Register.r1, Instruction.Register.r3], Instruction.Register.r1)
+		add_child(instruction)
+		instructions.append(instruction)
+
+		# Third instruction: LW r3, 16(r2)
+		instruction = Instruction.new(2, Instruction.Type.MEM, [16, Instruction.Register.r2], Instruction.Register.r3)
+		add_child(instruction)
+		instructions.append(instruction)
+
+		# Fourth instruction: ADD r0, r1, r3
+		instruction = Instruction.new(3, Instruction.Type.ALU, [Instruction.Register.r1, Instruction.Register.r3], Instruction.Register.r0)
+		add_child(instruction)
+		instructions.append(instruction)
+		
 	
 	$"../../UILayer/CodeContainer/InstructionsPanel".repopulate(instructions)

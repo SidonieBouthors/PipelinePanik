@@ -13,10 +13,13 @@ func _on_level_0_pressed():
 	get_tree().change_scene_to_file("res://main.tscn")
 	
 
-
-
 func _on_level_1_pressed():
 	global.level_number = 1
+	get_tree().change_scene_to_file("res://main.tscn")
+
+
+func _on_level_2_pressed():
+	global.level_number = 2
 	get_tree().change_scene_to_file("res://main.tscn")
 
 
