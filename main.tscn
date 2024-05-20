@@ -47,25 +47,25 @@ volume = 0.0
 pitch = 1.0
 streams = Array[AudioStream]([ExtResource("8_up0y5")])
 
-[sub_resource type="Resource" id="Resource_nr7mw"]
+[sub_resource type="Resource" id="Resource_gywsp"]
 script = ExtResource("11_cawjm")
-name = ""
+name = "main"
 enabled = true
 volume = 0.0
 stream = ExtResource("12_xy8md")
 
-[sub_resource type="Resource" id="Resource_rgfta"]
+[sub_resource type="Resource" id="Resource_qotmg"]
 script = ExtResource("11_cawjm")
 name = "simulation"
 enabled = false
 volume = 0.0
 stream = ExtResource("13_gaudq")
 
-[sub_resource type="Resource" id="Resource_2db8i"]
+[sub_resource type="Resource" id="Resource_3wbsa"]
 script = ExtResource("10_ri5pv")
 name = "main"
-bus = ""
-stems = Array[ExtResource("11_cawjm")]([SubResource("Resource_nr7mw"), SubResource("Resource_rgfta")])
+bus = "master"
+stems = Array[ExtResource("11_cawjm")]([SubResource("Resource_gywsp"), SubResource("Resource_qotmg")])
 
 [node name="Node2D" type="Node2D"]
 
@@ -86,7 +86,7 @@ events = Array[ExtResource("3_a84p1")]([SubResource("Resource_2jami"), SubResour
 script = ExtResource("9_cgvh0")
 label = "background"
 bus = "master"
-tracks = Array[ExtResource("10_ri5pv")]([SubResource("Resource_2db8i")])
+tracks = Array[ExtResource("10_ri5pv")]([SubResource("Resource_3wbsa")])
 
 [node name="CharacterColored" type="Sprite2D" parent="CanvasLayer2"]
 visible = false
