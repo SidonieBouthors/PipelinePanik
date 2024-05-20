@@ -43,10 +43,16 @@ var is_playing : bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if global.level_number == 0:
+		size = Vector2(5,1)
+		set_position(Vector2(105, 94))
+	else :
+		size = Vector2(5,3)
+		set_position(Vector2(105, 30))
+	
 	level = levelMaker.instantiate()
 	add_child(level)
 	
-	set_position(Vector2(105, 30))
 	for i in (size.x * size.y):
 		pipeline_state.append(null)
 		drop_zones.append(null)
@@ -174,25 +180,32 @@ func _on_reset_button_pressed():
 func fill_instructions():
 	# Clear the instructions
 	instructions = []
+	
+	if global.level_number == 0 :
+		# Only instructon : ADD r0, r1, r2
+		var instruction = Instruction.new(0, Instruction.Type.ALU, [Instruction.Register.r1, Instruction.Register.r2], Instruction.Register.r0)
+		add_child(instruction)
+		instructions.append(instruction)
+		
+	else :
+		# First instruction: ADD r0, r1, r2
+		var instruction = Instruction.new(0, Instruction.Type.ALU, [Instruction.Register.r1, Instruction.Register.r2], Instruction.Register.r0)
+		add_child(instruction)
+		instructions.append(instruction)
 
-	# First instruction: ADD r0, r1, r2
-	var instruction = Instruction.new(0, Instruction.Type.ALU, [Instruction.Register.r1, Instruction.Register.r2], Instruction.Register.r0)
-	add_child(instruction)
-	instructions.append(instruction)
+		# Second instruction: ADD r1, r1, r2
+		instruction = Instruction.new(1, Instruction.Type.ALU, [Instruction.Register.r1, Instruction.Register.r2], Instruction.Register.r1)
+		add_child(instruction)
+		instructions.append(instruction)
 
-	# Second instruction: ADD r1, r1, r2
-	instruction = Instruction.new(1, Instruction.Type.ALU, [Instruction.Register.r1, Instruction.Register.r2], Instruction.Register.r1)
-	add_child(instruction)
-	instructions.append(instruction)
+		# Third instruction: ADD r2, r1, r2
+		instruction = Instruction.new(2, Instruction.Type.ALU, [Instruction.Register.r1, Instruction.Register.r2], Instruction.Register.r2)
+		add_child(instruction)
+		instructions.append(instruction)
 
-	# Third instruction: ADD r2, r1, r2
-	instruction = Instruction.new(2, Instruction.Type.ALU, [Instruction.Register.r1, Instruction.Register.r2], Instruction.Register.r2)
-	add_child(instruction)
-	instructions.append(instruction)
-
-	# Fourth instruction: LW r3, 0(r0)
-	instruction = Instruction.new(3, Instruction.Type.MEM, [0, Instruction.Register.r0], Instruction.Register.r3)
-	add_child(instruction)
-	instructions.append(instruction)
+		# Fourth instruction: LW r3, 0(r0)
+		instruction = Instruction.new(3, Instruction.Type.MEM, [0, Instruction.Register.r0], Instruction.Register.r3)
+		add_child(instruction)
+		instructions.append(instruction)
 	
 	$"../../UILayer/CodeContainer/InstructionsPanel".repopulate(instructions)

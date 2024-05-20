@@ -6,12 +6,8 @@ func _ready():
 	$HBoxContainer/Next.grab_focus()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
 func _on_skip_pressed():
+	global.level_number = 0
 	get_tree().change_scene_to_file("res://main.tscn")
 
 
