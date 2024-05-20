@@ -11,18 +11,7 @@ var instruction_count: int
 var first_units: Array
 var last_unit: Commiter
 
-var scheduler_list: Array = []
 var components: Array = []
-
-signal increment_clock(clock_cycle_counter)
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
-	#set_timer()
-	#start_clock()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 
 func _init(_instructions : Array, _first_units : Array, _last_unit : Commiter, _components: Array):
 	instructions = _instructions
@@ -31,20 +20,8 @@ func _init(_instructions : Array, _first_units : Array, _last_unit : Commiter, _
 	last_unit = _last_unit
 	components = _components
 
-func searchAllSchedulers(unit, accumulator):
-	if not unit:
-		return
 
-	if unit is Scheduler:
-		if unit not in accumulator:
-			accumulator.append(unit)
-			for output in unit.outputs:
-				searchAllSchedulers(output, accumulator)
-	elif unit is Commiter:
-		return
-	else:
-		searchAllSchedulers(unit.next_unit, accumulator)
-
+# Main function, called every clock cycle. It handles the simulation of the pipeline
 func _on_timer_timeout():
 	pop_instructions(first_units, instructions)
 	_print_state()
@@ -65,11 +42,7 @@ func _on_timer_timeout():
 			return null
 		else: return instr.pc)
 	if (instruction_count - 1) in pc:
-		MusicManager.disable_stem("simulation")
-		toggle_clock()
-		print("Simulation done")
-		print("Score : ", str(float(instruction_count)/clock_cycle_counter), " IPC")
-		return
+		end_game()
 	else:
 		last_unit.run()
 
@@ -83,10 +56,7 @@ func run():
 
 #E 0:00:46:0634   controller.gd:66 @ start_clock(): Timer was not added to the SceneTree. Either add it or set autostart to true.
 func start_clock():
-	if timer.is_inside_tree():
-		timer.start()
-	else:
-		print("Timer not in scene tree")
+	timer.start()
 
 func toggle_clock():
 	if (timer.is_stopped()):
@@ -105,6 +75,10 @@ func set_timer():
 	timer.timeout.connect(_on_timer_timeout)
 	timer.one_shot = false
 	add_child(timer)
+
+func change_speed(speed):
+	timer.wait_time = speed
+	timer_wait_time = speed
 
 func _print_state():
 	print()
@@ -141,6 +115,14 @@ func _draw_state() :
 						parent = parent.get_parent()
 					var rob = parent.find_child("ROB")
 					rob.repopulate(u.stack)
+
+func end_game():
+	MusicManager.disable_stem("simulation")
+	toggle_clock()
+	print("Simulation done")
+	print("Score : ", str(float(instruction_count)/clock_cycle_counter), " IPC")
+	return
+
 
 func clear():
 	instructions = []

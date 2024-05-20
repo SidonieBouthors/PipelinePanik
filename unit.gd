@@ -10,12 +10,6 @@ class_name Unit
 # Either a unit or a scheduler
 var previous_unit 
 var next_unit
-
-func _on_controller_increment_clock(clock_cycle_counter):
-	print(clock_cycle_counter)
-	
-func update_instruction(instruction):
-	instr = instruction
 	
 # Run the unit every clock cycle. 
 # Note that the simulation starts at the end of the pipeline and 
@@ -35,9 +29,6 @@ func run():
 				instr = previous_unit.instr
 				previous_unit.instr = null
 		previous_unit.run()
-
-func find_types() -> Array:
-	return []
 
 func clear():
 	instr = null
