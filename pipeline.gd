@@ -100,8 +100,6 @@ func add_unit(type):
 	sprite._on_mouse_entered()
 	SoundManager.play("main", "coins-buy")	
 	
-
-
 func _on_f_button_down():
 	add_unit(Unit.FETCH)
 
@@ -169,6 +167,8 @@ func _on_reset_button_pressed():
 		fill_instructions()
 		first_start = true
 		is_playing = false
+		var playButton = get_parent().get_parent().get_node("UILayer/PlayPanel/PlayButton")
+		playButton._pressed()
 	
 
 func fill_instructions():
@@ -189,7 +189,6 @@ func fill_instructions():
 	instruction = Instruction.new(2, Instruction.Type.ALU, [Instruction.Register.r1, Instruction.Register.r2], Instruction.Register.r2)
 	add_child(instruction)
 	instructions.append(instruction)
-
 
 	# Fourth instruction: LW r3, 0(r0)
 	instruction = Instruction.new(3, Instruction.Type.MEM, [0, Instruction.Register.r0], Instruction.Register.r3)
