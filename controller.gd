@@ -76,9 +76,14 @@ func set_timer():
 	timer.one_shot = false
 	add_child(timer)
 
-func change_speed(speed):
-	timer.wait_time = speed
-	timer_wait_time = speed
+func change_speed(faster : bool):
+	if faster:
+		if timer_wait_time >= 2:
+			timer_wait_time-=1
+	else:
+		if timer_wait_time <=4:
+			timer_wait_time+=1
+	timer.wait_time = timer_wait_time
 
 func _print_state():
 	print()
@@ -126,7 +131,8 @@ func end_game():
 		parent = parent.get_parent()
 	var endLevel = parent.find_child("EndLevel")
 	endLevel.find_child("Score").text = str("Score : ", score, " IPC")
-	endLevel.visible = not endLevel.visible
+	endLevel.visible = true
+	endLevel.find_child("NextLevel").grab_focus()
 
 
 func clear():

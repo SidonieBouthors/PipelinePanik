@@ -13,6 +13,11 @@ func _on_level_selector_pressed():
 
 func _on_exit_pressed():
 	get_tree().quit()
+	
+func _unhandled_input(event):
+	if event is InputEventKey:
+		if event.pressed and event.keycode == KEY_ESCAPE:
+			get_tree().quit()
 
 
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://introduction_1.gd" id="1_cl21h"]
 [ext_resource type="FontFile" uid="uid://dnsh0g58gjw40" path="res://assets/fonts/m5x7.ttf" id="1_q3fyr"]
-[ext_resource type="PackedScene" uid="uid://2www521xcgdj" path="res://background_tiled.tscn" id="2_rfxnu"]
+[ext_resource type="PackedScene" path="res://background_tiled.tscn" id="2_rfxnu"]
 
 [node name="Introduction1" type="Control"]
 layout_mode = 3
@@ -28,7 +28,7 @@ grow_horizontal = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("1_q3fyr")
 theme_override_font_sizes/font_size = 16
-text = "Bienvenue dans notre usine virtuelle où chaque niveau est une nouvelle aventure au cœur d'un processeur, le cerveau de l'ordinateur. Imagine une chaîne de montage animée, où tu vas explorer les cinq étapes essentielles de l'exécution d'une instruction : Fetch, Decode, Execute, Memory, et Writeback.
+text = "Bienvenue dans notre usine virtuelle où chaque niveau est une nouvelle aventure au cœur d'un processeur, le cerveau de l'ordinateur. Imagine une chaîne de montage animée, où tu vas explorer les cinq étapes essentielles de l'exécution d'une instruction : Fetch, Decode, ALU, Memory, et Writeback.
 
 Ta mission : optimiser l'interaction entre chaque étape pour améliorer la gestion des dépendances entre les instructions, et éviter les arrêts de la chaîne. On va avancer pas à pas, pour te guider à travers chaque phase de la compréhension d'une pipeline d'un processeur.
 

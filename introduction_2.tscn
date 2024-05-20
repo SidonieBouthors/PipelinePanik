@@ -28,30 +28,32 @@ offset_bottom = 239.0
 grow_horizontal = 2
 theme = ExtResource("1_mewcv")
 theme_override_fonts/normal_font = ExtResource("2_tj6w6")
-text = "Chaque étape est symbolisée par sa première lettre : F, D, E, M, et W.
+text = "Une instruction est l'élément élémentaire de l'exécution d'un programme informatique. L'opération peut être de plusieurs types :
+ALU : une opération mathématique simple (addition, soustraction)
+MEM : une lecture ou écriture de la mémoire
 
-- Fetch : Récupère la prochaine instruction de la mémoire
-- Decode : Prépare les registres et décide si l'instruction peut continuer dans la pipeline, en fonction des instructions déjà présentes et de leurs dépendances
-- Execute : Effectue les opérations arithmétiques
-- Memory : Si une instruction sollicite la mémoire, elle passe par là
-- Writeback : Marque l'instruction comme étant terminée et enregistre le résultat dans le registre correspondant
-
-Une instruction est l'élément élémentaire de l'exécution d’un programme informatique, elle se présente sous la forme suivante : opération à exécuter, résultat, premier paramètre, deuxième paramètre.
-L'opération peut être de plusieurs types :
-ALU : une opération mathématique simple (addition, soustraction), elle ne nécessite pas d'accéder à la mémoire.
-MEM : une lecture ou écriture de la mémoire, nécessite donc d'accéder à la mémoire.
-Un exemple d’instruction est : ALU r1 r2 r3, qui est équivalent à r1 = r2 ± r3.
-Comme cette instruction ne nécessite pas d'accéder à la mémoire, elle n'aura pas besoin de passer par l'étape M. 
-
-Un concept important est la notion de temps, dans un processeur chaque étape est régie par un tempo bien précis, le Clock Cycle (abrégé cc). Toutes les étapes prennent exactement 1cc, hormis l’étape M qui peut en prendre plus. Ainsi, comme les étapes sont en série, si une étape est bloquée, elle bloquera toutes les étapes en amont : la pipeline \"stall\".
+Elle se présente sous la forme suivante :
+Opération à exécuter ; résultat ; 1er paramètre ; 2ème paramètre.
+Un exemple d'instruction est : ALU r3 r1 r2, qui est équivalent à r3 = r1 ± r2.
 
 Les instructions sont données dans un certain ordre, et certaines sont dépendantes de cet ordre d'exécution pour obtenir le bon résultat. Voici un exemple simple : 
-	Instruction 0 : lit le contenu de la mémoire et le stocke dans r1
-	Instruction 1 : additionne r1 et r2, et stocke le résultat dans r3
+	Instruction 0 : MEM r1, 0, 0 <=> r1 = mem[0]
+	Instruction 1 : ALU  r3, r1, 1	<=> r3 = r1 + 1
+On voit ici que si l'instruction 1 est lancée avant que l'instruction 0 ne soit finie, on n'obtiendra pas le bon résultat.
 
-On voit ici que si DECODE lance l'instruction 1 avant que l'instruction 0 n'ait le temps de finir, on obtient un comportement non défini.
+Chaque étape est symbolisée par sa première lettre : F, D, A, M, et W :
+- Fetch : Récupère la prochaine instruction de la mémoire
+- Decode : Prépare les registres et détermine, en fonction de leurs dépendances, si l'instruction peut continuer dans la pipeline
+- ALU : Effectue les opérations arithmétiques
+- Memory : Effectue les opérations qui sollicitent la mémoire
+- Writeback : Marque l’instruction comme étant terminée et enregistre le résultat dans le registre correspondant
 
-C'est parti pour l'exploration de la pipeline ! Deviens un ingénieur, qui a pour rôle de construire la pipeline optimale pour ton processeur !
+Un concept important est la notion de temps, dans un processeur chaque étape est régie par un tempo bien précis, le Clock Cycle (abrégé cc). Toutes les étapes prennent exactement 1cc. Ainsi, comme les étapes sont en série, si une étape est bloquée, elle bloquera toutes les étapes en amont : on dit que la pipeline \"stall\".
+On peut désormais exécuter les instructions en parallèle (sur plusieurs étages visuellement) pour accélérer les performances. Cependant, une contrainte demeure : les instructions doivent toujours être validées dans un ordre croissant. Pour garantir le respect de cet ordre, on utilise un Reorder Buffer (ROB), qui s'assure de réorganiser les instructions de manière appropriée.
+Comme mentionné précédemment, le but est d'optimiser le temps total d'exécution d'une série d'instructions. Ce temps se compte en Instruction Par Cycle (abrégé IPC), c'est le rapport entre le nombre d'instructions validées et le nombre de cc. Ainsi plus l'IPC est grand, meilleure sera la performance. 
+
+Te voilà prêt⋅e à construire ta première pipeline. Bonne chance !
+
 
 
 

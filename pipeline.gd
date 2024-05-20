@@ -148,7 +148,6 @@ func _on_play_button_pressed():
 		level.create(pipeline_state, size, instructions)
 		first_start = false
 	else:
-		
 		if (is_playing) :
 			MusicManager.enable_stem("simulation")
 		else : MusicManager.disable_stem("simulation")
@@ -244,3 +243,15 @@ func _on_next_level_pressed():
 	else:
 		global.level_number = 0
 		get_tree().change_scene_to_file("res://menu.tscn")
+
+
+func _on_plus_pressed():
+	var controller = level.controller
+	if controller:
+		controller.change_speed(true)
+
+
+func _on_minus_pressed():
+	var controller = level.controller
+	if controller:
+		controller.change_speed(false)
