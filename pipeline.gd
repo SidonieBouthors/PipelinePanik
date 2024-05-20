@@ -118,7 +118,6 @@ func _on_w_button_down():
 	add_unit(Unit.WRITEBACK)
 
 func _on_play_button_pressed():
-  
 	is_playing = not is_playing
 	if first_start:
 		MusicManager.enable_stem("simulation") # Starts the simulation background sound
