@@ -128,9 +128,15 @@ func _unhandled_input(event):
 			
 			
 func escape():
-	_on_play_button_pressed()
+	if is_playing:
+		_on_play_button_pressed()
+		var playButton = get_parent().get_parent().get_node("UILayer/PlayPanel/PlayButton")
+		playButton._pressed()
 	var escapeMenu = get_parent().get_parent().get_node("PopupLayer/EscapeMenu")
 	escapeMenu.visible = not escapeMenu.visible
+	if escapeMenu.visible:
+		var resume = escapeMenu.find_child("Resume")
+		resume.grab_focus()
 
 
 func _on_play_button_pressed():
@@ -225,3 +231,16 @@ func fill_instructions():
 
 func _on_resume_pressed():
 	escape()
+
+
+func _on_exit_pressed():
+	get_tree().change_scene_to_file("res://menu.tscn")	
+
+
+func _on_next_level_pressed():
+	if global.level_number < 2:
+		global.level_number += 1
+		get_tree().change_scene_to_file("res://main.tscn")
+	else:
+		global.level_number = 0
+		get_tree().change_scene_to_file("res://menu.tscn")

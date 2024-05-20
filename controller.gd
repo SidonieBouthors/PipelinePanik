@@ -120,8 +120,13 @@ func end_game():
 	MusicManager.disable_stem("simulation")
 	toggle_clock()
 	print("Simulation done")
-	print("Score : ", str(float(instruction_count)/clock_cycle_counter), " IPC")
-	return
+	print("Score : ", score, " IPC")
+	var parent = self.get_parent()
+	while parent.name != "Node2D":
+		parent = parent.get_parent()
+	var endLevel = parent.find_child("EndLevel")
+	endLevel.find_child("Score").text = str("Score : ", score, " IPC")
+	endLevel.visible = not endLevel.visible
 
 
 func clear():
