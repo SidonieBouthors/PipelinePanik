@@ -60,6 +60,8 @@ func _ready():
 			
 	fill_instructions()
 			
+	MusicManager.loaded.connect(func(): MusicManager.play("background", "main", 2.0, true))
+	
 
 # Returns the position of a cell's center in pixels.
 func calculate_map_position(grid_position: Vector2) -> Vector2:
@@ -96,6 +98,8 @@ func add_unit(type):
 	sprite.position = get_local_mouse_position()
 	get_node(".").add_child(sprite)
 	sprite._on_mouse_entered()
+	SoundManager.play("main", "coins-buy")	
+	
 
 
 func _on_f_button_down():
@@ -114,19 +118,19 @@ func _on_w_button_down():
 	add_unit(Unit.WRITEBACK)
 
 func _on_play_button_pressed():
+  
 	is_playing = not is_playing
 	if first_start:
+		MusicManager.enable_stem("simulation") # Starts the simulation background sound
 		calc_pipeline()
 		print(pipeline_state)
 		level.create(pipeline_state, size, instructions)
 		first_start = false
 	else:
+		MusicManager.disable_stem("simulation")
+		if (MusicManager.is_playing("background", "simulation")) :
+			MusicManager.enable_stem("simulation")
 		var controller = level.controller
-
-#		for child in level.get_children():
-#			if child as Controller:
-#				controller = child
-
 		controller.toggle_clock()
 
 func _on_restart_button_pressed():
@@ -147,6 +151,7 @@ func _on_restart_button_pressed():
 
 	instructions.map(func (i): if i as Instruction: i.queue_free())
 
+	MusicManager.enable_stem("simulation")
 	fill_instructions()
 	level.reset(instructions)
 	

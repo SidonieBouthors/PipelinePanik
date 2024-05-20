@@ -3,6 +3,9 @@ extends PanelContainer
 const instruction = preload("res://instruction_panel.tscn")
 var instruction_children = []
 
+func _ready():
+	pass
+
 func populate(instruction_list):
 	for instruction_node in instruction_list:
 		var ins = instruction.instantiate()

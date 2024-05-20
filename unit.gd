@@ -83,6 +83,7 @@ func _process(delta):
 			if is_inside_dropzone and zone_ref.occupant == self:
 				noPos = false
 				tween.tween_property(self, "position", zone_ref.position, 0.2).set_ease(Tween.EASE_OUT)
+				SoundManager.play("main", "bong")	
 			else:
 				if (noPos): 
 					queue_free()
