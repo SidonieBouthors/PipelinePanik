@@ -18,3 +18,8 @@ func _on_level_2_pressed():
 
 func _on_return_pressed():
 	get_tree().change_scene_to_file("res://menu.tscn")
+	
+func _unhandled_input(event):
+	if event is InputEventKey:
+		if event.pressed and event.keycode == KEY_ESCAPE:
+			get_tree().change_scene_to_file("res://menu.tscn")

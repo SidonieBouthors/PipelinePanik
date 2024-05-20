@@ -1,6 +1,5 @@
 [gd_scene load_steps=35 format=3 uid="uid://bd0hbatixfv0y"]
 
-[ext_resource type="Texture2D" uid="uid://bnhkhnr1ta8io" path="res://assets/background_light.png" id="1_3uv06"]
 [ext_resource type="Script" path="res://pipeline.gd" id="1_34f1b"]
 [ext_resource type="Texture2D" uid="uid://m2lbprrvl8s7" path="res://assets/CharacterColored.png" id="2_36yq3"]
 [ext_resource type="Script" path="res://addons/resonate/sound_manager/sound_bank.gd" id="2_dtatx"]
@@ -28,6 +27,7 @@
 [ext_resource type="Theme" uid="uid://dwctb0tlytcoo" path="res://pipeline_theme.tres" id="26_i1crj"]
 [ext_resource type="FontFile" uid="uid://dnsh0g58gjw40" path="res://assets/fonts/m5x7.ttf" id="27_fbt6k"]
 [ext_resource type="Script" path="res://DevScore.gd" id="28_heh4c"]
+[ext_resource type="PackedScene" uid="uid://dnwglmbbvtq5g" path="res://clear_background_tiled.tscn" id="29_u1eea"]
 
 [sub_resource type="Resource" id="Resource_2jami"]
 script = ExtResource("3_a84p1")
@@ -75,9 +75,7 @@ stems = Array[ExtResource("11_cawjm")]([SubResource("Resource_gywsp"), SubResour
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(280, 201)
-texture = ExtResource("1_3uv06")
+[node name="Background" parent="." instance=ExtResource("29_u1eea")]
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 layer = 2

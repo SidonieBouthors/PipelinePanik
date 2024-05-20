@@ -1,61 +1,61 @@
-[gd_scene load_steps=2 format=3 uid="uid://2www521xcgdj"]
+[gd_scene load_steps=2 format=3 uid="uid://ni2tdpirvt6f"]
 
-[ext_resource type="Texture2D" uid="uid://r7w3i5pq8sy4" path="res://assets/background_grey.png" id="1_t3mya"]
+[ext_resource type="Texture2D" uid="uid://r7w3i5pq8sy4" path="res://assets/background_grey.png" id="1_es6se"]
 
 [node name="Background" type="Node2D"]
 
 [node name="BackgroundGrey13" type="Sprite2D" parent="."]
 position = Vector2(1500, 1100)
-texture = ExtResource("1_t3mya")
+texture = ExtResource("1_es6se")
 
 [node name="BackgroundGrey12" type="Sprite2D" parent="."]
 position = Vector2(900, 1100)
-texture = ExtResource("1_t3mya")
+texture = ExtResource("1_es6se")
 
 [node name="BackgroundGrey11" type="Sprite2D" parent="."]
 position = Vector2(300, 1100)
-texture = ExtResource("1_t3mya")
+texture = ExtResource("1_es6se")
 
 [node name="BackgroundGrey10" type="Sprite2D" parent="."]
 position = Vector2(1500, 660)
-texture = ExtResource("1_t3mya")
+texture = ExtResource("1_es6se")
 
 [node name="BackgroundGrey9" type="Sprite2D" parent="."]
 position = Vector2(1500, 220)
-texture = ExtResource("1_t3mya")
+texture = ExtResource("1_es6se")
 
 [node name="BackgroundGrey8" type="Sprite2D" parent="."]
 position = Vector2(900, 1100)
-texture = ExtResource("1_t3mya")
+texture = ExtResource("1_es6se")
 
 [node name="BackgroundGrey7" type="Sprite2D" parent="."]
 position = Vector2(1500, 1100)
-texture = ExtResource("1_t3mya")
+texture = ExtResource("1_es6se")
 
 [node name="BackgroundGrey6" type="Sprite2D" parent="."]
 position = Vector2(2100, 1100)
-texture = ExtResource("1_t3mya")
+texture = ExtResource("1_es6se")
 
 [node name="BackgroundGrey5" type="Sprite2D" parent="."]
 position = Vector2(2100, 220)
-texture = ExtResource("1_t3mya")
+texture = ExtResource("1_es6se")
 
 [node name="BackgroundGrey4" type="Sprite2D" parent="."]
 position = Vector2(2100, 660)
-texture = ExtResource("1_t3mya")
+texture = ExtResource("1_es6se")
 
 [node name="BackgroundGrey0" type="Sprite2D" parent="."]
 position = Vector2(300, 220)
-texture = ExtResource("1_t3mya")
+texture = ExtResource("1_es6se")
 
 [node name="BackgroundGrey1" type="Sprite2D" parent="."]
 position = Vector2(900, 220)
-texture = ExtResource("1_t3mya")
+texture = ExtResource("1_es6se")
 
 [node name="BackgroundGrey3" type="Sprite2D" parent="."]
 position = Vector2(300, 660)
-texture = ExtResource("1_t3mya")
+texture = ExtResource("1_es6se")
 
 [node name="BackgroundGrey2" type="Sprite2D" parent="."]
 position = Vector2(900, 660)
-texture = ExtResource("1_t3mya")
+texture = ExtResource("1_es6se")

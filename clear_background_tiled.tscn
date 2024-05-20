@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://dnwglmbbvtq5g"]
+
+[ext_resource type="Texture2D" uid="uid://bnhkhnr1ta8io" path="res://assets/background_light.png" id="1_wb5fa"]
+
+[node name="Background" type="Node2D"]
+
+[node name="Backgroundclear" type="Sprite2D" parent="."]
+position = Vector2(300, 220)
+texture = ExtResource("1_wb5fa")
+
+[node name="Backgroundclear2" type="Sprite2D" parent="."]
+position = Vector2(300, 660)
+texture = ExtResource("1_wb5fa")
+
+[node name="Backgroundclear3" type="Sprite2D" parent="."]
+position = Vector2(900, 660)
+texture = ExtResource("1_wb5fa")
+
+[node name="Backgroundclear4" type="Sprite2D" parent="."]
+position = Vector2(900, 220)
+texture = ExtResource("1_wb5fa")
+
+[node name="Backgroundclear5" type="Sprite2D" parent="."]
+position = Vector2(1500, 224)
+texture = ExtResource("1_wb5fa")
+
+[node name="Backgroundclear7" type="Sprite2D" parent="."]
+position = Vector2(300, 1099)
+texture = ExtResource("1_wb5fa")
+
+[node name="Backgroundclear8" type="Sprite2D" parent="."]
+position = Vector2(900, 1100)
+texture = ExtResource("1_wb5fa")
+
+[node name="Backgroundclear9" type="Sprite2D" parent="."]
+position = Vector2(1500, 1104)
+texture = ExtResource("1_wb5fa")
+
+[node name="Backgroundclear6" type="Sprite2D" parent="."]
+position = Vector2(1500, 664)
+texture = ExtResource("1_wb5fa")

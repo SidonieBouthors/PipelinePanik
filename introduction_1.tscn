@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://introduction_1.gd" id="1_cl21h"]
 [ext_resource type="FontFile" uid="uid://dnsh0g58gjw40" path="res://assets/fonts/m5x7.ttf" id="1_q3fyr"]
-[ext_resource type="PackedScene" path="res://background_tiled.tscn" id="2_rfxnu"]
+[ext_resource type="PackedScene" uid="uid://ni2tdpirvt6f" path="res://dark_background_tiled.tscn" id="2_rfxnu"]
 
 [node name="Introduction1" type="Control"]
 layout_mode = 3

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bbdhxb1io0mg5"]
 
 [ext_resource type="Script" path="res://level_selector.gd" id="1_0tp6e"]
-[ext_resource type="PackedScene" path="res://background_tiled.tscn" id="2_mvuqb"]
+[ext_resource type="PackedScene" uid="uid://ni2tdpirvt6f" path="res://dark_background_tiled.tscn" id="2_mvuqb"]
 [ext_resource type="FontFile" uid="uid://dnsh0g58gjw40" path="res://assets/fonts/m5x7.ttf" id="2_vxt4e"]
 
 [node name="Level_Selector" type="Control"]

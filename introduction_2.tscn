@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://introduction_2.gd" id="1_kb3q1"]
 [ext_resource type="Theme" uid="uid://dwctb0tlytcoo" path="res://pipeline_theme.tres" id="1_mewcv"]
-[ext_resource type="PackedScene" path="res://background_tiled.tscn" id="2_l32m7"]
+[ext_resource type="PackedScene" uid="uid://ni2tdpirvt6f" path="res://dark_background_tiled.tscn" id="2_l32m7"]
 [ext_resource type="FontFile" uid="uid://dnsh0g58gjw40" path="res://assets/fonts/m5x7.ttf" id="2_tj6w6"]
 
 [node name="introduction_2" type="Control"]

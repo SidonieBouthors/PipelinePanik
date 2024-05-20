@@ -10,3 +10,8 @@ func _on_skip_pressed():
 
 func _on_next_pressed():
 	get_tree().change_scene_to_file("res://introduction_2.tscn")
+	
+func _unhandled_input(event):
+	if event is InputEventKey:
+		if event.pressed and event.keycode == KEY_ESCAPE:
+			get_tree().change_scene_to_file("res://menu.tscn")
