@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://dropzone.gd" id="1_pt87l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jr4y4"]
-size = Vector2(32, 32)
+size = Vector2(10, 10)
 
 [node name="DropZone" type="StaticBody2D" groups=["dropzone"]]
 script = ExtResource("1_pt87l")
