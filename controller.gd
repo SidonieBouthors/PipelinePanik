@@ -70,6 +70,8 @@ func reset_counter():
 
 func set_timer():
 	timer = Timer.new()
+	if global.level_number == 0:
+		timer_wait_time = 2.0
 	timer.wait_time = timer_wait_time
 	timer.autostart = true
 	timer.timeout.connect(_on_timer_timeout)
