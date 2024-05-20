@@ -46,7 +46,7 @@ func _ready():
 	level = levelMaker.instantiate()
 	add_child(level)
 	
-	set_position(Vector2(128, 0))
+	set_position(Vector2(105, 30))
 	for i in (size.x * size.y):
 		pipeline_state.append(null)
 		drop_zones.append(null)
