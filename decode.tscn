@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bvl8tkb3y7gtu"]
-
-[ext_resource type="Script" path="res://decode.gd" id="1_llhd6"]
-
-[node name="Decode" type="Node"]
-script = ExtResource("1_llhd6")

@@ -46,13 +46,13 @@ Chaque étape est symbolisée par sa première lettre : F, D, A, M, et W :
 - Decode : Prépare les registres et détermine, en fonction de leurs dépendances, si l'instruction peut continuer dans la pipeline
 - ALU : Effectue les opérations arithmétiques
 - Memory : Effectue les opérations qui sollicitent la mémoire
-- Writeback : Marque l’instruction comme étant terminée et enregistre le résultat dans le registre correspondant
+- Writeback : Marque l'instruction comme étant terminée et enregistre le résultat dans le registre correspondant
 
 Un concept important est la notion de temps, dans un processeur chaque étape est régie par un tempo bien précis, le Clock Cycle (abrégé cc). Toutes les étapes prennent exactement 1cc. Ainsi, comme les étapes sont en série, si une étape est bloquée, elle bloquera toutes les étapes en amont : on dit que la pipeline \"stall\".
 On peut désormais exécuter les instructions en parallèle (sur plusieurs étages visuellement) pour accélérer les performances. Cependant, une contrainte demeure : les instructions doivent toujours être validées dans un ordre croissant. Pour garantir le respect de cet ordre, on utilise un Reorder Buffer (ROB), qui s'assure de réorganiser les instructions de manière appropriée.
 Comme mentionné précédemment, le but est d'optimiser le temps total d'exécution d'une série d'instructions. Ce temps se compte en Instruction Par Cycle (abrégé IPC), c'est le rapport entre le nombre d'instructions validées et le nombre de cc. Ainsi plus l'IPC est grand, meilleure sera la performance. 
 
-Te voilà prêt⋅e à construire ta première pipeline. Bonne chance !
+Te voilà prêt.e à construire ta première pipeline. Bonne chance !
 
 
 
