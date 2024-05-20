@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bd0hbatixfv0y"]
+[gd_scene load_steps=34 format=3 uid="uid://bd0hbatixfv0y"]
 
 [ext_resource type="Texture2D" uid="uid://bnhkhnr1ta8io" path="res://assets/background_light.png" id="1_3uv06"]
 [ext_resource type="Script" path="res://pipeline.gd" id="1_34f1b"]
@@ -25,6 +25,8 @@
 [ext_resource type="AudioStream" uid="uid://bxliuppnakquh" path="res://assets/sound/tapis-roulant_fond-simulation_285238-Coal_Mine-Hall-Coal_Blending-Belt_Conveyor-Spreader-Knock-Rattle.ogg" id="13_gaudq"]
 [ext_resource type="Script" path="res://play-button.gd" id="21_cvk83"]
 [ext_resource type="Texture2D" uid="uid://bnkvwimd7ktp5" path="res://assets/replay-button.png" id="22_bnavf"]
+[ext_resource type="Theme" uid="uid://dwctb0tlytcoo" path="res://pipeline_theme.tres" id="26_i1crj"]
+[ext_resource type="FontFile" uid="uid://dnsh0g58gjw40" path="res://assets/fonts/m5x7.ttf" id="27_fbt6k"]
 
 [sub_resource type="Resource" id="Resource_2jami"]
 script = ExtResource("3_a84p1")
@@ -225,6 +227,92 @@ alignment = 1
 clip_contents = true
 layout_mode = 2
 text = "Score: 0 IPC"
+
+[node name="PopupLayer" type="CanvasLayer" parent="."]
+
+[node name="EscapeMenu" type="PanelContainer" parent="PopupLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = -65.0
+offset_right = 58.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PopupLayer/EscapeMenu"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="PopupLayer/EscapeMenu/VBoxContainer"]
+layout_mode = 2
+text = "Pause"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PopupLayer/EscapeMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Resume" type="Button" parent="PopupLayer/EscapeMenu/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("26_i1crj")
+theme_override_fonts/font = ExtResource("27_fbt6k")
+theme_override_font_sizes/font_size = 16
+text = "Reprendre "
+
+[node name="Exit" type="Button" parent="PopupLayer/EscapeMenu/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("27_fbt6k")
+theme_override_font_sizes/font_size = 16
+text = "Retourner au menu"
+
+[node name="EndLevel" type="PanelContainer" parent="PopupLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -59.0
+offset_top = -65.0
+offset_right = 58.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PopupLayer/EndLevel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="PopupLayer/EndLevel/VBoxContainer"]
+layout_mode = 2
+text = "Score"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PopupLayer/EndLevel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Resume" type="Button" parent="PopupLayer/EndLevel/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("26_i1crj")
+theme_override_fonts/font = ExtResource("27_fbt6k")
+theme_override_font_sizes/font_size = 16
+text = "Niveau suivant "
+
+[node name="Exit" type="Button" parent="PopupLayer/EndLevel/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("27_fbt6k")
+theme_override_font_sizes/font_size = 16
+text = "Retourner au menu"
 
 [connection signal="button_down" from="UILayer/ShopPanel/HBoxContainer/F-Button" to="CanvasLayer2/Pipeline" method="_on_f_button_down"]
 [connection signal="pressed" from="UILayer/ShopPanel/HBoxContainer/F-Button" to="CanvasLayer2/Pipeline" method="_on_f_pressed"]
