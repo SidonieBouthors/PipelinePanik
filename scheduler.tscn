@@ -4,3 +4,7 @@
 
 [node name="Scheduler" type="Node"]
 script = ExtResource("1_wxn4j")
+inputs = null
+outputs = null
+semaphore = null
+components = null

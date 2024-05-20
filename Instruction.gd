@@ -12,7 +12,7 @@ enum Type {
 }
 
 enum Register {
-	r0 = 2 * * 17,
+	r0 = 2 ** 17,
 	r1,
 	r2,
 	r3,

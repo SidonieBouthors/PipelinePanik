@@ -107,7 +107,6 @@ func add_unit(type):
 	sprite._on_mouse_entered()
 	SoundManager.play("main", "coins-buy")
 	
-	
 func _on_f_button_down():
 	add_unit(Unit.FETCH)
 
@@ -203,7 +202,6 @@ func check_correct_pipeline():
 		get_parent().get_parent().get_node("UILayer/Level0/PanelContainer").visible = true
 		return false
 	return true
-	
 
 func fill_instructions():
 	# Clear the instructions
@@ -257,8 +255,6 @@ func fill_instructions():
 		instructions.append(instruction)
 	
 	$"../../UILayer/CodeContainer/InstructionsPanel".repopulate(instructions)
-	
-
 
 func _on_resume_pressed():
 	escape()
@@ -288,16 +284,13 @@ func _on_restart_0_pressed():
 	var level0_UI = get_parent().get_parent().get_node("UILayer/Level0/PanelContainer")
 	level0_UI.visible = false
 
-
 func _on_help_button_pressed():
 	if is_playing:
 		_on_play_button_pressed()
 		var playButton = get_parent().get_parent().get_node("UILayer/PlayPanel/PlayButton")
 		playButton._pressed()
-	var tutoPanel =  get_parent().get_parent().get_node("PopupLayer/TutoPanel")
+	var tutoPanel = get_parent().get_parent().get_node("PopupLayer/TutoPanel")
 	tutoPanel.visible = not tutoPanel.visible
 	if tutoPanel.visible:
 		var resume = tutoPanel.find_child("ResumeTuto")
 		resume.grab_focus()
-	
-	

@@ -4,3 +4,9 @@
 
 [node name="ROB" type="Node"]
 script = ExtResource("1_hlbuc")
+inputs = null
+outputs = null
+stack = null
+size = null
+pc = null
+semaphore = null

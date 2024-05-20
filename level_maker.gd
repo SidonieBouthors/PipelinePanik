@@ -3,10 +3,10 @@ class_name Level_Maker
 
 @export var first_units: Array = []
 @export var last_units: Array = []
-@export var components : Array = []
+@export var components: Array = []
 @export var controller: Controller
 
-func create(pipeline: Array, size: Vector2, instructions: Array, rob_size: int = 10):
+func create(pipeline: Array, size: Vector2, instructions: Array, rob_size: int=10):
 
 	#Fetch
 	var column = get_column(pipeline, size, 0)
@@ -103,7 +103,7 @@ func get_column(pipeline: Array, size: Vector2, i: int) -> Array:
 		res.append(pipeline[idx])
 	return res
 
-func get_line(pipeline: Array, size: Vector2, j: int, from: int = 0) -> Array:
+func get_line(pipeline: Array, size: Vector2, j: int, from: int=0) -> Array:
 	var res = []
 	for idx in range(from, size.x):
 		res.append(pipeline[idx * size.y + j])
@@ -112,4 +112,3 @@ func get_line(pipeline: Array, size: Vector2, j: int, from: int = 0) -> Array:
 func reset(instructions: Array):
 	controller.instructions = instructions
 	controller.start_clock()
-	
