@@ -130,7 +130,7 @@ func end_game():
 	while parent.name != "Node2D":
 		parent = parent.get_parent()
 	var endLevel = parent.find_child("EndLevel")
-	endLevel.find_child("Score").text = str("Score : ", score, " IPC")
+	endLevel.find_child("Score").text = "Score: " + str(snapped(score, 0.01)) + " IPC"
 	endLevel.visible = true
 	endLevel.find_child("NextLevel").grab_focus()
 
