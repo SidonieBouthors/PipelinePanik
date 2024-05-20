@@ -121,6 +121,18 @@ func _on_m_button_down():
 func _on_w_button_down():
 	add_unit(Unit.WRITEBACK)
 
+func _unhandled_input(event):
+	if event is InputEventKey:
+		if event.pressed and event.keycode == KEY_ESCAPE:
+			escape()
+			
+			
+func escape():
+	_on_play_button_pressed()
+	var escapeMenu = get_parent().get_parent().get_node("PopupLayer/EscapeMenu")
+	escapeMenu.visible = not escapeMenu.visible
+
+
 func _on_play_button_pressed():
 	is_playing = not is_playing
 	if first_start:
@@ -136,28 +148,7 @@ func _on_play_button_pressed():
 		else : MusicManager.disable_stem("simulation")
 		var controller = level.controller
 		controller.toggle_clock()
-
-func _on_restart_button_pressed():
-	"""
-	Level Maker children:
-		- Controller
-		- ROB
-		- Commiter
-		- Schedulers (always 2)
-	"""
-	level.get_children().map(func (child): child.clear())
-
-	"""
-	Pipeline children:
-		- All units
-	"""
-	pipeline_state.map(func (u): if u: u.clear())
-
-	instructions.map(func (i): if i as Instruction: i.queue_free())
-
-	MusicManager.enable_stem("simulation")
-	fill_instructions()
-	level.reset(instructions)
+		
 	
 # Remove all children from the scene
 func _on_reset_button_pressed():
@@ -230,3 +221,7 @@ func fill_instructions():
 		
 	
 	$"../../UILayer/CodeContainer/InstructionsPanel".repopulate(instructions)
+
+
+func _on_resume_pressed():
+	escape()

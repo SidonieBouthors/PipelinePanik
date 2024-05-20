@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://menu.gd" id="1_1plqs"]
 [ext_resource type="Theme" uid="uid://dwctb0tlytcoo" path="res://pipeline_theme.tres" id="1_gyw7c"]
 [ext_resource type="FontFile" uid="uid://dnsh0g58gjw40" path="res://assets/fonts/m5x7.ttf" id="3_0c04y"]
-[ext_resource type="PackedScene" uid="uid://2www521xcgdj" path="res://background_tiled.tscn" id="3_in3ho"]
+[ext_resource type="PackedScene" path="res://background_tiled.tscn" id="3_in3ho"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
