@@ -1,0 +1,72 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbdhxb1io0mg5"]
+
+[ext_resource type="Script" path="res://level_selector.gd" id="1_0tp6e"]
+[ext_resource type="Texture2D" uid="uid://r7w3i5pq8sy4" path="res://assets/background_grey.png" id="1_jrgcx"]
+[ext_resource type="FontFile" uid="uid://dnsh0g58gjw40" path="res://assets/fonts/m5x7.ttf" id="2_vxt4e"]
+
+[node name="Level_Selector" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0tp6e")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(222, 120)
+texture = ExtResource("1_jrgcx")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -93.0
+offset_top = -1.5
+offset_right = 93.0
+offset_bottom = 99.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Level0" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Return")
+theme_override_fonts/font = ExtResource("2_vxt4e")
+text = "Niveau 0"
+
+[node name="Level1" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vxt4e")
+text = "Niveau 1"
+
+[node name="Return" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../Level0")
+theme_override_fonts/font = ExtResource("2_vxt4e")
+text = "Retour au menu"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -88.5
+offset_top = -76.5
+offset_right = -17.5
+offset_bottom = -63.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2.5, 2.5)
+theme_type_variation = &"ScreenText"
+text = "Pipeline Panik
+"
+
+[connection signal="pressed" from="VBoxContainer/Level0" to="." method="_on_level_0_pressed"]
+[connection signal="pressed" from="VBoxContainer/Level1" to="." method="_on_level_1_pressed"]
+[connection signal="pressed" from="VBoxContainer/Return" to="." method="_on_return_pressed"]

@@ -5,14 +5,14 @@ extends Control
 func _ready():
 	$VBoxContainer/Start.grab_focus()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
 func _on_start_pressed():
 	get_tree().change_scene_to_file("res://introduction_1.tscn")
-
+	
+func _on_level_selector_pressed():
+	get_tree().change_scene_to_file("res://level_selector.tscn")
 
 func _on_exit_pressed():
 	get_tree().quit()
+
+
+
