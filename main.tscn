@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bd0hbatixfv0y"]
+[gd_scene load_steps=31 format=3 uid="uid://bd0hbatixfv0y"]
 
 [ext_resource type="Script" path="res://pipeline.gd" id="1_34f1b"]
 [ext_resource type="Texture2D" uid="uid://m2lbprrvl8s7" path="res://assets/CharacterColored.png" id="2_36yq3"]
@@ -22,6 +22,8 @@
 [ext_resource type="Script" path="res://addons/resonate/music_manager/music_stem_resource.gd" id="11_cawjm"]
 [ext_resource type="AudioStream" uid="uid://chjmmcwis8cq4" path="res://assets/sound/bruit-de-fond-entrepot_fond_479937-Country_House_Empty_Warehouse_Night_Spooky_Distant_Hits.ogg" id="12_xy8md"]
 [ext_resource type="AudioStream" uid="uid://bxliuppnakquh" path="res://assets/sound/tapis-roulant_fond-simulation_285238-Coal_Mine-Hall-Coal_Blending-Belt_Conveyor-Spreader-Knock-Rattle.ogg" id="13_gaudq"]
+[ext_resource type="Script" path="res://play-button.gd" id="21_cvk83"]
+[ext_resource type="Texture2D" uid="uid://bnkvwimd7ktp5" path="res://assets/replay-button.png" id="22_bnavf"]
 
 [sub_resource type="Resource" id="Resource_2jami"]
 script = ExtResource("3_a84p1")
@@ -146,6 +148,7 @@ size_flags_vertical = 8
 [node name="PlayButton" type="TextureButton" parent="UILayer/PlayPanel"]
 layout_mode = 2
 texture_normal = ExtResource("8_oewop")
+script = ExtResource("21_cvk83")
 
 [node name="RestartPanel" type="PanelContainer" parent="UILayer"]
 anchors_preset = 1
@@ -161,7 +164,7 @@ size_flags_vertical = 8
 
 [node name="RestartButton" type="TextureButton" parent="UILayer/RestartPanel"]
 layout_mode = 2
-texture_normal = ExtResource("8_oewop")
+texture_normal = ExtResource("22_bnavf")
 
 [node name="CodeContainer" type="VBoxContainer" parent="UILayer"]
 offset_left = 2.0
