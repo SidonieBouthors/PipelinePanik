@@ -32,7 +32,7 @@ var instructions = []
 # The grid's size in columns and rows.
 @export var size := Vector2(5, 3)
 # The size of a cell in pixels.
-@export var cell_size := Vector2(64, 64)
+@export var cell_size := Vector2(54, 54)
 
 var _half_cell_size = cell_size / 2
 
@@ -48,7 +48,7 @@ func _ready():
 		set_position(Vector2(105, 94))
 	else :
 		size = Vector2(5,3)
-		set_position(Vector2(105, 30))
+		set_position(Vector2(105, 28))
 	
 	level = levelMaker.instantiate()
 	add_child(level)
